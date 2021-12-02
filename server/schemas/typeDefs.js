@@ -1,6 +1,12 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+    input SearchInput {
+        title: String
+        tags: [Tag!]
+        category: Category
+    }
+
     type User {
         _id: ID!
         username: String!
@@ -58,7 +64,7 @@ const typeDefs = gql`
     type Query {
         user: User 
         categories: [Category]
-        tutorials(category: Category, title: String): [Tutorial]
+        tutorials(SearchInput): [Tutorial]
         tutorial(_id: ID!): Tutorial
         room(_id: ID!): Room
     }
