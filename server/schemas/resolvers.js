@@ -1,7 +1,7 @@
 const resolvers = {
-    Query: {me: () => {
-        return 'helloworld';
-    }},
+    // Query: {me: () => {
+    //     return 'helloworld';
+    // }},
     
 }
 
