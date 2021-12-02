@@ -5,6 +5,7 @@ const typeDefs = gql`
         title: String
         tagIDs: [ID!]
         categoryIDs: ID
+
     }
 
     input LoginInput {
@@ -18,6 +19,7 @@ const typeDefs = gql`
         tagIDs: [ID!]
         categoryIDs: ID!
         stepIDs: [ID!]!
+
         searchable: Boolean
     }
 
@@ -80,6 +82,7 @@ const typeDefs = gql`
         author: User!
         content: String!
     }
+
 
     type Auth {
         token: ID
