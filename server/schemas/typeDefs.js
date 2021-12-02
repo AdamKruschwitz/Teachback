@@ -15,8 +15,8 @@ const typeDefs = gql`
         author: String!
         tags: [Tag]
         category: String!
-        steps: [Steps]!
-        ratings: [Rating]!
+        steps: [Steps!]!
+        ratings: [Rating!]
         searchable: Boolean    
     }
 
@@ -28,33 +28,57 @@ const typeDefs = gql`
     type Tag {
         _id: ID!
         name: String!
+        frequency: Int
     }
 
     type Room {
         _id: ID!
-        owner: 
-        tutorial: 
-        currentStep: 
+        owner: User!
+        tutorial: Tutorial!
+        currentStep: Step!
     }
 
     type Step {
         content: String!
-        comments: [Comment]
+        comments: [Comment!]!
     }
 
     type Rating {
         _id: ID!
-        user: [ID]
-        value: Int
+        user: User!
+        value: Int!
     }
 
     type Comment {
         _id: ID!
-        author: 
-        content: String!;
+        author: User!
+        content: String!
     }
 
-   
+    type Query {
+        user: User 
+        categories: [Category]
+        tutorials(category: Category, title: String): [Tutorial]
+        tutorial(_id: ID!): Tutorial
+        room(_id: ID!): Room
+    }
+
+    type Mutations {
+    addUser(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+    ): Auth
+    login(email: String!, password: String!): Auth
+    createTutorial(title: String!, author: String!, category: [ID]!, steps: [Step]!): Tutorial
+    updateTutorial(_id: ID!, quantity: Int!): Tutorial
+    addComment:
+    deleteComment: 
+    addRating: 
+    deleteRating: 
+
+    }
 
 
 
