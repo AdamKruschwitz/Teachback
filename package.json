@@ -16,6 +16,10 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "apollo-server-express": "^2.15.0"
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.2",
+    "apollo-server-express": "^2.15.0",
+    "styled-components": "^5.3.3"
   }
 }
