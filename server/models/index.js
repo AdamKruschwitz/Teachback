@@ -4,6 +4,7 @@ const Rating = require('./Rating');
 const Comment = require('./Comment');
 const User = require('./User');
 const Tag = require('./Tag');
+const Step = require('./Step');
 
 module.exports = {
     Category,
@@ -12,4 +13,5 @@ module.exports = {
     Comment,
     User,
     Tag,
+    Step,
 }
