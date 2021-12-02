@@ -3,9 +3,6 @@ import styled from "styled-components";
 import { Button } from '@mui/material';
 import { auth, GoogleProvider } from "../firebase";
 
-
-
-
 function Login() {
 
     const signIn = e => {
@@ -16,10 +13,11 @@ function Login() {
     return (
         <LoginContainer>
             <LoginInnerContainer>
-                <img
-                    src="https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg"
+                {/* Logo */}
+                <img 
+                    src=""
                      alt=""
-                />
+                /> 
                 <h1>Teachback</h1>
                 <p>Technical Tutorials</p>
                 <Button type='submit' onClick={signIn}>
