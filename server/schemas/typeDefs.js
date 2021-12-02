@@ -7,6 +7,26 @@ const typeDefs = gql`
         category: Category
     }
 
+    input LoginInput {
+        email: String!
+        password: String!
+    }
+
+    input TutorialInput {
+        _id: ID
+        title: String!
+        tags: [Tag!]
+        category: Category!
+        steps: [Step!]!
+        searchable: Boolean
+    }
+
+    input UserInput {
+        username: String!
+        email: String!
+        password: String!
+    }
+
     type User {
         _id: ID!
         username: String!
@@ -64,30 +84,21 @@ const typeDefs = gql`
     type Query {
         user: User 
         categories: [Category]
-        tutorials(SearchInput): [Tutorial]
+        tutorials(input: SearchInput): [Tutorial]
         tutorial(_id: ID!): Tutorial
         room(_id: ID!): Room
     }
 
     type Mutations {
-    addUser(
-      firstName: String!
-      lastName: String!
-      email: String!
-      password: String!
-    ): Auth
-    login(email: String!, password: String!): Auth
-    createTutorial(title: String!, author: String!, category: [ID]!, steps: [Step]!): Tutorial
-    updateTutorial(_id: ID!, quantity: Int!): Tutorial
-    addComment:
-    deleteComment: 
-    addRating: 
-    deleteRating: 
-
+    addUser(input: UserInput): Auth
+    login(input: LoginInput!): Auth
+    createTutorial(input: TutorialInput!): Tutorial
+    updateTutorial(input: TutorialInput!): Tutorial
+    addComment(stepId: ID!, content: String!): Step
+    deleteComment(commentId: ID!): Step
+    addRating:(tutorialId: ID!, value: Int!): Tutorial
+    deleteRating:(ratingId: ID!): Tutorial
     }
-
-
-
 
 `
 module.exports = typeDefs;
