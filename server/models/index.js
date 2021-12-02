@@ -5,6 +5,7 @@ const Comment = require('./Comment');
 const User = require('./User');
 const Tag = require('./Tag');
 const Step = require('./Step');
+const Room = require('./Room');
 
 module.exports = {
     Category,
@@ -14,4 +15,5 @@ module.exports = {
     User,
     Tag,
     Step,
+    Room,
 }
