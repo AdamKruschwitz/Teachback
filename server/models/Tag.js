@@ -6,6 +6,10 @@ const tagSchema = new Schema({
         required: true,
         trim: true,
         lowercase: true
+    },
+    frequency: {
+        type: INTEGER,
+        default: 0
     }
 });
 
