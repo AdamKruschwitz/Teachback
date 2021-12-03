@@ -9,7 +9,7 @@ export const Container = styled.div`
     height: 50px;
     box-sizing: border-box;
     border-radius: 50px;
-    border: 4px solid  #94ECBE;
+    border: 4px solid var(--light-green);
     padding: 5px;
     background:  #2D2244;
     transition: all 0.5s;
@@ -25,7 +25,7 @@ export const Container = styled.div`
         width: 50%;
         -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.74);
         box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.74);
-        border: 4px solid #00adb5;
+        border: 4px solid var(--light-green);
 
         @media (min-width: 768px) {
             width: 80%;
@@ -36,15 +36,16 @@ export const SearchInput = styled.input`
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%auto;
+    width: 100%;
     height: 42px;
     line-height: 30px;
     outline: 0;
     border: 0;
     font-size: 2rem;
     border-radius: 20px;
-    padding: 0 20px;
+    padding: 0;
     margin: 0;
+    text-align: center;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;

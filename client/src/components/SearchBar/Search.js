@@ -27,8 +27,9 @@ const Search = () => {
                 onBlur={() => setIsFocused(false)}
                 hover={showSearchInput}
             >
-                <SearchInput ref={targetRef} showSearchInput={showSearchInput} />
+                <SearchInput ref={targetRef} showSearchInput={showSearchInput}/>
                 {showSearchInput ? <IconRightArrow /> : <IconMagnifyingGlass />}
+                
             </Container>
 
     );
