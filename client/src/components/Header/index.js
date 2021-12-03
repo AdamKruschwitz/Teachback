@@ -10,25 +10,50 @@ const Header = function() {
         setLoggedIn(!loggedIn);
     }
 
-    return (
-        <div>
-            <HeaderContainer>
-                
-                <HeaderLeft>
-                    <Logo>Teachback</Logo>
-                    <HeaderItemContainer>
-                        <HeaderItemLabel>Browse</HeaderItemLabel>
-                    </HeaderItemContainer>
-                </HeaderLeft>
-                <HeaderRight>
-                    <ButtonContainer>
-                        <LeftButton onClick={handleLogIn} variant="outlined">Login</LeftButton>
-                        <RightButton variant="contained">Register</RightButton>
-                    </ButtonContainer>
-                </HeaderRight>
-            </HeaderContainer>
-        </div>
-    )
+    if(!loggedIn) {
+        return (
+            <div>
+                <HeaderContainer>
+                    
+                    <HeaderLeft>
+                        <Logo>Teachback</Logo>
+                        <HeaderItemContainer>
+                            <HeaderItemLabel>Browse</HeaderItemLabel>
+                        </HeaderItemContainer>
+                    </HeaderLeft>
+                    <HeaderRight>
+                        <ButtonContainer>
+                            <LeftButton onClick={handleLogIn} variant="outlined" size="large">Login</LeftButton>
+                            <RightButton variant="contained" onClick={handleLogIn} size="large">Register</RightButton>   
+                        </ButtonContainer>
+                    </HeaderRight>
+                </HeaderContainer>
+            </div>
+        )
+    }
+    else if(loggedIn) {
+        return (
+            <div>
+                <HeaderContainer>
+                    
+                    <HeaderLeft>
+                        <Logo>Teachback</Logo>
+                        <HeaderItemContainer>
+                            <HeaderItemLabel>Browse</HeaderItemLabel>
+                        </HeaderItemContainer>
+                        <HeaderItemContainer>
+                            <HeaderItemLabel>Profile</HeaderItemLabel>
+                        </HeaderItemContainer>
+                    </HeaderLeft>
+                    <HeaderRight>
+                        <ButtonContainer>
+                            <RightButton variant="contained" onClick={handleLogIn}>Create Tutorial</RightButton>   
+                        </ButtonContainer>
+                    </HeaderRight>
+                </HeaderContainer>
+            </div>
+        )
+    }
 }
 
 const HeaderContainer = styled.div`
@@ -60,6 +85,8 @@ const HeaderRight = styled.div`
 
 const Logo = styled.h1`
     padding-right: 1em;
+    font-family: 'Bungee', cursive;
+    margin: 0px;
 `
 
 const HeaderItemContainer = styled.div`
@@ -67,14 +94,16 @@ const HeaderItemContainer = styled.div`
     align-items: center;
     padding-left: 1em;
     padding-right:1em;
+    cursor: pointer;
     :hover {
-        background-color: #5f478f;
+        background-color: #453469;
     }
 `
 
 const HeaderItemLabel = styled.h2` 
     vertical-align: middle;
     color: var(--light-green);
+    font-family: 'Montserrat', sans-serif;
 `
 
 const ButtonContainer = styled.div`
@@ -87,6 +116,7 @@ const LeftButton = styled(Button)`
     background-color: var(--dark-purple) !important;
     color: var(--light-green) !important;
     border-color: var(--light-green) !important;
+    font-family: 'Montserrat', sans-serif;
 `
 
 const RightButton = styled(Button)`
@@ -95,6 +125,7 @@ const RightButton = styled(Button)`
     background-color: var(--light-green) !important;
     color: var(--dark-purple) !important;
     border-color: var(--light-green) !important;
+    font-family: 'Montserrat', sans-serif;
 `
 
 
