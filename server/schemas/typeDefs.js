@@ -3,8 +3,9 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
     input SearchInput {
         title: String
-        tags: [Tag!]
-        category: Category
+        tagIDs: [ID!]
+        categoryIDs: ID
+
     }
 
     input LoginInput {
@@ -15,9 +16,10 @@ const typeDefs = gql`
     input TutorialInput {
         _id: ID
         title: String!
-        tags: [Tag!]
-        category: Category!
-        steps: [Step!]!
+        tagIDs: [ID!]
+        categoryIDs: ID!
+        stepIDs: [ID!]!
+
         searchable: Boolean
     }
 
@@ -41,7 +43,7 @@ const typeDefs = gql`
         author: String!
         tags: [Tag]
         category: String!
-        steps: [Steps!]!
+        steps: [Step!]!
         ratings: [Rating!]
         searchable: Boolean    
     }
@@ -81,6 +83,12 @@ const typeDefs = gql`
         content: String!
     }
 
+
+    type Auth {
+        token: ID
+        user: User
+    }
+
     type Query {
         user: User 
         categories: [Category]
@@ -89,15 +97,15 @@ const typeDefs = gql`
         room(_id: ID!): Room
     }
 
-    type Mutations {
-    addUser(input: UserInput): Auth
-    login(input: LoginInput!): Auth
-    createTutorial(input: TutorialInput!): Tutorial
-    updateTutorial(input: TutorialInput!): Tutorial
-    addComment(stepId: ID!, content: String!): Step
-    deleteComment(commentId: ID!): Step
-    addRating:(tutorialId: ID!, value: Int!): Tutorial
-    deleteRating:(ratingId: ID!): Tutorial
+    type Mutation {
+        addUser(input: UserInput): Auth
+        login(input: LoginInput!): Auth
+        createTutorial(input: TutorialInput!): Tutorial
+        updateTutorial(input: TutorialInput!): Tutorial
+        addComment(stepId: ID!, content: String!): Step
+        deleteComment(commentId: ID!): Step
+        addRating(tutorialId: ID!, value: Int!): Tutorial
+        deleteRating(ratingId: ID!): Tutorial
     }
 
 `
