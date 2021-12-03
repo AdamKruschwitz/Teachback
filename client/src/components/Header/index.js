@@ -29,6 +29,7 @@ const Header = function() {
                     <HeaderRight>
                         <ButtonContainer>
                             <LeftButton onClick={handleLogIn} variant="outlined" size="large">Login</LeftButton>
+                            
                             <UnstyledLink to="/register" style={{ textDecoration: 'none' }}>
                             <RightButton variant="contained" onClick={handleLogIn} size="large">Register</RightButton>
                             </UnstyledLink>   
