@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import  SearchIcon  from '../icons/search';
-import  ArrowRightIcon  from '../icons/arrowRight'
+import  SearchIcon  from '../../icons/search';
+import  ArrowRightIcon  from '../../icons/arrowRight'
 
 export const Container = styled.div`
 
