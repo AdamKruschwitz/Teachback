@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom'
 
 const Header = function() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -16,15 +17,21 @@ const Header = function() {
                 <HeaderContainer>
                     
                     <HeaderLeft>
-                        <Logo>Teachback</Logo>
-                        <HeaderItemContainer>
-                            <HeaderItemLabel>Browse</HeaderItemLabel>
-                        </HeaderItemContainer>
+                        <UnstyledLink to="/">
+                            <Logo>Teachback</Logo>
+                        </UnstyledLink>
+                        <UnstyledLink to="browse">
+                            <HeaderItemContainer>
+                                <HeaderItemLabel>Browse</HeaderItemLabel>
+                            </HeaderItemContainer>
+                        </UnstyledLink>
                     </HeaderLeft>
                     <HeaderRight>
                         <ButtonContainer>
                             <LeftButton onClick={handleLogIn} variant="outlined" size="large">Login</LeftButton>
-                            <RightButton variant="contained" onClick={handleLogIn} size="large">Register</RightButton>   
+                            <UnstyledLink to="/register" style={{ textDecoration: 'none' }}>
+                            <RightButton variant="contained" onClick={handleLogIn} size="large">Register</RightButton>
+                            </UnstyledLink>   
                         </ButtonContainer>
                     </HeaderRight>
                 </HeaderContainer>
@@ -35,19 +42,26 @@ const Header = function() {
         return (
             <div>
                 <HeaderContainer>
-                    
                     <HeaderLeft>
-                        <Logo>Teachback</Logo>
-                        <HeaderItemContainer>
-                            <HeaderItemLabel>Browse</HeaderItemLabel>
-                        </HeaderItemContainer>
-                        <HeaderItemContainer>
-                            <HeaderItemLabel>Profile</HeaderItemLabel>
-                        </HeaderItemContainer>
+                        <UnstyledLink to="/">
+                            <Logo>Teachback</Logo>
+                        </UnstyledLink>
+                        <UnstyledLink to="browse">
+                            <HeaderItemContainer>
+                                <HeaderItemLabel>Browse</HeaderItemLabel>
+                            </HeaderItemContainer>
+                        </UnstyledLink>
+                        <UnstyledLink to="profile">
+                            <HeaderItemContainer>
+                                <HeaderItemLabel>Profile</HeaderItemLabel>
+                            </HeaderItemContainer>
+                        </UnstyledLink>
                     </HeaderLeft>
                     <HeaderRight>
                         <ButtonContainer>
-                            <RightButton variant="contained" onClick={handleLogIn}>Create Tutorial</RightButton>   
+                            <UnstyledLink to="tutorial/create">
+                                <RightButton variant="contained" onClick={handleLogIn}>Create Tutorial</RightButton>
+                            </UnstyledLink>   
                         </ButtonContainer>
                     </HeaderRight>
                 </HeaderContainer>
@@ -95,6 +109,7 @@ const HeaderItemContainer = styled.div`
     padding-left: 1em;
     padding-right:1em;
     cursor: pointer;
+    height: 100%;
     :hover {
         background-color: #453469;
     }
@@ -108,6 +123,15 @@ const HeaderItemLabel = styled.h2`
 
 const ButtonContainer = styled.div`
     
+`
+
+const UnstyledLink = styled(Link)`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: inherit;
+    }
 `
 
 const LeftButton = styled(Button)`
