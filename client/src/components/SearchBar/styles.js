@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { SearchIcon } from '../icons/search';
-import { SearchIcon } from '../icons/search'
+import  SearchIcon  from '../icons/search';
+import  ArrowRightIcon  from '../icons/arrowRight'
 
 export const Container = styled.div`
 
@@ -52,5 +52,22 @@ export const SearchInput = styled.input`
     display: ${(props) => (props.showSearchInput ? 'block' : 'none')};
 `;
 
-export const IconMagnifyingGlass = styled(SearchIcon)``;
-export const IconRightArrow = styled(ArrowRightIcon)``;
+const IconCommonCss = css`
+    height: 1.25rem;
+    width: 1.25rem;
+    fill: #00adb5;
+    z-index: 10;
+`;
+
+export const IconMagnifyingGlass = styled(SearchIcon)`
+    ${IconCommonCss}
+`;
+
+export const IconRightArrow = styled(ArrowRightIcon)`
+    ${IconCommonCss}
+    align-self: flex-end;
+    cursor: pointer;
+    &:hover {
+        fill: #393e46;
+    }
+`;

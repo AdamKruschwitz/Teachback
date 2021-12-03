@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import {
     Container,
+    IconMagnifyingGlass,
+    IconRightArrow,
     SearchInput
 } from './styles'
 
@@ -26,6 +28,7 @@ const Search = () => {
                 hover={showSearchInput}
             >
                 <SearchInput ref={targetRef} showSearchInput={showSearchInput} />
+                {showSearchInput ? <IconRightArrow /> : <IconMagnifyingGlass />}
             </Container>
 
     );

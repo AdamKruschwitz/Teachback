@@ -1,4 +1,4 @@
-const IconSearch = (props) => (
+const SearchIcon = (props) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -10,4 +10,4 @@ const IconSearch = (props) => (
     </svg>
   );
   
-  export default IconSearch;
+  export default SearchIcon;
