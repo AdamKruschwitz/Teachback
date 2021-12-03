@@ -19,10 +19,6 @@
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@mui/material": "^5.2.2",
-<<<<<<< HEAD
-    "@mui/styled-engine-sc": "^5.1.0",
-=======
->>>>>>> 56c46d2ecf2943c8c9e3b59064f144c44edbd2e8
     "apollo-server-express": "^2.15.0",
     "styled-components": "^5.3.3"
   }
