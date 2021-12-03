@@ -1,7 +1,8 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import { Header } from './components'
+// import { Header } from './components'
+import Footer from './components/Footer/index'
 
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <Header />
+    // <Header />
+
+    <Footer />
   );
 }
 
