@@ -11,10 +11,21 @@ const Search = () => {
     const [isFocused, setIsFocused] = useState(false);
     const showSearchInput = isHovered || isFocused;
 
+    useEffect(() => {
+    targetRef.current.value = "";
+    },[showSearchInput]);
+
+
     return (
 
-            <Container>
-                <SearchInput />
+            <Container
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                hover={showSearchInput}
+            >
+                <SearchInput ref={targetRef} showSearchInput={showSearchInput} />
             </Container>
 
     );
