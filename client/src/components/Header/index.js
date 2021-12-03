@@ -6,7 +6,7 @@ const Header = function() {
     const [loggedIn, setLoggedIn] = useState(false);
     
     const handleLogIn = () => {
-        // TODO - implement with firebase
+        // TODO: - implement with firebase
         setLoggedIn(!loggedIn);
     }
 
