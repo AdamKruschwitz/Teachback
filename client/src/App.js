@@ -1,8 +1,9 @@
 // import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-
-import { Header, Footer, SearchBar, Login } from './components'
+import { Routes, Route } from 'react-router-dom';
+import { Header, Footer } from './components';
+import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 
 
 
@@ -11,17 +12,13 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" />
-        <Route path="/browse" />
-        <Route path="/profile" />
-        <Route path="/register" />
-        <Route path="/room/:id" />
-        <Route path="/tutorial/create" />
-        <Route path="*" />
+        <Route path="/" element={ <Home /> } />
+        <Route path="/browse" element={ <Browse /> } />
+        <Route path="/profile" element={ <Profile /> } />
+        <Route path="/room/:id" element={ <Room /> } />
+        <Route path="/tutorial/create" element={ <CreateTutorial /> } />
+        <Route path="*" element={ <Home /> } />
       </Routes>
-    
-      <Login />
-      <SearchBar />
       <Footer />
     </div>
 

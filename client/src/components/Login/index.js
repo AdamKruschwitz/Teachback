@@ -9,13 +9,11 @@ import TextField from '@mui/material/TextField';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton'
 
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
 import { auth, GoogleProvider } from "../../firebase";
-import Google from '@mui/icons-material/Google';
 
 const LoginDialogue = function() {
     const [open, setOpen] = useState(true); // TODO - change to false by default
