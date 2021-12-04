@@ -5,27 +5,34 @@ import styled from 'styled-components'
 import { Button } from '@mui/material';
 
 const Browse = function() {
-    
+    const handleCategorySelect = () => {
+
+    }
+
+    const handleTagSelect = () => {
+        
+    }
+
     return (
         <MainBody>
             <TopContainer>
                 <LeftContainer>
                     <h1>Technologies</h1>
-                    <Button>Javascript</Button>
-                    <Button>HTML</Button>
-                    <Button>CSS</Button>
-                    <Button>React</Button>
-                    <Button>Reavt Native</Button>
-                    <Button>IOS</Button>
+                    <Button onClick={handleCategorySelect}>Javascript</Button>
+                    <Button onClick={handleCategorySelect}>HTML</Button>
+                    <Button onClick={handleCategorySelect}>CSS</Button>
+                    <Button onClick={handleCategorySelect}>React</Button>
+                    <Button onClick={handleCategorySelect}>Reavt Native</Button>
+                    <Button onClick={handleCategorySelect}>IOS</Button>
                 </LeftContainer>
                 <RightContainer>
                     <h1>Popular Tags</h1>
-                    <Button>Swift</Button>
-                    <Button>GoLang</Button>
-                    <Button>Flutter</Button>
-                    <Button>Javascript</Button>
-                    <Button>Jquery</Button>
-                    <Button>Next.js</Button>
+                    <Button onClick={handleTagSelect}>Swift</Button>
+                    <Button onClick={handleTagSelect}>GoLang</Button>
+                    <Button onClick={handleTagSelect}>Flutter</Button>
+                    <Button onClick={handleTagSelect}>Javascript</Button>
+                    <Button onClick={handleTagSelect}>Jquery</Button>
+                    <Button onClick={handleTagSelect}>Next.js</Button>
                 </RightContainer>
             </TopContainer>
             <SearchContainer>
