@@ -2,7 +2,7 @@
 import './App.css';
 import React from 'react';
 
-import { Header, Footer, SearchBar, Login } from './components'
+import { Header, Footer, SearchBar, Login, Category } from './components'
 
 
 
@@ -13,6 +13,7 @@ function App() {
     <Header />
     <Login />
     <SearchBar />
+    <Category />
     <Footer />
     </div>
 
