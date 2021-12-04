@@ -3,14 +3,13 @@ import './App.css';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Header, Footer } from './components';
-import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
-
-
+import { Home, CreateTutorial, Browse, Profile, Room, Category } from './pages';
 
 function App() {
   return (
     <div>
       <Header />
+      <Category />
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/browse" element={ <Browse /> } />
