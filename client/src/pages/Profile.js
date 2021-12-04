@@ -6,9 +6,9 @@ import portrait from '../portrait.jpeg'
 
 const Profile = function() {
     const handleEditProfile = () => {
+            // TODO: finish functionality
 
     }
-    // TODO
     return (
         <ProfilePageBody>
             <TopContainer>
@@ -40,6 +40,7 @@ export default Profile
 const ProfilePageBody = styled.div`
     display: flex;
     flex-direction: column;
+    background-color: #F0F0F0;
 `
 
 const TopContainer = styled.div`
@@ -79,7 +80,15 @@ const TopContainer = styled.div`
 `
 const TutorialsContainer = styled.div`
     flex: 0.3;
+
+    > h1 {
+        margin-left: 10px;
+    }
 `
 const HistoryContainer = styled.div`
     flex: 0.3;
+
+    > h1 {
+        margin-left: 10px;
+    }
 `
