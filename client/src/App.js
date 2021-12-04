@@ -2,8 +2,9 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Header, Footer } from './components';
+import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
+import { GlobalContext } from './utils/GlobalContext';
 
 
 
@@ -11,6 +12,7 @@ function App() {
   return (
     <div>
       <Header />
+      <Login />
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/browse" element={ <Browse /> } />
