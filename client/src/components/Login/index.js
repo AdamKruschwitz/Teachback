@@ -15,13 +15,16 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
+import { useGlobalContext } from '../../utils/GlobalContext';
+import { TOGGLE_LOGIN_DIALOG } from '../../utils/actions';
+
 const LoginDialogue = function() {
-    const [open, setOpen] = useState(true); // TODO - change to false by default
     const [curTab, setCurTab] = useState('login');
+    const [state, dispatch] = useGlobalContext();
 
 
     const handleOnClose = () => {
-        setOpen(false);
+        dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
 
     const handleTabChange = (e, value) => {
@@ -56,7 +59,7 @@ const LoginDialogue = function() {
 
     return (
         // Probably remove padding on the dialogue to allow tabs to extend to the end of the div
-        <Dialog open={ open } onClose={ handleOnClose }>
+        <Dialog open={ state.loginOpen } onClose={ handleOnClose }>
             <DialogTitle>
                 <Tabs value={ curTab } onChange={ handleTabChange }>
                     <Tab label="Log In" value="login" />
