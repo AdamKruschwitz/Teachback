@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
-import { auth, GoogleProvider } from "../../firebase";
+import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 const LoginDialogue = function() {
     const [open, setOpen] = useState(true); // TODO - change to false by default
@@ -44,7 +44,14 @@ const LoginDialogue = function() {
 
     const handleGithubLogin = (e) => {
         e.preventDefault();
-        // TODO: login with github
+        auth.signInWithPopup(GithubProvider).then((result) => {
+            const credential = result.credential;
+            const token = credential.accessToken;
+            console.log(result);
+            alert(result);
+            const user = result.user
+            // TODO: graphQL query sending auth token and credential? send whatever data is needed to log in to the server
+        }).catch((error) => alert(error.message));
     }
 
     return (
