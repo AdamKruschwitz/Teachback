@@ -1,8 +1,9 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'
-import { Header } from './components'
+
+import { Header, Footer, SearchBar, Login } from './components'
+
 
 
 function App() {
@@ -18,7 +19,12 @@ function App() {
         <Route path="/tutorial/create" />
         <Route path="*" />
       </Routes>
+    
+      <Login />
+      <SearchBar />
+      <Footer />
     </div>
+
   );
 }
 
