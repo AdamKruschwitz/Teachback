@@ -43,6 +43,7 @@ const CategoryContainer = styled.div`
     justify-content: center;
     align-items: center;
     margin: 10px;
+    background-color: #fff;
 `
 const LeftConatiner = styled.div`
     margin-left: 1%;
