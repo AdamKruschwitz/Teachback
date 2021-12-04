@@ -5,8 +5,9 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import TextField from '@mui/material/TextField';
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Button from '@mui/material/Button';
 
 
 
@@ -24,6 +25,14 @@ const LoginDialogue = function() {
         setCurTab(value);
     }
 
+    const handlePasswordLogin = (e, authContent) => {
+        // TODO
+    }
+
+    const handleCreatePasswordAccount = (e, registerContent) => {
+        // TODO
+    }
+
     return (
         // Probably remove padding on the dialogue to allow tabs to extend to the end of the div
         <Dialog open={ open } onClose={ handleOnClose }>
@@ -33,10 +42,27 @@ const LoginDialogue = function() {
                     <Tab label="Register" value="register" />
                 </Tabs>
                 <TabPanel value={ curTab } index="login">
-                    Login Time!
+                    <DialogContent>
+                        {/* Username field */}
+                        {/* Password field */}
+                        {/* Github OAuth button */}
+                        {/* Google OAuth button */}
+                    </DialogContent>
+                    {/* Submit button */}
+                    <DialogActions>
+                        <Button variant="text" label="Submit" onClick={ handlePasswordLogin }>Log In</Button>
+                    </DialogActions>
                 </TabPanel>
                 <TabPanel value={ curTab } index="register">
-                    Register Time!
+                    <DialogContent>
+                        {/* Username field */}
+                        {/* Email field */}
+                        {/* Password field */}
+                        {/* Password confirmation */}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="text" label="Submit" onClick={ handleCreatePasswordAccount }>Create Account</Button>
+                    </DialogActions>
                 </TabPanel>
             </DialogTitle>
         </Dialog>
