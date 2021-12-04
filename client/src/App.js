@@ -6,8 +6,6 @@ import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
 
-
-
 function App() {
   return (
     <div>
