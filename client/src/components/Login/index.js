@@ -44,7 +44,16 @@ const LoginDialogue = function() {
                 <TabPanel value={ curTab } index="login">
                     <DialogContent>
                         {/* Username field */}
+                        <TextField
+                            id="username"
+                            label="Username"
+                        />
                         {/* Password field */}
+                        <TextField
+                            id="password"
+                            label="Password"
+                            type="password"
+                        />
                         {/* Github OAuth button */}
                         {/* Google OAuth button */}
                     </DialogContent>
