@@ -16,7 +16,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
     const [curTab, setCurTab] = useState('login');
@@ -52,7 +52,13 @@ const LoginDialogue = function() {
             const token = credential.accessToken;
             console.log(result);
             alert(result);
-            const user = result.user
+            const user = {
+                username: result.additionalUserInfo.username,
+                email: result.user.email,
+                image: result.user.photoURL,
+                token: token
+            }
+            dispatch({ type: GITHUB_LOGIN, payload: user });
             // TODO: graphQL query sending auth token and credential? send whatever data is needed to log in to the server
         }).catch((error) => alert(error.message));
     }

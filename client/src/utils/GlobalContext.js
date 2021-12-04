@@ -6,6 +6,7 @@ const { Provider } = GlobalContext;
 
 const initialState = {
     loginOpen: false,
+    user: null,
 }
 
 export function GlobalProvider({ value = [], ...props }) {
