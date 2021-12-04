@@ -1,39 +1,14 @@
 // import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-<<<<<<< HEAD
-import TutorialInput from './components/TutorialInput';
-
-
-function App() {
-  return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <TutorialInput />
-=======
 import { Routes, Route } from 'react-router-dom';
 import { Header, Footer } from './components';
-import { Home, CreateTutorial, Browse, Profile, Room, Category } from './pages';
+import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 
 function App() {
   return (
     <div>
       <Header />
-      <Category />
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/browse" element={ <Browse /> } />
@@ -45,7 +20,6 @@ function App() {
       <Footer />
     </div>
 
->>>>>>> main
   );
 }
 
