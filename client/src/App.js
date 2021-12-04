@@ -1,10 +1,9 @@
 // import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import Search from './components/SearchBar/Search'
 
-import { Header } from './components'
-import Footer from './components/Footer/index'
+import { Header, Footer, SearchBar, Login } from './components'
+
 
 
 function App() {
@@ -12,7 +11,8 @@ function App() {
     
     <div>
     <Header />
-    <Search />
+    <Login />
+    <SearchBar />
     <Footer />
     </div>
 
