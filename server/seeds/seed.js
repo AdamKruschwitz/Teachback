@@ -136,10 +136,11 @@ db.once('open', async () => {
             user: users[0]._id,
             value: 5
         }
-    ])
+    ]);
+    console.log("Ratings seeded.")
 
     await Tutorial.deleteMany();
-    const tutorials = await Tutorial.insertMany([
+    await Tutorial.insertMany([
         {
             author: users[0]._id,
             tags: [ tags[6]._id ],
@@ -152,10 +153,6 @@ db.once('open', async () => {
         }
     ]);
     console.log("Tutorials seeded.");
-
-    
-    
-    console.log("Comments seeded.");
 
     process.exit();
 });
