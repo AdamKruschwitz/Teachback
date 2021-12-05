@@ -8,7 +8,7 @@ const tagSchema = new Schema({
         lowercase: true
     },
     frequency: {
-        type: INTEGER,
+        type: Number,
         default: 0
     }
 });
