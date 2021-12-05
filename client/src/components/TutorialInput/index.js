@@ -29,12 +29,9 @@ function TutorialInput({ className }) {
   };
 
   const handleNewStep = () => {
-    // TODO: function to for creating new step
-
     // save the body state to the current step and steps
     const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
     const stepsAfterCurrent = steps.slice(currentStepIndex+1)
-
     const newSteps = stepsBeforeCurrent.concat(body, stepsAfterCurrent)
     
     // add an empty string to the steps state
@@ -50,7 +47,13 @@ function TutorialInput({ className }) {
   };
 
   const handleSelectStep = (event, props) => {
-    // TODO: function to render clicked step 
+    // Saved the current step
+    const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
+    const stepsAfterCurrent = steps.slice(currentStepIndex+1)
+    const newSteps = stepsBeforeCurrent.concat(body, stepsAfterCurrent)
+
+    setSteps(newSteps)
+    setBody(steps[props.value])
   };
 
 
