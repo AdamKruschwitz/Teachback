@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const { Category, Comment, Step, Tag, Tutorial, User } = require('../models');
+const { Category, Comment, Step, Tag, Tutorial, User, Rating } = require('../models');
 
 db.once('open', async () => {
     await Category.deleteMany();
@@ -126,6 +126,18 @@ db.once('open', async () => {
     ]);
     console.log("Steps seeded.");
 
+    await Rating.deleteMany();
+    const ratings = await Tutorial.insertMany([
+        {
+            user: users[0]._id,
+            value: 5
+        },
+        {
+            user: users[0]._id,
+            value: 5
+        }
+    ])
+
     await Tutorial.deleteMany();
     const tutorials = await Tutorial.insertMany([
         {
@@ -134,7 +146,7 @@ db.once('open', async () => {
             category: categories[4]._id,
             // Creates a new array of all the step id's in order.
             steps: steps.map(step => step._id),
-            ratings: [],
+            ratings: ratings.map(rating => ratin._id),
             searchable: true,
             title: "How to use Teachback"
         }
