@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
 
+import { useGlobalContext } from '../../utils/GlobalContext';
+import { TOGGLE_LOGIN_DIALOG } from '../../utils/actions';
+
 const Header = function() {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [state, dispatch] = useGlobalContext();
     
     const handleLogIn = () => {
         // TODO: - implement with firebase
-        setLoggedIn(!loggedIn);
+        dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
 
-    if(!loggedIn) {
+    if(!state.user) {
         return (
             <div>
                 <HeaderContainer>
@@ -39,7 +42,7 @@ const Header = function() {
             </div>
         )
     }
-    else if(loggedIn) {
+    else {
         return (
             <div>
                 <HeaderContainer>
