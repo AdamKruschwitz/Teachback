@@ -8,15 +8,21 @@ export const reducer = (state, action) => {
                 ...state,
                 loginOpen: !state.loginOpen
             }
-            break;
+
         case GITHUB_LOGIN: 
             return {
                 ...state,
                 user: action.payload
             }
+
+        case GOOGLE_LOGIN:
+            return {
+                ...state,
+                user: action.payload
+            }
+        
         default: 
             return state;
-            break;
     }
 }
 
