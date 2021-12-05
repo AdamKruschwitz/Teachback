@@ -4,10 +4,34 @@ import { Button } from '@mui/material';
 
 function Room() {
     return (
-        <div>
+        <MainContainer>
+            <TopContainer>
+
+            </TopContainer>
+            <ButtonContainer>
+
+            </ButtonContainer>
+            <CommentsContainer>
+
+            </CommentsContainer>
             
-        </div>
+        </MainContainer>
     )
 }
 
 export default Room
+
+const MainContainer = styled.div`
+
+`
+
+const TopContainer = styled.div`
+
+`
+
+const ButtonContainer = styled.div`
+
+`
+const CommentsContainer = styled.div`
+
+`
