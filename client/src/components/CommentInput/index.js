@@ -41,7 +41,7 @@ export default function CommentInput() {
             onClick={() => {
                //TODO: implement comment submission
                
-                alert('clicked'), variant="contained";
+                // alert('clicked'), variant="contained";
             }}
             >
                 Submit </Button>
