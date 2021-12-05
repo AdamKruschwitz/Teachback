@@ -46,14 +46,14 @@ function TutorialInput({ className }) {
     console.log(newSteps)
   };
 
-  const handleSelectStep = (event, props) => {
+  const handleSelectStep = (index) => {
     // Saved the current step
     const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
     const stepsAfterCurrent = steps.slice(currentStepIndex+1)
     const newSteps = stepsBeforeCurrent.concat(body, stepsAfterCurrent)
 
     setSteps(newSteps)
-    setBody(steps[props.value])
+    setBody(steps[index])
   };
 
 
@@ -137,6 +137,9 @@ function TutorialInput({ className }) {
         <ButtonContainer>
             <StepsContainer>
                {/* TODO: Generate buttons for steps */}
+               {steps.map((_stepBody, stepIndex) => {
+                   return (<Button onClick={ () => handleSelectStep(stepIndex)} key={stepIndex}>{stepIndex+1}</Button>)
+               })}
                <Button onClick={handleNewStep}>+</Button>
             </StepsContainer>
             <ButtonRight>
