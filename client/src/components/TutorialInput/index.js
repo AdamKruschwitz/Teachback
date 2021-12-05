@@ -87,21 +87,24 @@ function TutorialInput({ className }) {
           multiline
           name="Input"
           value={body}
-          rows={30}
+          rows={40}
           onChange={handleChange}
           className={className}
         />
           </LeftContainer>
           <RightContainer>
-            <ReactMarkdown children={body} remarkPlugins={[remarkGFM]} />
+              <MarkdownContainer >
+                <ReactMarkdown children={body} remarkPlugins={[remarkGFM]} />
+             </MarkdownContainer>
+
           </RightContainer>
         </MiddleContainer>
 
         <ButtonContainer>
             <StepsContainer>
                <Button>1</Button>
-               <Button>1</Button>
-               <Button>1</Button>
+               <Button>2</Button>
+               <Button>3</Button>
                <Button>+</Button>
             </StepsContainer>
             <ButtonRight>
@@ -263,6 +266,9 @@ const ButtonRight = styled.div`
   }
 `
 
+const MarkdownContainer = styled.div`
+    margin-left: 10px;
+`
 
 
 
