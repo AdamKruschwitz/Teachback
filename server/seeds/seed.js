@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const { Category, Comment, Step, Tag, Tutorial } = require('../models');
+const { Category, Comment, Step, Tag, Tutorial, User } = require('../models');
 
 db.once('open', async () => {
     await Category.deleteMany();
@@ -51,10 +51,16 @@ db.once('open', async () => {
     ]);
     console.log("Tags seeded.");
 
-    await Comment.deleteMany();
-    const comments = await Comment.insertMany([
-        // TODO
+    await User.deleteMany();
+    const users = await User.insertMany([
+        {
+            username: "TeachbackBot",
+            token: "I_HAVE_NO_TOKEN_BUT_I_MUST_AUTH",
+            email: "teachback@teachback.us",
+            image: "I_HAVE_NO_URL_BUT_I_MUST_RENDER"
+        }
     ]);
+    console.log("Users seeded");
 
     await Step.deleteMany();
     const steps = await Tutorial.insertMany([
@@ -94,6 +100,7 @@ db.once('open', async () => {
     ]);
     console.log("Tutorials seeded.");
 
+    
     
     console.log("Comments seeded.");
 
