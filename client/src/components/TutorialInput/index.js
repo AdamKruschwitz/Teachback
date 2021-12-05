@@ -14,6 +14,9 @@ import {Input} from "@mui/material";
 function TutorialInput({ className }) {
   const [body, setBody] = useState("");
   const [submit, setSubmit] = useState(false);
+  const [steps, setSteps] = useState([""]);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
   // const [markdown, setMarkdown] = useState("");
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -27,11 +30,30 @@ function TutorialInput({ className }) {
 
   const handleNewStep = () => {
     // TODO: function to for creating new step
+
+    // save the body state to the current step and steps
+    const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
+    const stepsAfterCurrent = steps.slice(currentStepIndex+1)
+
+    const newSteps = stepsBeforeCurrent.concat(body, stepsAfterCurrent)
+    
+    // add an empty string to the steps state
+    newSteps.push("")
+    setSteps(newSteps)
+   
+    // then update currentstep 
+    setCurrentStepIndex(newSteps.length-1)
+
+    // set body to be equal to empty string
+    setBody("")
+    console.log(newSteps)
   };
 
   const handleSelectStep = (event, props) => {
     // TODO: function to render clicked step 
   };
+
+
 
 
   const toggleSubmit = (props) => {
@@ -112,7 +134,7 @@ function TutorialInput({ className }) {
         <ButtonContainer>
             <StepsContainer>
                {/* TODO: Generate buttons for steps */}
-               <Button>+</Button>
+               <Button onClick={handleNewStep}>+</Button>
             </StepsContainer>
             <ButtonRight>
                 <Button sx={{backgroundColor: "#94ECBE !important", color: "#2D2244 !important", border: "1px solid #2D2244 !important"}} variant="contained" onClick={toggleSubmit} children="Submit" 
