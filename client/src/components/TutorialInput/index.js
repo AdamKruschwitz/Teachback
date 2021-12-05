@@ -25,6 +25,15 @@ function TutorialInput({ className }) {
     }
   };
 
+  const handleNewStep = () => {
+    // TODO: function to for creating new step
+  };
+
+  const handleSelectStep = (event, props) => {
+    // TODO: function to render clicked step 
+  };
+
+
   const toggleSubmit = (props) => {
     setSubmit(!submit);
   };
@@ -102,9 +111,7 @@ function TutorialInput({ className }) {
 
         <ButtonContainer>
             <StepsContainer>
-               <Button>1</Button>
-               <Button>2</Button>
-               <Button>3</Button>
+               {/* TODO: Generate buttons for steps */}
                <Button>+</Button>
             </StepsContainer>
             <ButtonRight>
