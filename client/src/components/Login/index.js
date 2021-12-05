@@ -16,7 +16,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
     const [curTab, setCurTab] = useState('login');

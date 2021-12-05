@@ -16,5 +16,5 @@ export function GlobalProvider({ value = [], ...props }) {
   };
 
 export function useGlobalContext() {
-    return useContext(GlobalContext)
+    return useContext(GlobalContext);
 }
