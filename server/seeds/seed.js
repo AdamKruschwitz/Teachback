@@ -147,7 +147,7 @@ db.once('open', async () => {
             category: categories[4]._id,
             // Creates a new array of all the step id's in order.
             steps: steps.map(step => step._id),
-            ratings: ratings.map(rating => ratin._id),
+            ratings: ratings.map(rating => rating._id),
             searchable: true,
             title: "How to use Teachback"
         }
