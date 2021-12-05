@@ -45,6 +45,7 @@ const CategoryContainer = styled.div`
     align-items: center;
     margin: 10px;
     background-color: #fff;
+    height: 140px;
 `
 const LeftConatiner = styled.div`
     margin-left: 1%;
