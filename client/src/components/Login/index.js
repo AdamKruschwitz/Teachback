@@ -16,7 +16,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
     const [curTab, setCurTab] = useState('login');
@@ -42,7 +42,20 @@ const LoginDialogue = function() {
 
     const handleGoogleLogin = (e) => {
         e.preventDefault();
-        auth.signInWithPopup(GoogleProvider).catch((error) => alert(error.message));
+        auth.signInWithPopup(GoogleProvider)
+            .then((result) => {
+                const credential = result.credential;
+                const token = credential.accessToken;
+                const user = {
+                    username: result.additionalUserInfo.username,
+                    email: result.user.email,
+                    image: result.user.photoURL,
+                    toke: token
+                }
+                dispatch({type: GOOGLE_LOGIN, payload: user });
+                // TODO: graphql query sending user info.
+            })
+            .catch((error) => alert(error.message));
     }
 
     const handleGithubLogin = (e) => {
@@ -59,7 +72,7 @@ const LoginDialogue = function() {
                 token: token
             }
             dispatch({ type: GITHUB_LOGIN, payload: user });
-            // TODO: graphQL query sending auth token and credential? send whatever data is needed to log in to the server
+            // TODO: graphQL query sending user info.
         }).catch((error) => alert(error.message));
     }
 
