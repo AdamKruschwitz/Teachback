@@ -40,6 +40,7 @@ export default function CommentInput() {
             <Button 
             onClick={() => {
                //TODO: implement comment submission
+               
                 alert('clicked'), variant="contained";
             }}
             >
@@ -48,4 +49,5 @@ export default function CommentInput() {
         </Box>
     );
 }
+
 
