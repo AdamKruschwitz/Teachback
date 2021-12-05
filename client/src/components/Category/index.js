@@ -6,9 +6,10 @@ import { Button } from '@mui/material';
 
 function Category() {
     const handleRating = () => {
-
+        // TODO: functionality
     }
     const handleCreateRoom = () => {
+        // TODO: functionality
 
     }
     return (

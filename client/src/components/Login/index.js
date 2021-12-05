@@ -13,15 +13,18 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
-import { auth, GoogleProvider } from "../../firebase";
+import { auth, GithubProvider, GoogleProvider } from "../../firebase";
+
+import { useGlobalContext } from '../../utils/GlobalContext';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
-    const [open, setOpen] = useState(true); // TODO - change to false by default
     const [curTab, setCurTab] = useState('login');
+    const [state, dispatch] = useGlobalContext();
 
 
     const handleOnClose = () => {
-        setOpen(false);
+        dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
 
     const handleTabChange = (e, value) => {
@@ -39,17 +42,43 @@ const LoginDialogue = function() {
 
     const handleGoogleLogin = (e) => {
         e.preventDefault();
-        auth.signInWithPopup(GoogleProvider).catch((error) => alert(error.message));
+        auth.signInWithPopup(GoogleProvider)
+            .then((result) => {
+                const credential = result.credential;
+                const token = credential.accessToken;
+                const user = {
+                    username: result.additionalUserInfo.username,
+                    email: result.user.email,
+                    image: result.user.photoURL,
+                    toke: token
+                }
+                dispatch({type: GOOGLE_LOGIN, payload: user });
+                // TODO: graphql query sending user info.
+            })
+            .catch((error) => alert(error.message));
     }
 
     const handleGithubLogin = (e) => {
         e.preventDefault();
-        // TODO: login with github
+        auth.signInWithPopup(GithubProvider).then((result) => {
+            const credential = result.credential;
+            const token = credential.accessToken;
+            console.log(result);
+            alert(result);
+            const user = {
+                username: result.additionalUserInfo.username,
+                email: result.user.email,
+                image: result.user.photoURL,
+                token: token
+            }
+            dispatch({ type: GITHUB_LOGIN, payload: user });
+            // TODO: graphQL query sending user info.
+        }).catch((error) => alert(error.message));
     }
 
     return (
         // Probably remove padding on the dialogue to allow tabs to extend to the end of the div
-        <Dialog open={ open } onClose={ handleOnClose }>
+        <Dialog open={ state.loginOpen } onClose={ handleOnClose }>
             <DialogTitle>
                 <Tabs value={ curTab } onChange={ handleTabChange }>
                     <Tab label="Log In" value="login" />

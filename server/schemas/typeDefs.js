@@ -25,14 +25,15 @@ const typeDefs = gql`
         username: String!
         email: String!
         password: String!
+        token: String!
     }
 
     type User {
-        _id: ID!
         username: String!
         email: String!
         password: String!
         image: String!
+        token: String!
     }
 
     type Tutorial {
@@ -87,7 +88,7 @@ const typeDefs = gql`
     }
 
     type Query {
-        user: User 
+        user(token: String!): User 
         categories: [Category]
         tutorials(input: SearchInput): [Tutorial]
         tutorial(_id: ID!): Tutorial
@@ -96,7 +97,6 @@ const typeDefs = gql`
 
     type Mutation {
         addUser(input: UserInput): Auth
-        login(input: LoginInput!): Auth
         createTutorial(input: TutorialInput!): Tutorial
         updateTutorial(input: TutorialInput!): Tutorial
         addComment(stepId: ID!, content: String!): Step
