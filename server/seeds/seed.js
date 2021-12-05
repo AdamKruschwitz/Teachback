@@ -58,21 +58,53 @@ db.once('open', async () => {
             token: "I_HAVE_NO_TOKEN_BUT_I_MUST_AUTH",
             email: "teachback@teachback.us",
             image: "I_HAVE_NO_URL_BUT_I_MUST_RENDER"
+        },
+        {
+            username: "NotARealUser",
+            token: "NO_THANKS_I_DONT_SMOKE",
+            email: "notreal@teachback.us",
+            image: "IN_ALL_THE_PEOPLE"
         }
     ]);
-    console.log("Users seeded");
+    console.log("Users seeded.");
+
+    const comments = await Comment.insertMany([
+        {
+            author: users[1]._id,
+            content: "Will a gmail account be ok?"
+        },
+        {
+            author: users[0]._id,
+            content: "Google makes a google account for you automatically with your gmail account, so you won't need to make any additional accounts."
+        },
+        {
+            author: users[1]._id,
+            content: "I forgot my password, how can I change it?"
+        },
+        {
+            author: users[0]._id,
+            content: "Hmm, I'm not sure yet, but I'll get back to you as soon as I can!"
+        }
+    ]);
+    console.log("Comments seeded.")
 
     await Step.deleteMany();
     const steps = await Tutorial.insertMany([
         {
             content: `# Logging into Teachback
-            First, you'll need either an email, a github account, or a Google account. Make sure you have access to one of these three accounts.`
+            First, you'll need either an email, a github account, or a Google account. Make sure you have access to one of these three accounts.`,
+            comments: [
+                comments[0]._id, comments[1]._id
+            ]
         },
         {
             content: `# Logging in with an Email
             * If logging in with an email, click the **Log In** button in the top right of the screen, then fill out your username and password and click **log in** to log in. 
             * If you haven't yet created an account, click the **Register** tab on the window that pops up, then fill out the information and click **submit**.
-            In either case, after a moment, you should be logged into Teachback.`
+            In either case, after a moment, you should be logged into Teachback.`,
+            comments: [
+                comments[2]._id, comments[3]._id
+            ]
         },
         {
             content: `# Logging in with Google
@@ -96,7 +128,16 @@ db.once('open', async () => {
 
     await Tutorial.deleteMany();
     const tutorials = await Tutorial.insertMany([
-        // TODO
+        {
+            author: users[0]._id,
+            tags: [ tags[6]._id ],
+            category: categories[4]._id,
+            // Creates a new array of all the step id's in order.
+            steps: steps.map(step => step._id),
+            ratings: [],
+            searchable: true,
+            title: "How to use Teachback"
+        }
     ]);
     console.log("Tutorials seeded.");
 
