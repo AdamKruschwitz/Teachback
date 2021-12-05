@@ -13,7 +13,6 @@ import {Input} from "@mui/material";
 
 function TutorialInput({ className }) {
   const [body, setBody] = useState("");
-  const [preview, setPreview] = useState(false);
   const [submit, setSubmit] = useState(false);
   // const [markdown, setMarkdown] = useState("");
   const handleChange = (event) => {
@@ -24,9 +23,6 @@ function TutorialInput({ className }) {
       console.log(body);
       // setMarkdown(generateMarkdown(value))
     }
-  };
-  const togglePreview = (event) => {
-    setPreview(!preview);
   };
 
   const toggleSubmit = (props) => {
@@ -40,15 +36,6 @@ function TutorialInput({ className }) {
     setCategory(event.target.value);
   };
 
-
-  if (preview)
-    return (
-      <div>
-        <Button onClick={togglePreview} children="Preview" />
-        <ReactMarkdown remarkPlugins={[remarkGFM]}>{body}</ReactMarkdown>
-      </div>
-    );
-
   return (
     <MainContainer>
 
@@ -61,7 +48,7 @@ function TutorialInput({ className }) {
         <CategoryContainer>
         <Box sx={{ width: 300 }}>
           <FormControl sx={{ width: 300, backgroundColor: "white", color: "#94ECBE" }}>
-            <InputLabel sx={{ color: "#94ECBE" }} id="demo-simple-select-label">Category</InputLabel>
+            <InputLabel sx={{ color: "black" }} id="demo-simple-select-label">Category</InputLabel>
                 <Select
                 fullWidth
                 labelId="demo-simple-select-label"
@@ -106,16 +93,8 @@ function TutorialInput({ className }) {
         />
           </LeftContainer>
           <RightContainer>
-        <TextField
-            sx= {{fontSize: "20px"}}
-          multiline
-          name="Input"
-          value={body}
-          rows={30}
-          onChange={handleChange}
-          className={className}
-        />
-        </RightContainer>
+            <ReactMarkdown children={body} remarkPlugins={[remarkGFM]} />
+          </RightContainer>
         </MiddleContainer>
 
         <ButtonContainer>
@@ -126,11 +105,6 @@ function TutorialInput({ className }) {
                <Button>+</Button>
             </StepsContainer>
             <ButtonRight>
-                <Button
-                variant="contained"
-                onClick={togglePreview}
-                children="Preview"
-                />
                 <Button sx={{backgroundColor: "#94ECBE !important", color: "#2D2244 !important", border: "1px solid #2D2244 !important"}} variant="contained" onClick={toggleSubmit} children="Submit" 
                 />
             </ButtonRight>
@@ -231,6 +205,12 @@ const RightContainer = styled.div`
     display: flex;
     flex: 0.5;
     margin: 10px;
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+
+    :hover {
+        border-color: #111;
+    }
 
 `
 
