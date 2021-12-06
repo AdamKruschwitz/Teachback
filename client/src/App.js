@@ -5,10 +5,19 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
+
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
+
     <div>
+      <ApolloProvider client={client}>
       <GlobalProvider>
         <Header />
         <Login />
@@ -23,6 +32,7 @@ function App() {
         </Routes>
         <Footer />
       </GlobalProvider>
+      </ApolloProvider>
     </div>
 
   );

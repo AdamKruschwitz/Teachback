@@ -175,7 +175,6 @@ function TutorialInput({ className }) {
 
         <ButtonContainer>
             <StepsContainer>
-               {/* TODO: Generate buttons for steps */}
                {steps.map((_stepBody, stepIndex) => {
                    return (<Button onClick={ () => handleSelectStep(stepIndex)} key={stepIndex}>{stepIndex+1}</Button>)
                })}
