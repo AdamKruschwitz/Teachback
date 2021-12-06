@@ -4,6 +4,9 @@ import { Button, TextField } from '@mui/material';
 import remarkGFM from 'remark-gfm';
 import ReactMarkdown from 'react-markdown'
 
+import { useQuery } from '@apollo/client';
+import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' 
+
 function Room() {
     const handleNextStep= () => {
         //TODO: functinality missing

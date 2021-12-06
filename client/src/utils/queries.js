@@ -15,3 +15,29 @@ export const GET_CURRENT_STEP = gql`
     }
 `
 
+export const GET_ROOM = gql`
+    query GET_ROOM($id: ID!) {
+        room(_id: $id) {
+            currentStep {
+                content
+                comments {
+                    content
+                    author {
+                        username
+                    }
+                }
+            }
+            tutorial {
+                title
+                author {
+                    username
+                }
+                categories
+                tags
+            }
+            owner {
+                username
+            }
+        }
+    }
+`
