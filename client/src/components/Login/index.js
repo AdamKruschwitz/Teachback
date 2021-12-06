@@ -29,9 +29,6 @@ const LoginDialogue = function() {
     const history = useHistory()
 
 
-
-
-
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
 
@@ -63,26 +60,24 @@ const LoginDialogue = function() {
         // })
     }
 
-    const handleCreatePasswordAccount = e => {
-        // TODO:
-        console.log(emailRef)
-        console.log(passwordRef)
-
-        e.preventDefault();
-        auth.createUserWithEmailAndPassword(
-            // usernameRef.current.value,
-            emailRef.current.ref,
-            passwordRef.current.ref
-            // passwordConfirmRef.current.value
-            
-
-
-        ).then(user => {
-            console.log(user)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+    async function handleCreatePasswordAccount(e) {
+        e.preventDefault()
+    
+        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+          return setError("Passwords do not match")
+        }
+    
+        try {
+          setError("")
+          setLoading(true)
+          await signup(emailRef.current.value, passwordRef.current.value)
+          history.push("/")
+        } catch {
+          setError("Failed to create an account")
+        }
+    
+        setLoading(false)
+      }
     
     const handleGoogleLogin = (e) => {
         e.preventDefault();
