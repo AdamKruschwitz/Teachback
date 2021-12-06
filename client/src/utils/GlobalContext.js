@@ -15,8 +15,8 @@ export function GlobalProvider({ value = [], ...props }) {
     const [state, dispatch] = useGlobalReducer(initialState);
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(result => {
-            console.log(result)
-            const token = result.refreshToken;
+            if (result != null) {
+                const token = result.refreshToken;
               const user = {
                   username: result.email,
                   email: result.email,
@@ -24,6 +24,7 @@ export function GlobalProvider({ value = [], ...props }) {
                   toke: token
               }
               dispatch({type: PASSWORD_LOGIN, payload: user });
+            }
         })
     
         return unsubscribe

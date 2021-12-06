@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
-import 
+import { auth } from '../../firebase'
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, USER_LOGOUT } from '../../utils/actions';
 
 const Header = function() {
     const [state, dispatch] = useGlobalContext();
@@ -16,7 +16,9 @@ const Header = function() {
     }
 
     const handleSignOut = () => {
-
+        auth.signOut().then(function() {
+            dispatch({type: USER_LOGOUT, payload: null})
+        })
     }
 
     if(!state.user) {
