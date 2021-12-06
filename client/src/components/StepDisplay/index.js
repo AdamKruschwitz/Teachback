@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
+import remarkGFM from 'remark-gfm';
+import ReactMarkdown from 'react-markdown'
 
 export default function StepDisplay({ content }) {
     return (
         <TopContainer>
             <h1>Step 1</h1>
             <MarkdownContainer>
-                <ReactMarkdown children={step.content} remarkPlugins={[remarkGFM]} />
+                <ReactMarkdown children={content} remarkPlugins={[remarkGFM]} />
             </MarkdownContainer>
         </TopContainer>
     )

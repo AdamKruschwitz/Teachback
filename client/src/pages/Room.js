@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, TextField } from '@mui/material';
-import remarkGFM from 'remark-gfm';
-import ReactMarkdown from 'react-markdown'
 
 import { StepDisplay } from '../components'
 
