@@ -13,7 +13,11 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
-import { auth, GithubProvider, GoogleProvider } from "../../firebase";
+import { auth, GithubProvider, GoogleProvider, EmailPasswordProvider } from "../../firebase";
+
+
+
+
 
 import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
@@ -33,11 +37,20 @@ const LoginDialogue = function() {
     }
 
     const handlePasswordLogin = (e, authContent) => {
-        // TODO
+        // TODO: 
+        e.preventDefault();
+        auth.signInWithPopup(EmailPasswordProvider)
+        .then((result) => {
+            const credential = result.credential;
+            const token = credential.accessToken;
+            const user = {
+                username: result.credential;
+            }
+        })
     }
 
     const handleCreatePasswordAccount = (e, registerContent) => {
-        // TODO
+        // TODO:
     }
 
     const handleGoogleLogin = (e) => {
