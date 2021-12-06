@@ -1,8 +1,4 @@
-const jwt = require('jsonwebtoken');
-
-// set token secret and expiration date
-const secret = 'mysecretsshhhhh';
-const expiration = '2h';
+const { getAuth } = require( 'firebase-admin');
 
 module.exports = {
   // function for our authenticated routes
@@ -12,7 +8,9 @@ module.exports = {
 
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
+      // Should this be this way?
       token = token.split(' ').pop().trim();
+      console.log(token);
     }
 
     if (!token) {
@@ -21,8 +19,11 @@ module.exports = {
 
     // verify token and get user data out of it
     try {
-      const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      req.user = data;
+      getAuth()
+      .verifyIdToken( token )
+      .then((decodedToken) => {
+        console.log(decodedToken);
+      })
     } catch {
       console.log('Invalid token');
       return res.status(400).json({ message: 'invalid token!' });
