@@ -17,7 +17,8 @@ const resolvers = {
             return Tutorial.findOne({ _id: tagId })
         },
         room: async (_, { id }) => {
-            return Tag.findOne({ _id: tagId })
+            // TODO - fix this. this does not return a room.
+            return Tag.findOne({ _id: id })
         },
     },
     Mutation: {
@@ -31,9 +32,11 @@ const resolvers = {
             }
         },
         createTutorial: async (_, { TutorialInput }) => {
+            // TODO - fix this. I'm surprised this compiles.
             const createTutorial = await User.createTutorial({ _id, });
         },
         addComment: async (_, { stepId, content }) => {
+            // TODO - fix this, this code does not add a comment
             if (user) {
                 return Comment.findOneAndUpdate(
                     { _id: ID, author },
@@ -52,6 +55,7 @@ const resolvers = {
         },
         deleteComment: async (_, { commentId }, context) => {
             if (context.user) {
+                // TODO: Fix this, this does not delete a comment.
                 return Comment.findOneAndDelete(
                     { _id: commentId },
                     {
@@ -68,11 +72,13 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in first');
         },
         addRating: async (_, { ratingId }, context) => {
+            // TODO: Fix this, this does not add a rating
             if (context.user) {
                 return Rating.findOne({ _id });
             }
         },
         deleteRating: async (_, { ratingId }, context) => {
+            // Fix this, this does not delete a rating
             if (context.user) {
                 return Rating.findOneAndUpdate(
                     { _id: userId },
