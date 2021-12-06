@@ -1,5 +1,4 @@
 import firebase from 'firebase'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxPxBpweKr3vXl4wsc0EN6MFhnQjJRO1Y",
@@ -15,8 +14,6 @@ const firebaseConfig = {
   const auth = firebase.auth();
   const GoogleProvider = new firebase.auth.GoogleAuthProvider();
   const GithubProvider = new firebase.auth.GithubAuthProvider();
-  const CreateEmailPasswordProvider = new firebase.auth.createUserWithEmailAndPassword()
-  const SignInEmailPasswordProvider = new firebase.auth.signInWithEmailAndPassword()
 
 
-  export { auth, GoogleProvider, GithubProvider, db, CreateEmailPasswordProvider, SignInEmailPasswordProvider };
+  export { auth, GoogleProvider, GithubProvider, db };

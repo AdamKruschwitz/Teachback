@@ -13,15 +13,17 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
-import { auth, GithubProvider, GoogleProvider, CreateEmailPasswordProvider, SignInEmailPasswordProvider } from "../../firebase";
+import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
-    const usernameRef = useRef(null);
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    // const usernameRef = useRef(null);
+    const passwordConfirmRef = useRef();
+
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
 
@@ -37,21 +39,43 @@ const LoginDialogue = function() {
 
     const handlePasswordLogin = (e, authContent) => {
         // TODO
+        // e.preventDefault();
+        // SignInEmailPasswordProvider
+        // .then((result) => {
+        //     const credential = result.credential;
+        //     const token = credential.accessToken;
+        //     const user = {
+        //         username: result.additionalUserInfo.username,
+        //         email: result.user.email,
+        //         image: result.user.photoURL,
+        //         toke: token
+        //     }
+        //     dispatch({ type: PASSWORD_LOGIN, payload: user })
+        //     // TODO: graphql query sending user info.
+        // })
     }
 
     const handleCreatePasswordAccount = e => {
         // TODO:
+        console.log(emailRef)
+        console.log(passwordRef)
+
         e.preventDefault();
         auth.createUserWithEmailAndPassword(
-            usernameRef.current.value,
-            emailRef.current.value,
-            passwordRef.current.value
+            // usernameRef.current.value,
+            emailRef.current.ref,
+            passwordRef.current.ref
+            // passwordConfirmRef.current.value
+            
+
+
         ).then(user => {
             console.log(user)
         }).catch(err => {
             console.log(err)
         })
     }
+    
     const handleGoogleLogin = (e) => {
         e.preventDefault();
         auth.signInWithPopup(GoogleProvider)
@@ -124,27 +148,31 @@ const LoginDialogue = function() {
                 </TabPanel>
                 <TabPanel value={ curTab } index="register">
                     <DialogContent>
-                        <TextField sx={{margin: '10px'}}
+                        {/* <TextField sx={{margin: '10px'}}
+                            ref={usernameRef}
                             id="username"
                             label="Username"
-                        />
+                        /> */}
                         <br />
                         <TextField sx={{margin: '10px'}}
+                            ref={emailRef}
                             id="email"
                             label="Email"
                         />
                         <br />
                         <TextField sx={{margin: '10px'}}
+                            ref={passwordRef}
                             id="password"
                             label="Password"
                             type="password"
                         />
                         < br/>
-                        <TextField sx={{margin: '10px'}}
+                        {/* <TextField sx={{margin: '10px'}}
+                            ref={passwordConfirmRef}
                             id="passwordConfirm"
                             label="Confirm Password"
                             type="password"
-                        />
+                        /> */}
                         <br />
                     </DialogContent>
                     <DialogActions>
