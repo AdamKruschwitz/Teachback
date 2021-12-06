@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Dialog from '@mui/material/Dialog';
@@ -13,19 +13,12 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
-import { auth, GithubProvider, GoogleProvider, CreateEmailPasswordProvider, SignInEmailPasswordProvider } from "../../firebase";
-
-
-
-
+import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
-    const usernameRef = useRef(null);
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
 
@@ -40,36 +33,11 @@ const LoginDialogue = function() {
     }
 
     const handlePasswordLogin = (e, authContent) => {
-        // TODO: 
-    
-        // e.preventDefault();
-        // SignInEmailPasswordProvider
-        // .then((result) => {
-        //     const credential = result.credential;
-        //     const token = credential.accessToken;
-        //     const user = {
-        //         username: result.additionalUserInfo.username,
-        //         email: result.user.email,
-        //         image: result.user.photoURL,
-        //         toke: token
-        //     }
-        //     dispatch({ type: PASSWORD_LOGIN, payload: user })
-        //     // TODO: graphql query sending user info.
-        // })
+        // TODO
     }
 
-    const handleCreatePasswordAccount = e => {
-        // TODO:
-        e.preventDefault();
-        auth.createUserWithEmailAndPassword(
-            usernameRef.current.value,
-            emailRef.current.value,
-            passwordRef.current.value
-        ).then(user => {
-            console.log(user)
-        }).catch(err => {
-            console.log(err)
-        })
+    const handleCreatePasswordAccount = (e, registerContent) => {
+        // TODO
     }
 
     const handleGoogleLogin = (e) => {
@@ -118,25 +86,23 @@ const LoginDialogue = function() {
                 </Tabs>
                 <TabPanel value={ curTab } index="login">
                     <DialogContent>
-                        <TextField sx={{margin: '10px'}}
-                            ref={emailRef}
+                        <TextField
                             id="username"
                             label="Username"
                         />
                         <br />
-                        <TextField sx={{margin: '10px'}}
-                            ref={passwordRef}
+                        <TextField
                             id="password"
                             label="Password"
                             type="password"
                         />
                         <br />
                         {/* Github OAuth button */}
-                        <Button sx={{margin: '10px'}} id="github-auth" variant="contained" onClick={ handleGithubLogin }>
+                        <Button id="github-auth" variant="contained" onClick={ handleGithubLogin }>
                             <GitHubIcon />
                         </Button>
                         {/* Google OAuth button */}
-                        <Button sx={{margin: '10px'}} id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
+                        <Button id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
                             <GoogleIcon />
                         </Button>
                     </DialogContent>
@@ -146,27 +112,23 @@ const LoginDialogue = function() {
                 </TabPanel>
                 <TabPanel value={ curTab } index="register">
                     <DialogContent>
-                        <TextField sx={{margin: '10px'}}
-                            ref={usernameRef}
+                        <TextField
                             id="username"
                             label="Username"
                         />
                         <br />
-                        <TextField sx={{margin: '10px'}}
-                            ref={emailRef}
+                        <TextField
                             id="email"
                             label="Email"
                         />
                         <br />
-                        <TextField sx={{margin: '10px'}}
-                            ref={passwordRef}
+                        <TextField
                             id="password"
                             label="Password"
                             type="password"
                         />
                         < br/>
-                        <TextField sx={{margin: '10px'}}
-                            ref={passwordRef}
+                        <TextField
                             id="passwordConfirm"
                             label="Confirm Password"
                             type="password"
