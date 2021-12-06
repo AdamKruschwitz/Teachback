@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import remarkGFM from "remark-gfm";
-import  { Redirect } from 'react-router-dom'
+// import  { Redirect } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -88,7 +88,7 @@ function TutorialInput({ className }) {
         });
   
         // TODO: redirect to profile page
-        <Redirect to='/Profile'  />
+        // <Redirect to='/Profile'  />
 
       } catch (err) {
         console.error(err);
