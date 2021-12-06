@@ -52,9 +52,12 @@ function TutorialInput({ className }) {
     const stepsAfterCurrent = steps.slice(currentStepIndex+1)
     const newSteps = stepsBeforeCurrent.concat(body, stepsAfterCurrent)
 
+    setCurrentStepIndex(index)
     setSteps(newSteps)
     setBody(steps[index])
   };
+
+  
 
 
 
