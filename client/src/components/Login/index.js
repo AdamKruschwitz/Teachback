@@ -16,6 +16,7 @@ import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
+import AuthService from '../../utils/auth'
 
 const LoginDialogue = function() {
 
@@ -39,6 +40,19 @@ const LoginDialogue = function() {
         setCurTab(value);
     }
 
+    const loginFromfirebaseResponse = async (result) => {
+        const token = result.user.refreshToken;
+            const user = {
+                username: result.user.displayName,
+                email: result.user.email,
+                image: result.user.photoURL,
+                token: token
+            }
+            AuthService.login(token)
+            dispatch({type: PASSWORD_LOGIN, payload: user });
+            dispatch({ type: TOGGLE_LOGIN_DIALOG });
+    }
+
     async function handlePasswordLogin(e) {
         e.preventDefault();
        
@@ -54,19 +68,10 @@ const LoginDialogue = function() {
         try {
    
               const result = await auth.signInWithEmailAndPassword(loginEmailValue, loginPasswordValue)
-              const token = result.user.refreshToken;
-              const user = {
-                  username: result.user.email,
-                  email: result.user.email,
-                  image: '',
-                  toke: token
-              }
-              dispatch({type: PASSWORD_LOGIN, payload: user });
-              dispatch({ type: TOGGLE_LOGIN_DIALOG });
+              loginFromfirebaseResponse(result)
         } catch {
           alert("Failed to sign in")
         }
-    
     }
 
     const handleCreatePasswordAccount = async (e) => {
@@ -87,16 +92,7 @@ const LoginDialogue = function() {
           console.log(res)
           if (res.user != undefined) {
               const result = await auth.signInWithEmailAndPassword(emailValue, passwordValue)
-
-              const token = result.user.refreshToken;
-              const user = {
-                  username: result.user.email,
-                  email: result.user.email,
-                  image: '',
-                  toke: token
-              }
-              dispatch({type: PASSWORD_LOGIN, payload: user });
-              dispatch({ type: TOGGLE_LOGIN_DIALOG });
+              loginFromfirebaseResponse(result)
           }
         } catch {
           alert("Failed to create an account")
@@ -107,37 +103,15 @@ const LoginDialogue = function() {
     const handleGoogleLogin = (e) => {
         e.preventDefault();
         auth.signInWithPopup(GoogleProvider)
-            .then((result) => {
-                const credential = result.credential;
-                const token = credential.accessToken;
-                const user = {
-                    username: result.additionalUserInfo.username,
-                    email: result.user.email,
-                    image: result.user.photoURL,
-                    token: token
-                }
-                dispatch({type: GOOGLE_LOGIN, payload: user });
-                // TODO: graphql query sending user info.
-            })
+            .then(loginFromfirebaseResponse)
             .catch((error) => alert(error.message));
     }
 
     const handleGithubLogin = (e) => {
         e.preventDefault();
-        auth.signInWithPopup(GithubProvider).then((result) => {
-            const credential = result.credential;
-            const token = credential.accessToken;
-            console.log(result);
-            alert(result);
-            const user = {
-                username: result.additionalUserInfo.username,
-                email: result.user.email,
-                image: result.user.photoURL,
-                token: token
-            }
-            dispatch({ type: GITHUB_LOGIN, payload: user });
-            // TODO: graphQL query sending user info.
-        }).catch((error) => alert(error.message));
+        auth.signInWithPopup(GithubProvider)
+        .then(loginFromfirebaseResponse)
+        .catch((error) => alert(error.message));
     }
 
     return (

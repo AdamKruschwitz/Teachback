@@ -5,13 +5,19 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
-import links from './utils/auth';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import AuthService from './utils/auth';
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 function App() {
 
+  const terminatingLink = new HttpLink({
+    headers: {
+        refreshToken: AuthService.getToken()
+    }
+  });
+
   const client = new ApolloClient({
-    links: links,
+    links: terminatingLink,
     cache: new InMemoryCache()
   });
 
