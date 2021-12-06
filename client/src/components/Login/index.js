@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import Dialog from '@mui/material/Dialog';
@@ -19,6 +19,9 @@ import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const usernameRef = useRef(null);
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
 
@@ -36,10 +39,19 @@ const LoginDialogue = function() {
         // TODO
     }
 
-    const handleCreatePasswordAccount = (e, registerContent) => {
-        // TODO
+    const handleCreatePasswordAccount = e => {
+        // TODO:
+        e.preventDefault();
+        auth.createUserWithEmailAndPassword(
+            usernameRef.current.value,
+            emailRef.current.value,
+            passwordRef.current.value
+        ).then(user => {
+            console.log(user)
+        }).catch(err => {
+            console.log(err)
+        })
     }
-
     const handleGoogleLogin = (e) => {
         e.preventDefault();
         auth.signInWithPopup(GoogleProvider)
