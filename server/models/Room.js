@@ -12,9 +12,9 @@ const roomSchema = new Schema({
         ref: 'Tutorial'
     },
     currentStep: {
-        type: Schema.Types.ObjectId,
+        type: Number,
         required: true,
-        ref: 'Step'
+        default: 0
     }
 });
 
