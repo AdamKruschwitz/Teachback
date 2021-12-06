@@ -19,7 +19,7 @@ function Category() {
     }
 
     // Redirect the user to a room if their newRoom has been created
-    if(newRoomData) return (<Redirect to={`/room/${newRoomData._id}`} />);
+    if(newRoomData) window.location.pathname = `/room/${ newRoomData._id }`;
     
     return (
         <CategoryContainer>
