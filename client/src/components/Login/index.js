@@ -114,7 +114,7 @@ const LoginDialogue = function() {
                     username: result.additionalUserInfo.username,
                     email: result.user.email,
                     image: result.user.photoURL,
-                    toke: token
+                    token: token
                 }
                 dispatch({type: GOOGLE_LOGIN, payload: user });
                 // TODO: graphql query sending user info.

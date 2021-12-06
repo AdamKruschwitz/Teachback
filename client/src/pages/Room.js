@@ -23,10 +23,12 @@ function Room() {
     const {data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
     const {data: stepData, loading: stepLoading } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
     
+    // After render, check the state of initial room load and check for updated step data.
     useEffect( () => {
         if(roomData) {
             setRoom(roomData);
         }
+        
     })
 
     return (
