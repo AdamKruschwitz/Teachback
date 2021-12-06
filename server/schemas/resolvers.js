@@ -15,30 +15,70 @@ const resolvers = {
         },
         tutorials: async (_, { title, tagIDs, categoryIDs }) => {
             const args = title ? { title } : {};
-            return Tutorial.find(args)
+            return Tutorial.find(args).populate(
+                [{
+                    path: 'steps',
+                    populate: {
+                        path: 'comments',
+                        populate: {
+                            path: 'author'
+                        }
+                    }
+                },
+                {
+                    path: 'author'
+                },
+                {
+                    path: 'tags'
+                },
+                {
+                    path: 'ratings'
+                }]
+            );
         },
         tutorial: async (_, { id }) => {
             return Tutorial.findOne({ _id: tagId })
         },
-        room: async (_, { id }) => {
-            const dbRoom = await Room.findById(id).populate('owner');
+        room: async (_, { _id }) => {
             // Mongoose Deep Population
             // https://mongoosejs.com/docs/populate.html#deep-populate
-            dbRoom = await dbRoom.populate({
+            const dbRoom = await Room.findById(_id)
+            .populate('owner')
+            .populate({
                 path: 'tutorial',
-                populate: {
-                    path: 'steps'
-                }
+                populate: [{
+                    path: 'steps',
+                    populate: {
+                        path: 'comments',
+                        populate: {
+                            path: 'author'
+                        }
+                    }
+                },
+                {
+                    path: 'author'
+                },
+                {
+                    path: 'tags'
+                },
+                {
+                    path: 'category'
+                }]
             });
+
+            console.log(dbRoom);
 
             // Get the current step as a step object
             const gqlCurrentStep = dbRoom.tutorial.steps[dbRoom.currentStep];
 
             // Return the room replacing the integer with the object.
-            return {
-                ...dbRoom,
+            const out = {
+                tutorial: dbRoom.tutorial,
+                owner: dbRoom.owner,
                 currentStep: gqlCurrentStep
             }
+            // console.log(out);
+            return out
             
         },
     },
@@ -122,12 +162,17 @@ const resolvers = {
                 token: token
             });
 
-            const tutorial = await Tutorial.findById(tutorialId).populate({
+            const tutorial = await Tutorial.findById(tutorialId)
+            .populate({
                 path: 'steps',
-                populate: { path: 'comments' }
+                populate: { 
+                    path: 'comments',
+                    populate: { path: 'author' }
+                }
             }).populate({
                 path: 'author'
             });
+            console.log(tutorial);
 
             const dbRoom = new Room({
                 owner: user._id,
@@ -137,12 +182,12 @@ const resolvers = {
 
             return {
                 ...dbRoom,
-                _id: dbRoom.id.toString(),
+                _id: dbRoom._id,
                 owner: user,
                 tutorial: tutorial
             }
         }
-    },
+    }
 }
 
 module.exports = resolvers;
