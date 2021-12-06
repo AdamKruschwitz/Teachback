@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
+import 
 
 import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG } from '../../utils/actions';
@@ -12,6 +13,10 @@ const Header = function() {
     const handleLogIn = () => {
         // TODO: - implement with firebase
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
+    }
+
+    const handleSignOut = () => {
+
     }
 
     if(!state.user) {
@@ -66,6 +71,9 @@ const Header = function() {
                             <UnstyledLink to="tutorial/create">
                                 <RightButton variant="contained" onClick={handleLogIn}>Create Tutorial</RightButton>
                             </UnstyledLink>   
+                        </ButtonContainer>
+                        <ButtonContainer>
+                                <LeftButton variant="outlined" onClick={handleSignOut}>Sign Out</LeftButton>
                         </ButtonContainer>
                     </HeaderRight>
                 </HeaderContainer>
