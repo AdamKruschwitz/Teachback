@@ -4,7 +4,7 @@ import { Button, TextField } from '@mui/material';
 import remarkGFM from 'remark-gfm';
 import ReactMarkdown from 'react-markdown'
 
-import { useQuery } from '@apollo/client';
+import { useQuery, useParams } from '@apollo/client';
 import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' 
 
 function Room() {
@@ -16,8 +16,22 @@ function Room() {
     }
 
     const body = useState('')
+    const [loadPage, {data: roomData, loading: roomLoading, error: roomError }] = useQuery(GET_ROOM);
+    const [updateStep, {data: stepData, loading: stepLoading, error:stepError }] = useQuery(GET_CURRENT_STEP);
+    const { id } = useParams();
 
-    // TODO: useEffect
+    if(!loadPage && !roomData) {
+        loadPage({id: id});
+        return "loading..."
+    }
+
+    else if(loadPage) {
+        return "loading..."
+    }
+
+    else if(roomError) {
+        return "There was an error :("
+    }
 
     return (
         <MainContainer>
