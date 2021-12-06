@@ -109,9 +109,8 @@ const LoginDialogue = function() {
                   toke: token
               }
               dispatch({type: PASSWORD_LOGIN, payload: user });
-
+              dispatch({ type: TOGGLE_LOGIN_DIALOG });
           }
-        //   navigate('/Home')
         } catch {
           setError("Failed to create an account")
         }
