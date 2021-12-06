@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import Dialog from '@mui/material/Dialog';
@@ -23,6 +23,9 @@ import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const usernameRef = useRef(null);
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
 
@@ -38,20 +41,27 @@ const LoginDialogue = function() {
 
     const handlePasswordLogin = (e, authContent) => {
         // TODO: 
+        
         e.preventDefault();
-        auth.signInWithPopup(EmailPasswordProvider)
-        .then((result) => {
-            const credential = result.credential;
-            const token = credential.accessToken;
-            const user = {
-                username: result.additionalUserInfo.username,
-                email: result.user.email,
-                image: result.user.photoURL,
-                toke: token
-            }
-            dispatch({ type: PASSWORD_LOGIN, payload: user })
-            // TODO: graphql query sending user info.
-        })
+        auth.createUserWithEmailAndPassword(
+
+        )
+
+
+
+        // auth.signInWithPopup(EmailPasswordProvider)
+        // .then((result) => {
+        //     const credential = result.credential;
+        //     const token = credential.accessToken;
+        //     const user = {
+        //         username: result.additionalUserInfo.username,
+        //         email: result.user.email,
+        //         image: result.user.photoURL,
+        //         toke: token
+        //     }
+        //     dispatch({ type: PASSWORD_LOGIN, payload: user })
+        //     // TODO: graphql query sending user info.
+        // })
     }
 
     const handleCreatePasswordAccount = (e, registerContent) => {
@@ -105,11 +115,13 @@ const LoginDialogue = function() {
                 <TabPanel value={ curTab } index="login">
                     <DialogContent>
                         <TextField sx={{margin: '10px'}}
+                            ref={emailRef}
                             id="username"
                             label="Username"
                         />
                         <br />
                         <TextField sx={{margin: '10px'}}
+                            ref={passwordRef}
                             id="password"
                             label="Password"
                             type="password"
@@ -131,22 +143,26 @@ const LoginDialogue = function() {
                 <TabPanel value={ curTab } index="register">
                     <DialogContent>
                         <TextField sx={{margin: '10px'}}
+                            ref={usernameRef}
                             id="username"
                             label="Username"
                         />
                         <br />
                         <TextField sx={{margin: '10px'}}
+                            ref={emailRef}
                             id="email"
                             label="Email"
                         />
                         <br />
                         <TextField sx={{margin: '10px'}}
+                            ref={passwordRef}
                             id="password"
                             label="Password"
                             type="password"
                         />
                         < br/>
                         <TextField sx={{margin: '10px'}}
+                            ref={passwordRef}
                             id="passwordConfirm"
                             label="Confirm Password"
                             type="password"
