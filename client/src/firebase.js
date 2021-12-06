@@ -15,7 +15,8 @@ const firebaseConfig = {
   const auth = firebase.auth();
   const GoogleProvider = new firebase.auth.GoogleAuthProvider();
   const GithubProvider = new firebase.auth.GithubAuthProvider();
-  const EmailPasswordProvider = new firebase.auth().createUserWithEmailAndPassword
+  const CreateEmailPasswordProvider = new firebase.auth.createUserWithEmailAndPassword()
+  const SignInEmailPasswordProvider = new firebase.auth.signInWithEmailAndPassword()
 
 
-  export { auth, GoogleProvider, GithubProvider, db, EmailPasswordProvider  };
+  export { auth, GoogleProvider, GithubProvider, db, CreateEmailPasswordProvider, SignInEmailPasswordProvider };

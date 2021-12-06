@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
-import { auth, GithubProvider, GoogleProvider, EmailPasswordProvider } from "../../firebase";
+import { auth, GithubProvider, GoogleProvider, CreateEmailPasswordProvider, SignInEmailPasswordProvider } from "../../firebase";
 
 
 
@@ -41,15 +41,9 @@ const LoginDialogue = function() {
 
     const handlePasswordLogin = (e, authContent) => {
         // TODO: 
-        
-        e.preventDefault();
-        auth.createUserWithEmailAndPassword(
-
-        )
-
-
-
-        // auth.signInWithPopup(EmailPasswordProvider)
+    
+        // e.preventDefault();
+        // SignInEmailPasswordProvider
         // .then((result) => {
         //     const credential = result.credential;
         //     const token = credential.accessToken;
@@ -64,8 +58,18 @@ const LoginDialogue = function() {
         // })
     }
 
-    const handleCreatePasswordAccount = (e, registerContent) => {
+    const handleCreatePasswordAccount = e => {
         // TODO:
+        e.preventDefault();
+        auth.createUserWithEmailAndPassword(
+            usernameRef.current.value,
+            emailRef.current.value,
+            passwordRef.current.value
+        ).then(user => {
+            console.log(user)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     const handleGoogleLogin = (e) => {
