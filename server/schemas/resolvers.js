@@ -31,7 +31,7 @@ const resolvers = {
             }
         },
         createTutorial: async (_, { TutorialInput }) => {
-            return Tutorial.create({ TutorialInput }).populate("");
+            return Tutorial.create({ TutorialInput }).populate('user');
         },
         addComment: async (_, { stepId, content }) => {
             if (user) {

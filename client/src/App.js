@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
-import { ApolloClient, ApolloProvider } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 
 const client = new ApolloClient({
