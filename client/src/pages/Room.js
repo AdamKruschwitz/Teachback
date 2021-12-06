@@ -3,13 +3,14 @@ import styled from 'styled-components'
 import { Button, TextField } from '@mui/material';
 import remarkGFM from 'remark-gfm';
 import ReactMarkdown from 'react-markdown'
+import { CommentInput } from '../components';
 
 import { useQuery } from '@apollo/client';
 import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
 import { useParams } from 'react-router-dom';
 
 function Room() {
-    const handleNextStep= () => {
+    const handleNextStep = () => {
         //TODO: functinality missing
     }
     const handleFinishStep = () => {
@@ -44,24 +45,36 @@ function Room() {
             </ButtonContainer>
             <CommentsContainer>
                 <h1>Comments</h1>
+                <CommentInput>
+                    This is a test
+                </CommentInput>
                 <CommentsCard>
                     <h3>Hello Man</h3>
                     <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
                 </CommentsCard>
+                
+               
                 <CommentsCard>
                     <h3>Hello Man</h3>
                     <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
                 </CommentsCard>
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-            </CommentsContainer>
             
+                <CommentsCard>
+                    <h3>Hello Man</h3>
+                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
+                </CommentsCard>
+               
+                
+                <CommentsCard>
+                    <h3>Hello Man</h3>
+                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
+                   
+                </CommentsCard>
+               
+               
+            </CommentsContainer>
+            {/* {/* <CommentInput /> */}
+
         </MainContainer>
     )
 }
@@ -133,4 +146,3 @@ const CommentsCard = styled.div`
         margin-left: 10px;
     }
 `
-
