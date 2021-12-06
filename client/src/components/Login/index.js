@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 
-import { auth, GithubProvider, GoogleProvider } from "../../firebase";
+import { auth, GithubProvider, GoogleProvider, CreateEmailPasswordProvider, SignInEmailPasswordProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
@@ -86,23 +86,23 @@ const LoginDialogue = function() {
                 </Tabs>
                 <TabPanel value={ curTab } index="login">
                     <DialogContent>
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="username"
                             label="Username"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="password"
                             label="Password"
                             type="password"
                         />
                         <br />
                         {/* Github OAuth button */}
-                        <Button id="github-auth" variant="contained" onClick={ handleGithubLogin }>
+                        <Button sx={{margin: '10px'}} id="github-auth" variant="contained" onClick={ handleGithubLogin }>
                             <GitHubIcon />
                         </Button>
                         {/* Google OAuth button */}
-                        <Button id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
+                        <Button sx={{margin: '10px'}} id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
                             <GoogleIcon />
                         </Button>
                     </DialogContent>
@@ -112,23 +112,23 @@ const LoginDialogue = function() {
                 </TabPanel>
                 <TabPanel value={ curTab } index="register">
                     <DialogContent>
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="username"
                             label="Username"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="email"
                             label="Email"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="password"
                             label="Password"
                             type="password"
                         />
                         < br/>
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="passwordConfirm"
                             label="Confirm Password"
                             type="password"
