@@ -1,16 +1,12 @@
-import { ApolloLink, HttpLink, from } from '@apollo/client';
+class AuthService {
 
-// Instaed of this, use localstorage when the user is logged in. That way we can access the data outside of a react object
-import { useGlobalContext } from './GlobalContext';
-
-const [state, _dispatch] = useGlobalContext();
-
-const terminatingLink = new HttpLink({
-    headers: {
-        authUID: state.user.uid
+    getToken() {
+        return localStorage.getItem('refresh_token')
     }
-});
+    
+    login(userObject) {
+        localStorage.setItem('refresh_token', userObject)
+    }
+}
 
-const links = from([ terminatingLink ]);
-
-export default links;
+export default new AuthService()
