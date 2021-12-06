@@ -4,7 +4,11 @@ const { User, Category, Tutorial, Room, Tag, Step, Rating } = require("../models
 const resolvers = {
     Query: {
         user: async (_, { username }) => {
+            // TODO add awaits to all of these that are missing it
             return User.findOne({ username: username }).populate('tutorials')
+        },
+        users: async () => {
+            return await User.find();
         },
         categories: async () => {
             return Category.findAll();
@@ -17,10 +21,10 @@ const resolvers = {
             return Tutorial.findOne({ _id: tagId })
         },
         room: async (_, { id }) => {
-            const dbRoom = Room.findById(id).populate('owner');
+            const dbRoom = await Room.findById(id).populate('owner');
             // Mongoose Deep Population
             // https://mongoosejs.com/docs/populate.html#deep-populate
-            dbRoom = dbRoom.populate({
+            dbRoom = await dbRoom.populate({
                 path: 'tutorial',
                 populate: {
                     path: 'steps'
@@ -112,6 +116,32 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in first')
         },
+        createRoom: async (_parent, { tutorialId, token }, context) => {
+            // TODO: link firebase authentication with server side to check for authentication before room creation.
+            const user = await User.findOne({
+                token: token
+            });
+
+            const tutorial = await Tutorial.findById(tutorialId).populate({
+                path: 'steps',
+                populate: { path: 'comments' }
+            }).populate({
+                path: 'author'
+            });
+
+            const dbRoom = new Room({
+                owner: user._id,
+                tutorial: tutorialId
+            });
+            dbRoom.save();
+
+            return {
+                ...dbRoom,
+                _id: dbRoom.id.toString(),
+                owner: user,
+                tutorial: tutorial
+            }
+        }
     },
 }
 
