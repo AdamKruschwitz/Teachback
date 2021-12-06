@@ -17,7 +17,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
 
@@ -97,9 +97,18 @@ const LoginDialogue = function() {
           setError("")
           setLoading(true)
           const res = await auth.createUserWithEmailAndPassword(emailValue, passwordValue)
+          console.log(res)
           if (res.user != undefined) {
-              const loginRes = await auth.signInWithEmailAndPassword(emailValue, passwordValue)
-              console.log(loginRes)
+              const result = await auth.signInWithEmailAndPassword(emailValue, passwordValue)
+
+              const token = result.user.refreshToken;
+              const user = {
+                  username: result.user.email,
+                  email: result.user.email,
+                  image: '',
+                  toke: token
+              }
+              dispatch({type: PASSWORD_LOGIN, payload: user });
 
           }
         //   navigate('/Home')
