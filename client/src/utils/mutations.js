@@ -1,4 +1,4 @@
-import gql from 'graphql';
+import {gql} from '@apollo/client';
 
 export const CREATE_ROOM = gql`
 mutation CREATE_ROOM($tutorialId: ID!, $token: String!) {

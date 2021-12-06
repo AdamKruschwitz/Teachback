@@ -1,4 +1,4 @@
-import gql from 'graphql'
+import {gql} from '@apollo/client'
 export const GET_CURRENT_STEP = gql`
     query GET_CURRENT_STEP($id: ID!) {
         room(_id: $id) {
