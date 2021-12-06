@@ -8,14 +8,14 @@ module.exports = {
   // function for our authenticated routes
   authMiddleware: function (req, res, next) {
     // allows token to be sent via  req.query or headers
-    let token = req.query.token || req.headers.authorization;
+    let refreshToken = req.query.refreshToken || req.headers.refreshToken;
 
     // ["Bearer", "<tokenvalue>"]
-    if (req.headers.authorization) {
-      token = token.split(' ').pop().trim();
+    if (req.headers.refreshToken) {
+      refreshToken = refreshToken.split(' ').pop().trim();
     }
 
-    if (!token) {
+    if (!refreshToken) {
       return res.status(400).json({ message: 'You have no token!' });
     }
 
