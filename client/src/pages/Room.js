@@ -35,35 +35,35 @@ function Room() {
                 <CommentInput>
                     This is a test
                 </CommentInput>
-                {/* <CommentsCard>
+                <CommentsCard>
                     <h3>Hello Man</h3>
                     <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard> */}
-                <br></br>
+                </CommentsCard>
+                
                 <CommentInput>
                 </CommentInput>
-                {/* <CommentsCard>
+                <CommentsCard>
                     <h3>Hello Man</h3>
                     <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard> */}
-                <br></br>
-                <CommentInput>
-                    This is a test
-                </CommentInput>
-                {/* <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard> */}
-                <br></br>
+                </CommentsCard>
+               
                 <CommentInput>
                     This is a test
                 </CommentInput>
-                {/* <CommentsCard>
+                <CommentsCard>
+                    <h3>Hello Man</h3>
+                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
+                </CommentsCard>
+               
+                <CommentInput>
+                    This is a test
+                </CommentInput>
+                <CommentsCard>
                     <h3>Hello Man</h3>
                     <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
                    
-                </CommentsCard> */}
-                <br></br>
+                </CommentsCard>
+               
                 <CommentInput>
                     This is a test
                 </CommentInput>
