@@ -19,10 +19,18 @@ import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    // const usernameRef = useRef(null);
-    const passwordConfirmRef = useRef();
+
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const passwordConfirmRef = useRef()
+    const { signup } = useAuth()
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+    const history = useHistory()
+
+
+
+
 
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
