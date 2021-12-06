@@ -20,7 +20,7 @@ import { auth, GithubProvider, GoogleProvider, EmailPasswordProvider } from "../
 
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
     const [curTab, setCurTab] = useState('login');
@@ -44,8 +44,13 @@ const LoginDialogue = function() {
             const credential = result.credential;
             const token = credential.accessToken;
             const user = {
-                username: result.credential;
+                username: result.additionalUserInfo.username,
+                email: result.user.email,
+                image: result.user.photoURL,
+                toke: token
             }
+            dispatch({ type: PASSWORD_LOGIN, payload: user })
+            // TODO: graphql query sending user info.
         })
     }
 
@@ -99,23 +104,23 @@ const LoginDialogue = function() {
                 </Tabs>
                 <TabPanel value={ curTab } index="login">
                     <DialogContent>
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="username"
                             label="Username"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="password"
                             label="Password"
                             type="password"
                         />
                         <br />
                         {/* Github OAuth button */}
-                        <Button id="github-auth" variant="contained" onClick={ handleGithubLogin }>
+                        <Button sx={{margin: '10px'}} id="github-auth" variant="contained" onClick={ handleGithubLogin }>
                             <GitHubIcon />
                         </Button>
                         {/* Google OAuth button */}
-                        <Button id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
+                        <Button sx={{margin: '10px'}} id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
                             <GoogleIcon />
                         </Button>
                     </DialogContent>
@@ -125,23 +130,23 @@ const LoginDialogue = function() {
                 </TabPanel>
                 <TabPanel value={ curTab } index="register">
                     <DialogContent>
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="username"
                             label="Username"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="email"
                             label="Email"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="password"
                             label="Password"
                             type="password"
                         />
                         < br/>
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
                             id="passwordConfirm"
                             label="Confirm Password"
                             type="password"

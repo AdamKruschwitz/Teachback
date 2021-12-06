@@ -18,4 +18,4 @@ const firebaseConfig = {
   const EmailPasswordProvider = new firebase.auth().createUserWithEmailAndPassword
 
 
-  export { auth, GoogleProvider, GithubProvider, db,  };
+  export { auth, GoogleProvider, GithubProvider, db, EmailPasswordProvider  };
