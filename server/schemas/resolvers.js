@@ -17,8 +17,25 @@ const resolvers = {
             return Tutorial.findOne({ _id: tagId })
         },
         room: async (_, { id }) => {
-            // TODO - fix this. this does not return a room.
-            return Tag.findOne({ _id: id })
+            const dbRoom = Room.findById(id).populate('owner');
+            // Mongoose Deep Population
+            // https://mongoosejs.com/docs/populate.html#deep-populate
+            dbRoom = dbRoom.populate({
+                path: 'tutorial',
+                populate: {
+                    path: 'steps'
+                }
+            });
+
+            // Get the current step as a step object
+            const gqlCurrentStep = dbRoom.tutorial.steps[dbRoom.currentStep];
+
+            // Return the room replacing the integer with the object.
+            return {
+                ...dbRoom,
+                currentStep: gqlCurrentStep
+            }
+            
         },
     },
     Mutation: {
