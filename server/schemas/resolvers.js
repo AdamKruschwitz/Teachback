@@ -30,8 +30,9 @@ const resolvers = {
                 return e.message;
             }
         },
-        createTutorial: async (_, { TutorialInput }) => {
+        createTutorial: async (_, { author, title, tagIDs, categoryIDs, stepId }) => {
             const createTutorial = await User.createTutorial({ _id, });
+            return Tutorial.create({author, title, tagIDs, categoryIDs, stepId});
         },
         addComment: async (_, { stepId, content }) => {
             if (user) {

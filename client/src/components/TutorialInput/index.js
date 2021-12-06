@@ -11,12 +11,16 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {Input} from "@mui/material";
 import { useGlobalContext } from "../../utils/GlobalContext"
+import { CREATE_TUTORIAL } from "../../utils/mutations"
+import { QUERY_TUTORIALS } from "../../utils/queries";
+import { useMutation, useQuery } from '@apollo/client';
 
 function TutorialInput({ className }) {
   const [body, setBody] = useState("");
   const [submit, setSubmit] = useState(false);
   const [steps, setSteps] = useState([""]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  
 
   const [state,  dispatch] = useGlobalContext()
 
@@ -60,8 +64,7 @@ function TutorialInput({ className }) {
     setBody(steps[index])
   };
 
-  
-
+  const [createTutorial, { error }] = useMutation(CREATE_TUTORIAL);
 
   const toggleSubmit = (props) => {
     setSubmit(!submit);
@@ -74,7 +77,17 @@ function TutorialInput({ className }) {
         Tags: tags
       }
 
-    newTutorialObject.push()
+      try {
+        const { data } = createTutorial({
+          variables: { ...state },
+        });
+  
+        // TODO: redirect to profile page
+        
+
+      } catch (err) {
+        console.error(err);
+      }
   };
 
 
