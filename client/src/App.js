@@ -14,26 +14,28 @@ const client = new ApolloClient({
 });
 
 function App() {
-  return (
 
-    <div>
-      <ApolloProvider client={client}>
-      <GlobalProvider>
-        <Header />
-        <Login />
-        
-        <Routes>
-          <Route path="/" element={ <Home /> } />
-          <Route path="/browse" element={ <Browse /> } />
-          <Route path="/profile" element={ <Profile /> } />
-          <Route path="/room/:id" element={ <Room /> } />
-          <Route path="/tutorial/create" element={ <CreateTutorial /> } />
-          <Route path="*" element={ <Home /> } />
-        </Routes>
-        <Footer />
-      </GlobalProvider>
-      </ApolloProvider>
-    </div>
+  const client = new ApolloClient();
+
+  return (
+    <ApolloProvider client={client}>
+      <div>
+        <GlobalProvider>
+          <Header />
+          <Login />
+          
+          <Routes>
+            <Route path="/" element={ <Home /> } />
+            <Route path="/browse" element={ <Browse /> } />
+            <Route path="/profile" element={ <Profile /> } />
+            <Route path="/room/:id" element={ <Room /> } />
+            <Route path="/tutorial/create" element={ <CreateTutorial /> } />
+            <Route path="*" element={ <Home /> } />
+          </Routes>
+          <Footer />
+        </GlobalProvider>
+      </div>
+    </ApolloProvider>
 
   );
 }

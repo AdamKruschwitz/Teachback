@@ -3,15 +3,24 @@ import styled from 'styled-components'
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Button } from '@mui/material';
 
+import { useMutation } from '@apollo/client';
+import { CREATE_ROOM } from '../../utils/mutations';
+import { Redirect } from 'react-router-dom';
+
 
 function Category() {
+    const [createRoom, {newRoomData, loading, error}] = useMutation(CREATE_ROOM)
     const handleRating = () => {
         // TODO: functionality
     }
-    const handleCreateRoom = () => {
-        // TODO: functionality
-
+    
+    const handleCreateRoom = async (tutorialId) => {
+        createRoom({ tutorialId });
     }
+
+    // Redirect the user to a room if their newRoom has been created
+    if(newRoomData) window.location.pathname = `/room/${ newRoomData._id }`;
+    
     return (
         <CategoryContainer>
             <LeftConatiner>

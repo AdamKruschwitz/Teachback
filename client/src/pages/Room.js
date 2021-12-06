@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button, TextField } from '@mui/material';
 import remarkGFM from 'remark-gfm';
 import ReactMarkdown from 'react-markdown'
+
+import { useQuery } from '@apollo/client';
+import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
+import { useParams } from 'react-router-dom';
 
 function Room() {
     const handleNextStep= () => {
@@ -12,16 +16,25 @@ function Room() {
         //TODO: functinality missing
     }
 
-    const body = useState('')
-
-    // TODO: useEffect
+    const [step, setStep] = useState({});
+    const [room, setRoom] = useState({});
+    const [curStepI, setCurStepI] = useState(0);
+    const { id } = useParams();
+    const {data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
+    const {data: stepData, loading: stepLoading } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
+    
+    useEffect( () => {
+        if(roomData) {
+            setRoom(roomData);
+        }
+    })
 
     return (
         <MainContainer>
             <TopContainer>
                 <h1>Step 1</h1>
                 <MarkdownContainer>
-                    <ReactMarkdown children={body} remarkPlugins={[remarkGFM]} />
+                    <ReactMarkdown children={step.content} remarkPlugins={[remarkGFM]} />
                 </MarkdownContainer>
             </TopContainer>
             <ButtonContainer>

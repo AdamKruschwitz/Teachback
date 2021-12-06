@@ -31,7 +31,6 @@ const typeDefs = gql`
     type User {
         username: String!
         email: String!
-        password: String!
         image: String!
         token: String!
     }
@@ -39,7 +38,7 @@ const typeDefs = gql`
     type Tutorial {
         _id: ID!
         title: String!
-        author: String!
+        author: User!
         tags: [Tag]
         category: String!
         steps: [Step!]!
@@ -89,6 +88,7 @@ const typeDefs = gql`
 
     type Query {
         user(token: String!): User 
+        users: [User]
         categories: [Category]
         tutorials(input: SearchInput): [Tutorial]
         tutorial(_id: ID!): Tutorial
@@ -103,6 +103,7 @@ const typeDefs = gql`
         deleteComment(commentId: ID!): Step
         addRating(tutorialId: ID!, value: Int!): Tutorial
         deleteRating(ratingId: ID!): Tutorial
+        createRoom(tutorialId: ID!, token: String!): Room
     }
 
 `

@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const { Category, Comment, Step, Tag, Tutorial, User, Rating } = require('../models');
+const { Category, Comment, Step, Tag, Tutorial, User, Rating, Room } = require('../models');
 
 db.once('open', async () => {
     await Category.deleteMany();
@@ -89,7 +89,7 @@ db.once('open', async () => {
     console.log("Comments seeded.")
 
     await Step.deleteMany();
-    const steps = await Tutorial.insertMany([
+    const steps = await Step.insertMany([
         {
             content: `# Logging into Teachback
             First, you'll need either an email, a github account, or a Google account. Make sure you have access to one of these three accounts.`,
@@ -103,7 +103,8 @@ db.once('open', async () => {
             * If you haven't yet created an account, click the **Register** tab on the window that pops up, then fill out the information and click **submit**.
             In either case, after a moment, you should be logged into Teachback.`,
             comments: [
-                comments[2]._id, comments[3]._id
+                comments[2]._id, 
+                comments[3]._id
             ]
         },
         {
@@ -125,6 +126,7 @@ db.once('open', async () => {
 
     ]);
     console.log("Steps seeded.");
+    console.log(steps);
 
     await Rating.deleteMany();
     const ratings = await Tutorial.insertMany([
@@ -140,7 +142,7 @@ db.once('open', async () => {
     console.log("Ratings seeded.")
 
     await Tutorial.deleteMany();
-    await Tutorial.insertMany([
+    const tutorials = await Tutorial.insertMany([
         {
             author: users[0]._id,
             tags: [ tags[6]._id ],
@@ -153,6 +155,12 @@ db.once('open', async () => {
         }
     ]);
     console.log("Tutorials seeded.");
+    console.log(tutorials);
+
+    await Room.deleteMany();
+    console.log("cleared open rooms.");
+
+    console.log('Seeding finished successfully!');
 
     process.exit();
 });

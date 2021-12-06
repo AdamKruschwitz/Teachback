@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle'
@@ -16,13 +15,21 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
 
 const LoginDialogue = function() {
+
+    const [emailValue, setEmailValue] = useState('')
+    const [passwordValue, setPasswordValue] = useState('')
+    const [passwordConfirmValue, setPasswordConfirmValue] = useState('')
+
+    const [loginEmailValue, setLoginEmailValue] = useState('')
+    const [loginPasswordValue, setLoginPasswordValue] = useState('')
+
+
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
-
-
+  
     const handleOnClose = () => {
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
@@ -32,14 +39,71 @@ const LoginDialogue = function() {
         setCurTab(value);
     }
 
-    const handlePasswordLogin = (e, authContent) => {
-        // TODO
+    async function handlePasswordLogin(e) {
+        e.preventDefault();
+       
+        if (loginPasswordValue == '') {
+        alert('password field must not be empty');
+        return;
+        }
+        if (loginEmailValue == '') {
+            alert('enter your email');
+            return;
+            }
+    
+        try {
+   
+              const result = await auth.signInWithEmailAndPassword(loginEmailValue, loginPasswordValue)
+              const token = result.user.refreshToken;
+              const user = {
+                  username: result.user.email,
+                  email: result.user.email,
+                  image: '',
+                  toke: token
+              }
+              dispatch({type: PASSWORD_LOGIN, payload: user });
+              dispatch({ type: TOGGLE_LOGIN_DIALOG });
+        } catch {
+          alert("Failed to sign in")
+        }
+    
     }
 
-    const handleCreatePasswordAccount = (e, registerContent) => {
-        // TODO
-    }
+    const handleCreatePasswordAccount = async (e) => {
+        e.preventDefault();
+       
+        if (passwordValue == '' || passwordConfirmValue == '') {
+        alert('password field must not be empty');
+        return;
+        }
+        if (passwordValue !== passwordConfirmValue) {
+            alert('passwords do  not match');
+        return;
+        }
+    
+        try {
 
+          const res = await auth.createUserWithEmailAndPassword(emailValue, passwordValue)
+          console.log(res)
+          if (res.user != undefined) {
+              const result = await auth.signInWithEmailAndPassword(emailValue, passwordValue)
+
+              const token = result.user.refreshToken;
+              const user = {
+                  username: result.user.email,
+                  email: result.user.email,
+                  image: '',
+                  toke: token
+              }
+              dispatch({type: PASSWORD_LOGIN, payload: user });
+              dispatch({ type: TOGGLE_LOGIN_DIALOG });
+          }
+        } catch {
+          alert("Failed to create an account")
+        }
+    
+      }
+    
     const handleGoogleLogin = (e) => {
         e.preventDefault();
         auth.signInWithPopup(GoogleProvider)
@@ -77,7 +141,7 @@ const LoginDialogue = function() {
     }
 
     return (
-        // Probably remove padding on the dialogue to allow tabs to extend to the end of the div
+
         <Dialog open={ state.loginOpen } onClose={ handleOnClose }>
             <DialogTitle>
                 <Tabs value={ curTab } onChange={ handleTabChange }>
@@ -86,23 +150,31 @@ const LoginDialogue = function() {
                 </Tabs>
                 <TabPanel value={ curTab } index="login">
                     <DialogContent>
-                        <TextField
-                            id="username"
-                            label="Username"
+                        <TextField sx={{margin: '10px'}}
+                            value={loginEmailValue}
+                            onChange={(event, object) => {
+                                setLoginEmailValue(event.target.value)
+                            }}
+                            id="email"
+                            label="email"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
+                            value={loginPasswordValue}
+                            onChange={(event, object) => {
+                                setLoginPasswordValue(event.target.value)
+                            }}
                             id="password"
                             label="Password"
                             type="password"
                         />
                         <br />
                         {/* Github OAuth button */}
-                        <Button id="github-auth" variant="contained" onClick={ handleGithubLogin }>
+                        <Button sx={{margin: '10px'}} id="github-auth" variant="contained" onClick={ handleGithubLogin }>
                             <GitHubIcon />
                         </Button>
                         {/* Google OAuth button */}
-                        <Button id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
+                        <Button sx={{margin: '10px'}} id="google-auth" variant="contained" onClick={ handleGoogleLogin }>
                             <GoogleIcon />
                         </Button>
                     </DialogContent>
@@ -112,24 +184,40 @@ const LoginDialogue = function() {
                 </TabPanel>
                 <TabPanel value={ curTab } index="register">
                     <DialogContent>
-                        <TextField
+                        {/* <TextField sx={{margin: '10px'}}
+                            ref={usernameRef}
                             id="username"
                             label="Username"
-                        />
+                        /> */}
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
+                            required
                             id="email"
+                            onChange={(event, object) => {
+                                setEmailValue(event.target.value)
+                            }}
+                            value={emailValue}
                             label="Email"
                         />
                         <br />
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
+                            required
                             id="password"
+                            onChange={(event, object) => {
+                                setPasswordValue(event.target.value)
+                            }}
+                            value={passwordValue}
                             label="Password"
                             type="password"
                         />
                         < br/>
-                        <TextField
+                        <TextField sx={{margin: '10px'}}
+                            required
                             id="passwordConfirm"
+                            onChange={(event, object) => {
+                                setPasswordConfirmValue(event.target.value)
+                            }}
+                            value={passwordConfirmValue}
                             label="Confirm Password"
                             type="password"
                         />
