@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../utils/AuthContext"
 
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle'
@@ -20,19 +21,25 @@ import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from '../../utils/act
 
 const LoginDialogue = function() {
 
+    const [emailValue, setEmailValue] = useState('')
+    const [passwordValue, setPasswordValue] = useState('')
+    const [passwordConfirmValue, setPasswordConfirmValue] = useState('')
+   
+
+
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup } = useAuth()
+    const  signup  = useAuth()
+    const  login  = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
-    const history = useHistory()
+    const navigate = useNavigate()
 
 
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
-
-
+  
     const handleOnClose = () => {
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
@@ -42,7 +49,21 @@ const LoginDialogue = function() {
         setCurTab(value);
     }
 
-    const handlePasswordLogin = (e, authContent) => {
+    async function handlePasswordLogin(e) {
+        e.preventDefault()
+    
+        try {
+          setError("")
+          setLoading(true)
+          await login(emailRef.current.value, passwordRef.current.value)
+          navigate('/Home')
+        } catch {
+          setError("Failed to log in")
+        }
+    
+        setLoading(false)
+      }
+    // const handlePasswordLogin = (e, authContent) => {
         // TODO
         // e.preventDefault();
         // SignInEmailPasswordProvider
@@ -58,20 +79,30 @@ const LoginDialogue = function() {
         //     dispatch({ type: PASSWORD_LOGIN, payload: user })
         //     // TODO: graphql query sending user info.
         // })
-    }
+    // }
 
-    async function handleCreatePasswordAccount(e) {
-        e.preventDefault()
-    
-        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-          return setError("Passwords do not match")
+    const handleCreatePasswordAccount = async (e) => {
+        e.preventDefault();
+       
+        if (passwordValue == '' || passwordConfirmValue == '') {
+        alert('password field must not be empty');
+        return;
+        }
+        if (passwordValue !== passwordConfirmValue) {
+            alert('passwords do  not match');
+        return;
         }
     
         try {
           setError("")
           setLoading(true)
-          await signup(emailRef.current.value, passwordRef.current.value)
-          history.push("/")
+          const res = await auth.createUserWithEmailAndPassword(emailValue, passwordValue)
+          if (res.user != undefined) {
+              const loginRes = await auth.signInWithEmailAndPassword(emailValue, passwordValue)
+              console.log(loginRes)
+
+          }
+        //   navigate('/Home')
         } catch {
           setError("Failed to create an account")
         }
@@ -116,7 +147,7 @@ const LoginDialogue = function() {
     }
 
     return (
-        // Probably remove padding on the dialogue to allow tabs to extend to the end of the div
+
         <Dialog open={ state.loginOpen } onClose={ handleOnClose }>
             <DialogTitle>
                 <Tabs value={ curTab } onChange={ handleTabChange }>
@@ -158,24 +189,36 @@ const LoginDialogue = function() {
                         /> */}
                         <br />
                         <TextField sx={{margin: '10px'}}
-                            ref={emailRef}
+                            ref={emailRef} required
                             id="email"
+                            onChange={(event, object) => {
+                                setEmailValue(event.target.value)
+                            }}
+                            value={emailValue}
                             label="Email"
                         />
                         <br />
                         <TextField sx={{margin: '10px'}}
-                            ref={passwordRef}
+                            ref={passwordRef} required
                             id="password"
+                            onChange={(event, object) => {
+                                setPasswordValue(event.target.value)
+                            }}
+                            value={passwordValue}
                             label="Password"
                             type="password"
                         />
                         < br/>
-                        {/* <TextField sx={{margin: '10px'}}
-                            ref={passwordConfirmRef}
+                        <TextField sx={{margin: '10px'}}
+                            ref={passwordConfirmRef} required
                             id="passwordConfirm"
+                            onChange={(event, object) => {
+                                setPasswordConfirmValue(event.target.value)
+                            }}
+                            value={passwordConfirmValue}
                             label="Confirm Password"
                             type="password"
-                        /> */}
+                        />
                         <br />
                     </DialogContent>
                     <DialogActions>
