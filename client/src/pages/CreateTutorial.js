@@ -1,8 +1,13 @@
 import React from 'react';
+import { TutorialInput } from '../components';
 
 const CreateTutorial = function() {
     // TODO
-    return false;
+    return (
+        <div>
+        <TutorialInput />
+        </div>
+    )
 }
 
 export default CreateTutorial

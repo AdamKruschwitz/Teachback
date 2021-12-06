@@ -2,9 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
+import { auth } from '../../firebase'
 
 import { useGlobalContext } from '../../utils/GlobalContext';
-import { TOGGLE_LOGIN_DIALOG } from '../../utils/actions';
+import { TOGGLE_LOGIN_DIALOG, USER_LOGOUT } from '../../utils/actions';
 
 const Header = function() {
     const [state, dispatch] = useGlobalContext();
@@ -12,6 +13,12 @@ const Header = function() {
     const handleLogIn = () => {
         // TODO: - implement with firebase
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
+    }
+
+    const handleSignOut = () => {
+        auth.signOut().then(function() {
+            dispatch({type: USER_LOGOUT, payload: null})
+        })
     }
 
     if(!state.user) {
@@ -66,6 +73,9 @@ const Header = function() {
                             <UnstyledLink to="tutorial/create">
                                 <RightButton variant="contained" onClick={handleLogIn}>Create Tutorial</RightButton>
                             </UnstyledLink>   
+                        </ButtonContainer>
+                        <ButtonContainer>
+                                <LeftButton variant="outlined" onClick={handleSignOut}>Sign Out</LeftButton>
                         </ButtonContainer>
                     </HeaderRight>
                 </HeaderContainer>

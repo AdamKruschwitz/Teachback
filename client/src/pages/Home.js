@@ -1,10 +1,13 @@
 import React from 'react';
 
-import {  SearchBar } from '../components';
+
+import { Login, SearchBar, Category } from '../components';
 
 const Home = function() {
     return(
         <div>
+            <Category />
+            <Login />
             <SearchBar />
         </div>
     )

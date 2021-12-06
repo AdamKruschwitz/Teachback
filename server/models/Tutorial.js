@@ -15,7 +15,7 @@ const tutorialSchema = new Schema( {
     },
     steps: [{
         type: Schema.Types.ObjectId,
-        ref: 'Steps'
+        ref: 'Step'
     }],
     ratings: [{
         type: Schema.Types.ObjectId,

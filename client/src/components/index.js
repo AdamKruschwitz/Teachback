@@ -4,6 +4,7 @@ import SearchBar from './SearchBar/Search'
 import Login from './Login/index'
 import Category from './Category/index'
 import CommentInput from './CommentInput'
+import TutorialInput from './TutorialInput'
 
 export {
     Header,
@@ -11,5 +12,6 @@ export {
     SearchBar,
     Login,
     Category,
-    CommentInput
+    CommentInput,
+    TutorialInput
 }

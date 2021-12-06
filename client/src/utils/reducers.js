@@ -1,4 +1,4 @@
-import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN } from './actions';
+import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN, USER_LOGOUT } from './actions';
 import { useReducer } from 'react';
 
 export const reducer = (state, action) => {
@@ -19,6 +19,17 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload
+            }
+
+        case PASSWORD_LOGIN:
+            return {
+                ...state,
+                user: action.payload
+            }
+        case USER_LOGOUT:
+            return {
+                ...state,
+                user: null
             }
         
         default: 
