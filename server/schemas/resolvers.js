@@ -66,7 +66,6 @@ const resolvers = {
                 }]
             });
 
-            console.log(dbRoom);
 
             // Get the current step as a step object
             const gqlCurrentStep = dbRoom.tutorial.steps[dbRoom.currentStep];
@@ -77,7 +76,6 @@ const resolvers = {
                 owner: dbRoom.owner,
                 currentStep: gqlCurrentStep
             }
-            // console.log(out);
             return out
             
         },
@@ -172,7 +170,6 @@ const resolvers = {
             }).populate({
                 path: 'author'
             });
-            console.log(tutorial);
 
             const dbRoom = new Room({
                 owner: user._id,
