@@ -10,12 +10,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {Input} from "@mui/material";
+import { useGlobalContext } from "../../utils/GlobalContext"
 
 function TutorialInput({ className }) {
   const [body, setBody] = useState("");
   const [submit, setSubmit] = useState(false);
   const [steps, setSteps] = useState([""]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
+  const [state,  dispatch] = useGlobalContext()
 
   // const [markdown, setMarkdown] = useState("");
   const handleChange = (event) => {
@@ -60,10 +63,18 @@ function TutorialInput({ className }) {
   
 
 
-
-
   const toggleSubmit = (props) => {
     setSubmit(!submit);
+
+    const newTutorialObject = {
+        Name: title,
+        Author: state.user.token,
+        Steps: steps,
+        Category: category._id,
+        Tags: tags
+      }
+
+    newTutorialObject.push()
   };
 
 
@@ -73,13 +84,25 @@ function TutorialInput({ className }) {
     setCategory(event.target.value);
   };
 
+  const [title, setTitle] = React.useState('');
+
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const [tags, setTags] = React.useState('');
+
+  const handleTags = (event) => {
+      setTags(event.target.value)
+  }
+
   return (
     <MainContainer>
 
       <TopContainer>
 
         <TitleContainer>
-          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Title..." />
+          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Title..." value={title} onChange={handleTitle}  />
         </TitleContainer>
 
         <CategoryContainer>
@@ -103,7 +126,7 @@ function TutorialInput({ className }) {
         </CategoryContainer>
 
         <TagContainer>
-          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Tags..." />
+          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Tags..." value={tags} onChange={handleTags} />
         </TagContainer>
       </TopContainer>
 
