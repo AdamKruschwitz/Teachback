@@ -107,6 +107,7 @@ const typeDefs = gql`
         connectToRoom(roomId: ID!): Room
         disconnectFromRoom(roomId: ID!): Room
         recordStepFinished(roomId: ID!): Room
+        recordStepNotFinished(roomId: ID!): Room
     }
 
 `

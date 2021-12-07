@@ -220,7 +220,7 @@ const resolvers = {
                     {
                         new: true
                     }
-                )
+                );
             }
         },
         recordStepFinished: async (_parent, { roomId }, context) => {
