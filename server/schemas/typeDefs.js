@@ -7,11 +7,6 @@ const typeDefs = gql`
         categoryIDs: ID
     }
 
-    input LoginInput {
-        email: String!
-        password: String!
-    }
-
     input TutorialInput {
         _id: ID
         title: String!
@@ -26,13 +21,15 @@ const typeDefs = gql`
         email: String!
         password: String!
         token: String!
+        uid: String!
     }
 
     type User {
         username: String!
         email: String!
-        image: String!
+        image: String
         token: String!
+        uid: String!
     }
 
     type Tutorial {
@@ -62,6 +59,8 @@ const typeDefs = gql`
         owner: User!
         tutorial: Tutorial!
         currentStep: Step!
+        connectedUsers: [User!]!
+        finishedUsers: [User!]!
     }
 
     type Step {
@@ -104,6 +103,11 @@ const typeDefs = gql`
         addRating(tutorialId: ID!, value: Int!): Tutorial
         deleteRating(ratingId: ID!): Tutorial
         createRoom(tutorialId: ID!, token: String!): Room
+        login(input: UserInput): User
+        connectToRoom(roomId: ID!): Room
+        disconnectFromRoom(roomId: ID!): Room
+        recordStepFinished(roomId: ID!): Room
+        recordStepNotFinished(roomId: ID!): Room
     }
 
 `

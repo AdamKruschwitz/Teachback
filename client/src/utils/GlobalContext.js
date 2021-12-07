@@ -21,14 +21,16 @@ export function GlobalProvider({ value = [], ...props }) {
                   username: result.email,
                   email: result.email,
                   image: '',
-                  toke: token
+                  // Change to use User.uid instead of github token
+                  // https://firebase.google.com/docs/reference/js/v8/firebase.User#uid
+                  token: token
               }
               dispatch({type: PASSWORD_LOGIN, payload: user });
             }
         })
     
         return unsubscribe
-      }, [])
+      }, [dispatch])
     return <Provider value={[state, dispatch]} {...props} />;
   };
 

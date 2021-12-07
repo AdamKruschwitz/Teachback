@@ -5,11 +5,10 @@ import { Button } from '@mui/material';
 
 import { useMutation } from '@apollo/client';
 import { CREATE_ROOM } from '../../utils/mutations';
-import { Redirect } from 'react-router-dom';
 
 
 function Category() {
-    const [createRoom, {newRoomData, loading, error}] = useMutation(CREATE_ROOM)
+    const [createRoom, {newRoomData}] = useMutation(CREATE_ROOM)
     const handleRating = () => {
         // TODO: functionality
     }

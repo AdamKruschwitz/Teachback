@@ -4,12 +4,22 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
-import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
-import { ApolloProvider, ApolloClient } from '@apollo/client';
+import { GlobalProvider } from './utils/GlobalContext';
+import AuthService from './utils/auth';
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 function App() {
 
-  const client = new ApolloClient();
+  const terminatingLink = new HttpLink({
+    headers: {
+        refreshToken: AuthService.getToken()
+    }
+  });
+
+  const client = new ApolloClient({
+    links: terminatingLink,
+    cache: new InMemoryCache()
+  });
 
   return (
     <ApolloProvider client={client}>
