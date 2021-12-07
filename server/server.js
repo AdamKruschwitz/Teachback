@@ -17,7 +17,7 @@ const server = new ApolloServer({
 });
 
 server.start().then(() => {
-  server.applyMiddleware({ app});
+  server.applyMiddleware({ app });
 });
 
 app.use(express.urlencoded({ extended: false }));
