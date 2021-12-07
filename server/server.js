@@ -31,6 +31,18 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+app.post('/registerUser', (req, res) => {
+  const user = req.body.user;
+
+  db.collection('users').insertOne(user);
+
+
+  res.send({
+    "result":true,
+    "user_record_token":""
+  });
+});
+
 db.once('open', () => {
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
