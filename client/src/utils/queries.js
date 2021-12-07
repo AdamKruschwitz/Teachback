@@ -13,6 +13,18 @@ export const QUERY_TUTORIALS = gql`
   }
 `;
 
+export const GET_USER = gql`
+    query getUser {
+        user {
+            username
+            email
+            image
+            token
+        }
+    }
+`;
+
+
 export const GET_CURRENT_STEP = gql`
     query GET_CURRENT_STEP($id: ID!) {
         room(_id: $id) {

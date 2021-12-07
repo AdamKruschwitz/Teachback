@@ -36,6 +36,7 @@ function TutorialInput({ className }) {
     }
   };
 
+
   const handleNewStep = () => {
     // save the body state to the current step and steps
     const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
@@ -54,6 +55,7 @@ function TutorialInput({ className }) {
     console.log(newSteps)
   };
 
+
   const handleSelectStep = (index) => {
     // Saved the current step
     const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
@@ -65,6 +67,7 @@ function TutorialInput({ className }) {
     setBody(steps[index])
   };
 
+  
   const [createTutorial, { error }] = useMutation(CREATE_TUTORIAL);
 
   const toggleSubmit = (props) => {
@@ -78,10 +81,6 @@ function TutorialInput({ className }) {
         Tags: tags
       }
 
-    //   if(!this.auth.getCurrentUser()){
-    //     return;
-    // }
-
       try {
         const { data } = createTutorial({
           variables: { ...state },
@@ -89,6 +88,7 @@ function TutorialInput({ className }) {
   
         // TODO: redirect to profile page
         // <Redirect to='/Profile'  />
+        window.location('/Profile')
 
       } catch (err) {
         console.error(err);
