@@ -40,11 +40,11 @@ const resolvers = {
         tutorial: async (_, { id }) => {
             return Tutorial.findOne({ _id: tagId })
         },
-        room: async (_, { _id }) => {
+        room: async (_, { id }) => {
             // Mongoose Deep Population
             // https://mongoosejs.com/docs/populate.html#deep-populate
-            console.log(_id)
-            const room = await Room.findById(_id)
+            console.log(id);
+            const room = await Room.findById(id)
             .populate({
                 path: 'owner',
                 populate: {
@@ -75,7 +75,7 @@ const resolvers = {
                     path: 'category'
                 }]
             }); 
-            console.log(room.tutorial.steps);
+            // console.log(room.tutorial.steps);
             return room;
         },
     },

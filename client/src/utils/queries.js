@@ -6,7 +6,7 @@ export const GET_CURRENT_STEP = gql`
                 comments {
                     content
                     author {
-                        username
+                        email
                     }
                 }
             content
@@ -17,7 +17,7 @@ export const GET_CURRENT_STEP = gql`
 
 export const GET_ROOM = gql`
     query GET_ROOM($roomId: ID!) {
-        room(_id: $roomId) {
+        room(id: $roomId) {
             currentStep
             tutorial {
                 title
@@ -41,7 +41,7 @@ export const GET_ROOM = gql`
                 }
             }
             owner {
-                username
+                email
             }
         }
     }

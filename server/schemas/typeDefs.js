@@ -91,7 +91,7 @@ const typeDefs = gql`
         categories: [Category]
         tutorials(input: SearchInput): [Tutorial]
         tutorial(_id: ID!): Tutorial
-        room(_id: ID!): Room
+        room(id: ID!): Room
     }
 
     type Mutation {

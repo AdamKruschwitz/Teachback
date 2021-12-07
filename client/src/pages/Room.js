@@ -20,7 +20,7 @@ function Room() {
     // const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
     console.log(id);
-    const { data: roomData, loading: roomLoading, error } = useQuery(GET_ROOM, { variables: { roomId: id }, skip: !state.user });
+    const { data: roomData, loading: roomLoading, error } = useQuery(GET_ROOM, { variables: { roomId: id } });
     
     
     // const { data: stepData } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
@@ -30,11 +30,13 @@ function Room() {
     const [cancelFinishedStep] = useMutation(CANCEL_FINISHED_STEP);
     
 
-    console.log("room loading: " + roomLoading);
-    console.log("room data: " + roomData);
-    console.log("room error: " + error);
+    // console.log("room loading: " + roomLoading);
+    // console.log("room data: " + JSON.stringify(roomData, null, 2));
+    console.log(room);
+    console.log(state);
+    // console.log("room error: " + JSON.stringify(error, null, 2));
 
-    if(error) alert("There was an error loading the room!");
+    // if(error) alert("There was an error loading the room!");
 
     const toggleFinishedStep = () => {
         setFinishedStep(!finishedStep);
@@ -80,7 +82,7 @@ function Room() {
     }
 
     const renderRoomControls = () => {
-        if(room.owner.email = state.user.email) {
+        if(room.owner.email === state.user.email) {
             // If on the last step
             if(room.currentStep === room.tutorial.steps.length-1) {
                 return (<Button onClick={ handleCloseRoom }> Finish Tutorial </Button>)
@@ -104,9 +106,9 @@ function Room() {
     useEffect( () => {
         if(roomData) {
             // If the room has loaded for the first time...
-            setRoom(roomData);
+            setRoom(roomData.room);
         } 
-    }, [roomData, roomLoading]);
+    }, [setRoom, roomData]);
 
     // Handle step updates
     // useEffect( () => {
@@ -136,13 +138,13 @@ function Room() {
     //     }
     // }, [])
 
-    if(roomLoading || !roomData) return "Room Loading..."
+    if(roomLoading || !room.tutorial) return "Room Loading..."
 
     return (
         <MainContainer>
             <StepDisplay content={room.tutorial.steps[room.currentStep].content}/>
             <ButtonContainer>
-                {renderRoomControls()}
+                {!!state.user ? renderRoomControls() : ""}
             </ButtonContainer>
             <CommentsContainer>
                 <h1>Comments</h1>
@@ -150,7 +152,7 @@ function Room() {
                     room.tutorial.steps[room.currentStep].comments.map(comment => {
                         return (
                             <CommentsCard>
-                                <h3>{ comment.user.username }</h3>
+                                <h3>{ comment.author.username }</h3>
                                 <p>{ comment.content }</p>
                             </CommentsCard>
                         )
