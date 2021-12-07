@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Button } from '@mui/material';
 
 import { StepDisplay } from '../components'
+import { Button, TextField } from '@mui/material';
+import remarkGFM from 'remark-gfm';
+import ReactMarkdown from 'react-markdown'
+import { CommentInput } from '../components';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
@@ -222,4 +225,3 @@ const CommentsCard = styled.div`
         margin-left: 10px;
     }
 `
-

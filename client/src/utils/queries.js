@@ -1,4 +1,30 @@
-import {gql} from '@apollo/client'
+import { gql } from '@apollo/client';
+
+export const QUERY_TUTORIALS = gql`
+  query getTutorials {
+    tutorials {
+        _id
+        title
+        author
+        tags
+        category
+        steps 
+    }
+  }
+`;
+
+export const GET_USER = gql`
+    query getUser {
+        user {
+            username
+            email
+            image
+            token
+        }
+    }
+`;
+
+
 export const GET_CURRENT_STEP = gql`
     query GET_CURRENT_STEP($id: ID!) {
         room(_id: $id) {

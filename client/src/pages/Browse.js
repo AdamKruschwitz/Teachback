@@ -22,7 +22,7 @@ const Browse = function() {
                     <Button onClick={handleCategorySelect}>HTML</Button>
                     <Button onClick={handleCategorySelect}>CSS</Button>
                     <Button onClick={handleCategorySelect}>React</Button>
-                    <Button onClick={handleCategorySelect}>Reavt Native</Button>
+                    <Button onClick={handleCategorySelect}>React Native</Button>
                     <Button onClick={handleCategorySelect}>IOS</Button>
                 </LeftContainer>
                 <RightContainer>

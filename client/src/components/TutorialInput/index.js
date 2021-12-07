@@ -10,10 +10,36 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {Input} from "@mui/material";
+import { useGlobalContext } from "../../utils/GlobalContext"
+import { CREATE_TUTORIAL } from "../../utils/mutations"
+import { useMutation, useQuery } from '@apollo/client';
 
 function TutorialInput({ className }) {
   const [body, setBody] = useState("");
   const [submit, setSubmit] = useState(false);
+  const [steps, setSteps] = useState([""]);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  
+  const [state,  dispatch] = useGlobalContext()
+
+  const [category, setCategory] = React.useState('');
+
+  const handleCategory = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const [title, setTitle] = React.useState('');
+
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const [tags, setTags] = React.useState('');
+
+  const handleTags = (event) => {
+      setTags(event.target.value)
+  }
+
   // const [markdown, setMarkdown] = useState("");
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -25,16 +51,67 @@ function TutorialInput({ className }) {
     }
   };
 
-  const toggleSubmit = (props) => {
+
+  const handleNewStep = () => {
+    // save the body state to the current step and steps
+    const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
+    const stepsAfterCurrent = steps.slice(currentStepIndex+1)
+    const newSteps = stepsBeforeCurrent.concat(body, stepsAfterCurrent)
+    
+    // add an empty string to the steps state
+    newSteps.push("")
+    setSteps(newSteps)
+   
+    // then update currentstep 
+    setCurrentStepIndex(newSteps.length-1)
+
+    // set body to be equal to empty string
+    setBody("")
+    console.log(newSteps)
+  };
+
+
+  const handleSelectStep = (index) => {
+    // Saved the current step
+    const stepsBeforeCurrent = steps.slice(0, currentStepIndex)
+    const stepsAfterCurrent = steps.slice(currentStepIndex+1)
+    const newSteps = stepsBeforeCurrent.concat(body, stepsAfterCurrent)
+
+    setCurrentStepIndex(index)
+    setSteps(newSteps)
+    setBody(steps[index])
+  };
+
+  
+  const [createTutorial, { error }] = useMutation(CREATE_TUTORIAL);
+
+  const toggleSubmit = async (props) => {
     setSubmit(!submit);
+
+    const newTutorialObject = {
+        name: title,
+        author: state.user.token,
+        steps: steps,
+        category: category._id,
+        tags: tags
+      }
+      console.log(newTutorialObject)
+
+      try {
+        window.location.replace('/profile')
+
+        const { data } = await createTutorial({
+          variables: { ...newTutorialObject },
+        });
+        console.log(data)
+
+       
+
+      } catch (err) {
+        console.error(err);
+      }
   };
 
-
-  const [category, setCategory] = React.useState('');
-
-  const handleCategory = (event) => {
-    setCategory(event.target.value);
-  };
 
   return (
     <MainContainer>
@@ -42,7 +119,7 @@ function TutorialInput({ className }) {
       <TopContainer>
 
         <TitleContainer>
-          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Title..." />
+          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Title..." value={title} onChange={handleTitle}  />
         </TitleContainer>
 
         <CategoryContainer>
@@ -57,16 +134,19 @@ function TutorialInput({ className }) {
                 label="Category"
                 onChange={handleCategory}
                 >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={10}>Javascript</MenuItem>
+                <MenuItem value={20}>HTML</MenuItem>
+                <MenuItem value={30}>CSS</MenuItem>
+                <MenuItem value={30}>React</MenuItem>
+                <MenuItem value={30}>React Native</MenuItem>
+                <MenuItem value={30}>IOS</MenuItem>
                 </Select>
             </FormControl>
           </Box>
         </CategoryContainer>
 
         <TagContainer>
-          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Tags..." />
+          <Input sx={{ width: 300, backgroundColor: 'white' }} placeholder="Tags..." value={tags} onChange={handleTags} />
         </TagContainer>
       </TopContainer>
 
@@ -102,10 +182,10 @@ function TutorialInput({ className }) {
 
         <ButtonContainer>
             <StepsContainer>
-               <Button>1</Button>
-               <Button>2</Button>
-               <Button>3</Button>
-               <Button>+</Button>
+               {steps.map((_stepBody, stepIndex) => {
+                   return (<Button onClick={ () => handleSelectStep(stepIndex)} key={stepIndex}>{stepIndex+1}</Button>)
+               })}
+               <Button onClick={handleNewStep}>+</Button>
             </StepsContainer>
             <ButtonRight>
                 <Button sx={{backgroundColor: "#94ECBE !important", color: "#2D2244 !important", border: "1px solid #2D2244 !important"}} variant="contained" onClick={toggleSubmit} children="Submit" 

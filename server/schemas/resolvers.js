@@ -90,8 +90,10 @@ const resolvers = {
             }
         },
         createTutorial: async (_, { TutorialInput }) => {
-            // TODO - fix this. I'm surprised this compiles.
-            const createTutorial = await User.createTutorial({ _id, });
+            // await to create tags, steps 
+            // use object ids from created tags and steps and pass to tutorial creation object 
+            console.log('hello')
+            return Tutorial.create({ TutorialInput }).populate('user');
         },
         addComment: async (_, { stepId, content }) => {
             // TODO - fix this, this code does not add a comment
