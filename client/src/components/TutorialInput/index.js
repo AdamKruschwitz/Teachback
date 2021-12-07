@@ -86,7 +86,7 @@ function TutorialInput({ className }) {
   
   const [createTutorial, { error }] = useMutation(CREATE_TUTORIAL);
 
-  const toggleSubmit = (props) => {
+  const toggleSubmit = async (props) => {
     setSubmit(!submit);
 
     const newTutorialObject = {
@@ -99,12 +99,14 @@ function TutorialInput({ className }) {
       console.log(newTutorialObject)
 
       try {
-        const { data } = createTutorial({
+        window.location.replace('/profile')
+        
+        const { data } = await createTutorial({
           variables: { ...newTutorialObject },
         });
         console.log(data)
 
-        window.location.replace('/profile')
+       
 
       } catch (err) {
         console.error(err);
