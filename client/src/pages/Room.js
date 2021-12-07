@@ -23,6 +23,7 @@ function Room() {
     const [disconnectFromRoom] = useMutation(DISCONNECT_FROM_ROOM);
     const [finishStep] = useMutation(FINISH_STEP);
     const [cancelFinishedStep] = useMutation(CANCEL_FINISHED_STEP);
+    const [state, dispatch] = useGlobalContext();
 
     const toggleFinishedStep = () => {
         setFinishedStep(!finishedStep);
@@ -30,6 +31,19 @@ function Room() {
 
     const handleNextStep= () => {
         
+    }
+
+    const areAllUsersReady = () => {
+        var allUsersReady = true;
+        const connectedUserEmails = room.connectedUsers.map(user => user.email);
+        const finishedUserEmails = room.connectedUsers.map(user => user.email);
+        for(const email of connectedUserEmails) {
+            if(finishedUserEmails.indexOf(email) === -1) {
+                allUsersReady = false;
+                break;
+            }
+        }
+        return allUsersReady;
     }
 
     const handleFinishStep = () => {
@@ -88,13 +102,23 @@ function Room() {
         <MainContainer>
             <StepDisplay content={room.currentStep.content}/>
             <ButtonContainer>
-                {/* TODO: if statement for if owner or if follower */}
-                <Button onClick={handleNextStep}>Next Step</Button>
+                {/* Room controls */}
                 {
-                    finishedStep ? 
-                    <Button id="undo-finished-step" onClick={handleCancelFinishStep}>I'm not ready!</Button> :
-                    <Button id="finish-step" onClick={handleFinishStep}>Finish Step</Button>
+                    room.owner.email===state.user.email ?
+                        // If the room owner
+                        allUsersReady()?
+                            // If all users finished with the step
+                            <Button onClick={handleNextStep}>Next Step</Button> :
+                            // Else users aren't all finished
+                            <Button disabled onClick={handleNextStep}>Next Step</Button> :
+                        // Else the room follower
+                        finishedStep ? 
+                            // Of they are finished with the step
+                            <Button id="undo-finished-step" onClick={handleCancelFinishStep}>I'm not ready!</Button> :
+                            // If they are not finished with the step
+                            <Button id="finish-step" onClick={handleFinishStep}>Finish Step</Button>
                 }
+                
                 <Button onClick={handleFinishStep}>Finish Step</Button>
             </ButtonContainer>
             <CommentsContainer>
