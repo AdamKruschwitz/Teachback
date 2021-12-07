@@ -43,7 +43,7 @@ const resolvers = {
         room: async (_, { _id }) => {
             // Mongoose Deep Population
             // https://mongoosejs.com/docs/populate.html#deep-populate
-            const dbRoom = await Room.findById(_id)
+            return await Room.findById(_id)
             .populate({
                 path: 'owner',
                 populate: {
@@ -73,20 +73,7 @@ const resolvers = {
                 {
                     path: 'category'
                 }]
-            });
-
-
-            // Get the current step as a step object
-            const gqlCurrentStep = dbRoom.tutorial.steps[dbRoom.currentStep];
-
-            // Return the room replacing the integer with the object.
-            const out = {
-                tutorial: dbRoom.tutorial,
-                owner: dbRoom.owner,
-                currentStep: gqlCurrentStep
-            }
-            return out
-            
+            }); 
         },
     },
     Mutation: {
