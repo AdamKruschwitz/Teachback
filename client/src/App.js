@@ -33,7 +33,10 @@ function App() {
 
   const client = new ApolloClient({
     uri: '/graphql',
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
+    headers: {
+      Authentication: `Bearer ${AuthService.getToken()}`
+    }
   });
 
   // client.query({

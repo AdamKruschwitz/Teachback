@@ -45,7 +45,9 @@ mutation DISCONNECT_FROM_ROOM($roomId: ID!) {
 export const FINISH_STEP = gql`
 mutation FINISH_STEP($roomId: ID!) {
     recordStepFinished(roomId: $roomId) {
-        finishedUsers
+        finishedUsers {
+            email
+        }
     }
 }
 `
@@ -53,7 +55,9 @@ mutation FINISH_STEP($roomId: ID!) {
 export const CANCEL_FINISHED_STEP = gql`
 mutation CANCEL_FINISHED_STEP($roomId: ID!) {
     recordStepNotFinished(roomId: $roomId) {
-        finishedUsers
+        finishedUsers {
+            email
+        }
     }
 }
 `

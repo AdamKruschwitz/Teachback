@@ -18,6 +18,7 @@ module.exports = {
       // console.log(collection);
       const myuser = await collection.findOne({ token: refreshToken });
       // console.log(myuser);
+      console.log(myuser);
       user = myuser
     }
     // console.log(user);

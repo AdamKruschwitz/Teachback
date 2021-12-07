@@ -34,7 +34,7 @@ function Room() {
     // console.log("room data: " + JSON.stringify(roomData, null, 2));
     console.log(room);
     console.log(state);
-    // console.log("room error: " + JSON.stringify(error, null, 2));
+    console.log("room error: " + JSON.stringify(error, null, 2));
 
     // if(error) alert("There was an error loading the room!");
 
@@ -60,12 +60,16 @@ function Room() {
     }
 
     const handleFinishStep = () => {
-        finishStep({
-            variables: {
-                roomId: id
-            }
-        });
-        toggleFinishedStep();
+        try {
+            finishStep({
+                variables: {
+                    roomId: id
+                }
+            });
+            toggleFinishedStep();
+        } catch (error) {
+            console.log(JSON.stringify(error, null, 2));
+        }
     }
 
     const handleCancelFinishStep = () => {
