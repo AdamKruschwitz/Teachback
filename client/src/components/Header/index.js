@@ -21,6 +21,8 @@ const Header = function() {
         })
     }
 
+    console.log(state);
+
     if(!state.user) {
         return (
             <div>

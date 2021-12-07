@@ -58,7 +58,7 @@ const typeDefs = gql`
         _id: ID!
         owner: User!
         tutorial: Tutorial!
-        currentStep: Step!
+        currentStep: Int!
         connectedUsers: [User!]!
         finishedUsers: [User!]!
     }
@@ -102,7 +102,7 @@ const typeDefs = gql`
         deleteComment(commentId: ID!): Step
         addRating(tutorialId: ID!, value: Int!): Tutorial
         deleteRating(ratingId: ID!): Tutorial
-        createRoom(tutorialId: ID!, token: String!): Room
+        createRoom(tutorialId: ID!): Room
         connectToRoom(roomId: ID!): Room
         disconnectFromRoom(roomId: ID!): Room
         recordStepFinished(roomId: ID!): Room

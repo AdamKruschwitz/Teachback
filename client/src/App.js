@@ -11,6 +11,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/c
 function App() {
 
   const terminatingLink = new HttpLink({
+    uri: "http://localhost:3001/graphql",
     headers: {
         refreshToken: AuthService.getToken()
     }

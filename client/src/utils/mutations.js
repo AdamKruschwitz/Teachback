@@ -27,16 +27,6 @@ mutation CREATE_ROOM($tutorialId: ID!, $token: String!) {
 }
 `
 
-export const LOGIN = gql`
-mutation LOGIN($input: UserInput!) {
-    login(input: $input) {
-        username
-        email
-        image
-    }
-}
-`
-
 export const CONNECT_TO_ROOM = gql`
 mutation CONNECT_TO_ROOM($roomId: ID!) {
     connectToRoom(roomId: $roomId) {

@@ -12,19 +12,26 @@ import { useParams } from 'react-router-dom';
 import { useGlobalContext } from '../utils/GlobalContext'
 
 function Room() {
-    
+    const [state, dispatch] = useGlobalContext();
+    console.log(state);
     // Will be used for displaying connected users and allowing next buttons.
     const [room, setRoom] = useState({});
     const [finishedStep, setFinishedStep] = useState(false);
     // const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
-    const { data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
-    const { data: stepData } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
+    const { data: roomData, loading: roomLoading, error } = useQuery(GET_ROOM, { variables: {id: id}, headers: { authentication: state.user ? state.user.token : "" } });
+    // const { data: stepData } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
     const [connectToRoom] = useMutation(CONNECT_TO_ROOM);
     const [disconnectFromRoom] = useMutation(DISCONNECT_FROM_ROOM);
     const [finishStep] = useMutation(FINISH_STEP);
     const [cancelFinishedStep] = useMutation(CANCEL_FINISHED_STEP);
-    const [state, _dispatch] = useGlobalContext();
+    
+
+    console.log("room loading: " + roomLoading);
+    console.log("room data: " + roomData);
+    console.log("room error: " + error);
+
+    if(error) alert("There was an error loading the room!");
 
     const toggleFinishedStep = () => {
         setFinishedStep(!finishedStep);
@@ -96,17 +103,17 @@ function Room() {
             // If the room has loaded for the first time...
             setRoom(roomData);
         } 
-    }, [roomData]);
+    }, [roomData, roomLoading]);
 
     // Handle step updates
-    useEffect( () => {
-        if(stepData) {
-            setRoom({
-                ...room,
-                currentStep: stepData.currentStep
-            });
-        }
-    }, [stepData]);
+    // useEffect( () => {
+    //     if(stepData) {
+    //         setRoom({
+    //             ...room,
+    //             currentStep: stepData.currentStep
+    //         });
+    //     }
+    // }, [stepData]);
 
     // connect to the room on the server side
     useEffect( () => {

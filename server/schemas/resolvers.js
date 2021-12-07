@@ -43,7 +43,8 @@ const resolvers = {
         room: async (_, { _id }) => {
             // Mongoose Deep Population
             // https://mongoosejs.com/docs/populate.html#deep-populate
-            return await Room.findById(_id)
+            console.log(_id)
+            const room = await Room.findById(_id)
             .populate({
                 path: 'owner',
                 populate: {
@@ -74,6 +75,8 @@ const resolvers = {
                     path: 'category'
                 }]
             }); 
+            console.log(room.tutorial.steps);
+            return room;
         },
     },
     Mutation: {
@@ -150,12 +153,9 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in first')
         },
-        createRoom: async (_parent, { tutorialId, token }, context) => {
+        createRoom: async (_parent, { tutorialId }, context) => {
             // TODO: link firebase authentication with server side to check for authentication before room creation.
-            const user = await User.findOne({
-                token: token
-            });
-
+            console.log(context.user);
             const tutorial = await Tutorial.findById(tutorialId)
             .populate({
                 path: 'steps',
@@ -167,16 +167,14 @@ const resolvers = {
                 path: 'author'
             });
 
-            const dbRoom = new Room({
-                owner: user._id,
-                tutorial: tutorialId,
+            const dbRoom = await Room.create({
+                owner: context.user,
+                tutorial: tutorialId
             });
-            dbRoom.save();
 
             return {
-                ...dbRoom,
-                _id: dbRoom._id,
-                owner: user,
+                _id: dbRoom.id,
+                owner: context.user,
                 tutorial: tutorial
             }
         },
