@@ -32,7 +32,7 @@ export const GET_CURRENT_STEP = gql`
                 comments {
                     content
                     author {
-                        username
+                        email
                     }
                 }
             content
@@ -42,27 +42,32 @@ export const GET_CURRENT_STEP = gql`
 `
 
 export const GET_ROOM = gql`
-    query GET_ROOM($id: ID!) {
-        room(_id: $id) {
-            currentStep {
-                content
-                comments {
-                    content
-                    author {
-                        username
-                    }
-                }
-            }
+    query GET_ROOM($roomId: ID!) {
+        room(id: $roomId) {
+            currentStep
             tutorial {
                 title
                 author {
                     username
                 }
-                categories
-                tags
+                steps {
+                    content
+                    comments {
+                        content
+                        author {
+                            username
+                        }
+                    }
+                }
+                category {
+                    name
+                }
+                tags {
+                  name
+                }
             }
             owner {
-                username
+                email
             }
         }
     }

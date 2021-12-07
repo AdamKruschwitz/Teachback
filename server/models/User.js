@@ -19,6 +19,10 @@ const userSchema = new Schema ({
 
     image: {
         type: String
+    },
+
+    uid: {
+        type: String
     }
 
 });

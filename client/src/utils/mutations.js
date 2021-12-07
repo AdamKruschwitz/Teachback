@@ -52,16 +52,6 @@ mutation CREATE_ROOM($tutorialId: ID!, $token: String!) {
 }
 `
 
-export const LOGIN = gql`
-mutation LOGIN($input: UserInput!) {
-    login(input: $input) {
-        username
-        email
-        image
-    }
-}
-`
-
 export const CONNECT_TO_ROOM = gql`
 mutation CONNECT_TO_ROOM($roomId: ID!) {
     connectToRoom(roomId: $roomId) {
@@ -80,7 +70,9 @@ mutation DISCONNECT_FROM_ROOM($roomId: ID!) {
 export const FINISH_STEP = gql`
 mutation FINISH_STEP($roomId: ID!) {
     recordStepFinished(roomId: $roomId) {
-        finishedUsers
+        finishedUsers {
+            email
+        }
     }
 }
 `
@@ -88,7 +80,9 @@ mutation FINISH_STEP($roomId: ID!) {
 export const CANCEL_FINISHED_STEP = gql`
 mutation CANCEL_FINISHED_STEP($roomId: ID!) {
     recordStepNotFinished(roomId: $roomId) {
-        finishedUsers
+        finishedUsers {
+            email
+        }
     }
 }
 `

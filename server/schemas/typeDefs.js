@@ -37,7 +37,7 @@ const typeDefs = gql`
         title: String!
         author: User!
         tags: [Tag]
-        category: String!
+        category: Category!
         steps: [Step!]!
         ratings: [Rating!]
         searchable: Boolean    
@@ -58,7 +58,7 @@ const typeDefs = gql`
         _id: ID!
         owner: User!
         tutorial: Tutorial!
-        currentStep: Step!
+        currentStep: Int!
         connectedUsers: [User!]!
         finishedUsers: [User!]!
     }
@@ -91,7 +91,7 @@ const typeDefs = gql`
         categories: [Category]
         tutorials(input: SearchInput): [Tutorial]
         tutorial(_id: ID!): Tutorial
-        room(_id: ID!): Room
+        room(id: ID!): Room
     }
 
     type Mutation {
@@ -102,12 +102,12 @@ const typeDefs = gql`
         deleteComment(commentId: ID!): Step
         addRating(tutorialId: ID!, value: Int!): Tutorial
         deleteRating(ratingId: ID!): Tutorial
-        createRoom(tutorialId: ID!, token: String!): Room
-        login(input: UserInput): User
+        createRoom(tutorialId: ID!): Room
         connectToRoom(roomId: ID!): Room
         disconnectFromRoom(roomId: ID!): Room
         recordStepFinished(roomId: ID!): Room
         recordStepNotFinished(roomId: ID!): Room
+        progressRoom(roomId: ID!): Room
     }
 
 `

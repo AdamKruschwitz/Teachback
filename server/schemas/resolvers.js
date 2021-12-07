@@ -40,11 +40,17 @@ const resolvers = {
         tutorial: async (_, { id }) => {
             return Tutorial.findOne({ _id: tagId })
         },
-        room: async (_, { _id }) => {
+        room: async (_, { id }) => {
             // Mongoose Deep Population
             // https://mongoosejs.com/docs/populate.html#deep-populate
-            const dbRoom = await Room.findById(_id)
-            .populate('owner')
+            console.log(id);
+            const room = await Room.findById(id)
+            .populate({
+                path: 'owner',
+                populate: {
+                    path: 'username'
+                }
+            })
             .populate({
                 path: 'tutorial',
                 populate: [{
@@ -52,7 +58,10 @@ const resolvers = {
                     populate: {
                         path: 'comments',
                         populate: {
-                            path: 'author'
+                            path: 'author',
+                            populate: {
+                                path: 'username'
+                            }
                         }
                     }
                 },
@@ -65,20 +74,9 @@ const resolvers = {
                 {
                     path: 'category'
                 }]
-            });
-
-
-            // Get the current step as a step object
-            const gqlCurrentStep = dbRoom.tutorial.steps[dbRoom.currentStep];
-
-            // Return the room replacing the integer with the object.
-            const out = {
-                tutorial: dbRoom.tutorial,
-                owner: dbRoom.owner,
-                currentStep: gqlCurrentStep
-            }
-            return out
-            
+            }); 
+            // console.log(room.tutorial.steps);
+            return room;
         },
     },
     Mutation: {
@@ -157,12 +155,9 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in first')
         },
-        createRoom: async (_parent, { tutorialId, token }, context) => {
+        createRoom: async (_parent, { tutorialId }, context) => {
             // TODO: link firebase authentication with server side to check for authentication before room creation.
-            const user = await User.findOne({
-                token: token
-            });
-
+            console.log(context.user);
             const tutorial = await Tutorial.findById(tutorialId)
             .populate({
                 path: 'steps',
@@ -174,21 +169,16 @@ const resolvers = {
                 path: 'author'
             });
 
-            const dbRoom = new Room({
-                owner: user._id,
-                tutorial: tutorialId,
+            const dbRoom = await Room.create({
+                owner: context.user,
+                tutorial: tutorialId
             });
-            dbRoom.save();
 
             return {
-                ...dbRoom,
-                _id: dbRoom._id,
-                owner: user,
+                _id: dbRoom.id,
+                owner: context.user,
                 tutorial: tutorial
             }
-        },
-        login: async (_parent, args, context) => {
-            console.log('Login Resolver Running');
         },
         connectToRoom: async (_parent, { roomId }, context) => {
             if(context.user) {
@@ -257,6 +247,14 @@ const resolvers = {
                         new: true
                     }
                 );
+            }
+        },
+        progressRoom: async (_parent, { roomId }, context) => {
+            if(context.user) {
+                const room = Room.findById(roomId);
+                room.currentStep++;
+                room.save();
+                return room;
             }
         }
     }
