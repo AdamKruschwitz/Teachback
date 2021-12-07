@@ -4,39 +4,75 @@ import { Button } from '@mui/material';
 
 import { StepDisplay } from '../components'
 
-import { useQuery } from '@apollo/client';
-import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_CURRENT_STEP, GET_ROOM, CONNECT_TO_ROOM, DISCONNECT_FROM_ROOM, FINISH_STEP, CANCEL_FINISHED_STEP } from '../utils/queries' ;
 import { useParams } from 'react-router-dom';
 
-function Room() {
-    const handleNextStep= () => {
-        //TODO: functinality missing
-    }
-    const handleFinishStep = () => {
-        //TODO: functinality missing
-    }
+import { useGlobalContext } from '../utils/GlobalContext'
 
-    const [step, setStep] = useState({});
+function Room() {
+    
     // Will be used for displaying connected users and allowing next buttons.
     const [room, setRoom] = useState({});
     // const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
     const { data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
     const { data: stepData } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
+    const [connectToRoom] = useMutation(CONNECT_TO_ROOM);
+    const [disconnectFromRoom] = useMutation(DISCONNECT_FROM_ROOM);
+    const [finishStep] = useMutation(FINISH_STEP);
+    const [cancelFinishedStep] = useMutation(CANCEL_FINISHED_STEP);
+    const [state, dispatch] = useGlobalContext();
+
+    const handleNextStep= () => {
+        
+    }
+
+    const handleFinishStep = () => {
+        finishStep({
+            variables: {
+                roomId: id
+            }
+        });
+    }
     
     // After render, check the state of initial room load and check for updated step data.
     useEffect( () => {
         if(roomData) {
+            // If the room has loaded for the first time...
             setRoom(roomData);
         } else if(stepData) {
-            setStep(stepData);
+            // If the step Data has been updated...
+            setRoom({
+                ...room,
+                currentStep: stepData
+            });
         }
-        
-    }, [setStep, setRoom])
+    }, [setRoom]);
+
+    // connect to the room on the server side
+    useEffect( () => {
+        connectToRoom({
+            variables: {
+                roomId: id
+            }
+        });
+
+        // Cleanup for when the user disconnects
+        return () => {
+            disconnectFromRoom({
+                variables: {
+                    roomId: id
+                }
+            });
+        }
+    }, [])
+
+    if(roomLoading) return "Room Loading..."
 
     return (
         <MainContainer>
-            <StepDisplay content={step.content}/>
+            <StepDisplay content={room.currentStep.content}/>
             <ButtonContainer>
                 {/* TODO: if statement for if owner or if follower */}
                 <Button onClick={handleNextStep}>Next Step</Button>
@@ -45,7 +81,7 @@ function Room() {
             <CommentsContainer>
                 <h1>Comments</h1>
                 {
-                    step.comments.map(comment => {
+                    room.currentStep.comments.map(comment => {
                         return (
                             <CommentsCard>
                                 <h3>{ comment.user.username }</h3>
