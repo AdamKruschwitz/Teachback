@@ -4,9 +4,9 @@ export const CREATE_TUTORIAL = gql`
   mutation createTutorial(
     $title: String!
     $author: String!
-    $tags: [Tag]
+    $tags: [String]
     $category: String!
-    $steps: [Step!]!
+    $steps: [String!]!
   ) {
     createTutorial(
       title: $title
@@ -89,6 +89,15 @@ export const CANCEL_FINISHED_STEP = gql`
 mutation CANCEL_FINISHED_STEP($roomId: ID!) {
     recordStepNotFinished(roomId: $roomId) {
         finishedUsers
+    }
+}
+`
+export const ADD_COMMENT = gql`
+# TODO: create add comment mutation
+mutation addComment($stepId: ID!, $content: String! ) {
+    addComment(stepId: $stepId, content: $content) {
+        content
+        comments
     }
 }
 `

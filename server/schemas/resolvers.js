@@ -92,6 +92,8 @@ const resolvers = {
             }
         },
         createTutorial: async (_, { TutorialInput }) => {
+            // await to create tags, steps 
+            // use object ids from created tags and steps and pass to tutorial creation object 
             return Tutorial.create({ TutorialInput }).populate('user');
         },
         addComment: async (_, { stepId, content }) => {

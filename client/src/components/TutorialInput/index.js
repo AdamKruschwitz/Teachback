@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import remarkGFM from "remark-gfm";
-// import  { Redirect } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -22,8 +21,25 @@ function TutorialInput({ className }) {
   const [steps, setSteps] = useState([""]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   
-
   const [state,  dispatch] = useGlobalContext()
+
+  const [category, setCategory] = React.useState('');
+
+  const handleCategory = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const [title, setTitle] = React.useState('');
+
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const [tags, setTags] = React.useState('');
+
+  const handleTags = (event) => {
+      setTags(event.target.value)
+  }
 
   // const [markdown, setMarkdown] = useState("");
   const handleChange = (event) => {
@@ -74,45 +90,27 @@ function TutorialInput({ className }) {
     setSubmit(!submit);
 
     const newTutorialObject = {
-        Name: title,
-        Author: state.user.token,
-        Steps: steps,
-        Category: category._id,
-        Tags: tags
+        name: title,
+        author: state.user.token,
+        steps: steps,
+        category: category._id,
+        tags: tags
       }
+      console.log(newTutorialObject)
 
       try {
         const { data } = createTutorial({
-          variables: { ...state },
+          variables: { ...newTutorialObject },
         });
-  
-        // TODO: redirect to profile page
-        // <Redirect to='/Profile'  />
-        window.location('/Profile')
+        console.log(data)
+
+        window.location.replace('/profile')
 
       } catch (err) {
         console.error(err);
       }
   };
 
-
-  const [category, setCategory] = React.useState('');
-
-  const handleCategory = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const [title, setTitle] = React.useState('');
-
-  const handleTitle = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const [tags, setTags] = React.useState('');
-
-  const handleTags = (event) => {
-      setTags(event.target.value)
-  }
 
   return (
     <MainContainer>
