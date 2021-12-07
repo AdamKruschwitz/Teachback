@@ -1,14 +1,22 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
+const cors = require('cors');
 
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 
 const db = require('./config/connection');
 
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
+
 const PORT = process.env.PORT || 3001;
 const app = express();
+
 
 const server = new ApolloServer({
   typeDefs,
@@ -17,11 +25,13 @@ const server = new ApolloServer({
 });
 
 server.start().then(() => {
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: false });
 });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors(corsOptions));
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -35,11 +45,9 @@ app.post('/registerUser', (req, res) => {
   const user = req.body.user;
 
   db.collection('users').insertOne(user);
-
-
   res.send({
     "result":true,
-    "user_record_token":""
+    "data":[]
   });
 });
 
