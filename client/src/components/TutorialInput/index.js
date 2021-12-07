@@ -12,7 +12,6 @@ import Select from '@mui/material/Select';
 import {Input} from "@mui/material";
 import { useGlobalContext } from "../../utils/GlobalContext"
 import { CREATE_TUTORIAL } from "../../utils/mutations"
-import { QUERY_TUTORIALS } from "../../utils/queries";
 import { useMutation, useQuery } from '@apollo/client';
 
 function TutorialInput({ className }) {
@@ -100,7 +99,7 @@ function TutorialInput({ className }) {
 
       try {
         window.location.replace('/profile')
-        
+
         const { data } = await createTutorial({
           variables: { ...newTutorialObject },
         });
@@ -135,9 +134,12 @@ function TutorialInput({ className }) {
                 label="Category"
                 onChange={handleCategory}
                 >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={10}>Javascript</MenuItem>
+                <MenuItem value={20}>HTML</MenuItem>
+                <MenuItem value={30}>CSS</MenuItem>
+                <MenuItem value={30}>React</MenuItem>
+                <MenuItem value={30}>React Native</MenuItem>
+                <MenuItem value={30}>IOS</MenuItem>
                 </Select>
             </FormControl>
           </Box>
