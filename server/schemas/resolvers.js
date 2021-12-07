@@ -1,5 +1,6 @@
 const { UserInputError, AuthenticationError } = require("apollo-server-errors")
-const { User, Category, Tutorial, Room, Tag, Step, Rating } = require("../models")
+const { User, Category, Tutorial, Room, Tag, Step, Rating } = require("../models");
+const { findOneAndUpdate } = require("../models/Category");
 
 const resolvers = {
     Query: {
@@ -184,8 +185,43 @@ const resolvers = {
                 tutorial: tutorial
             }
         },
-        login: async (_parent, args) => {
+        login: async (_parent, args, context) => {
             console.log('Login Resolver Running');
+        },
+        connectToRoom: async (_parent, { roomId }, context) => {
+            if(context.user) {
+                // Add this user to the connected users, then return the resulting room.
+                return await findOneAndUpdate(
+                    {
+                        _id: roomId
+                    },
+                    {
+                        $addToSet: {
+                            connectedUsers: context.user.id
+                        }
+                    },
+                    {
+                        new: true
+                    }
+                )
+            }
+        },
+        recordStepFinished: async(_parent, { roomId }, context) => {
+            if(context.user) {
+                return await findOneAndUpdate(
+                    {
+                        _id: roomId
+                    },
+                    {
+                        $addToSet: {
+                            finishedUsers: context.user.id
+                        }
+                    },
+                    {
+                        new: true
+                    }
+                );
+            }
         }
     }
 }

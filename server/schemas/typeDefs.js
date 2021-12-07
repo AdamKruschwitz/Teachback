@@ -105,6 +105,7 @@ const typeDefs = gql`
         createRoom(tutorialId: ID!, token: String!): Room
         login(input: UserInput): User
         connectToRoom(roomId: ID!): Room
+        recordStepFinished(roomId: ID!): Room
     }
 
 `
