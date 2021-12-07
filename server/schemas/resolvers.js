@@ -173,7 +173,7 @@ const resolvers = {
 
             const dbRoom = new Room({
                 owner: user._id,
-                tutorial: tutorialId
+                tutorial: tutorialId,
             });
             dbRoom.save();
 

@@ -59,6 +59,8 @@ const typeDefs = gql`
         owner: User!
         tutorial: Tutorial!
         currentStep: Step!
+        connectedUsers: [User!]!
+        finishedUsers: [User!]!
     }
 
     type Step {
