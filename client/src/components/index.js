@@ -14,6 +14,6 @@ export {
     Login,
     Category,
     TutorialInput,
-    StepDisplay
+    StepDisplay,
     CommentInput,
 }

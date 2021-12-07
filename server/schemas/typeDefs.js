@@ -96,7 +96,7 @@ const typeDefs = gql`
 
     type Mutation {
         addUser(input: UserInput): Auth
-        createTutorial(input: TutorialInput!): Tutorial
+        createTutorial(title: String!, author: String!, tags: [String], category: String!, steps: [String!]!): Tutorial
         updateTutorial(input: TutorialInput!): Tutorial
         addComment(stepId: ID!, content: String!): Step
         deleteComment(commentId: ID!): Step
