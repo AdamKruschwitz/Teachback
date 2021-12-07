@@ -108,6 +108,7 @@ const typeDefs = gql`
         disconnectFromRoom(roomId: ID!): Room
         recordStepFinished(roomId: ID!): Room
         recordStepNotFinished(roomId: ID!): Room
+        progressRoom(roomId: ID!): Room
     }
 
 `

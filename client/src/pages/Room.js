@@ -5,7 +5,8 @@ import { Button } from '@mui/material';
 import { StepDisplay } from '../components'
 
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_CURRENT_STEP, GET_ROOM, CONNECT_TO_ROOM, DISCONNECT_FROM_ROOM, FINISH_STEP, CANCEL_FINISHED_STEP } from '../utils/queries' ;
+import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
+import { CONNECT_TO_ROOM, DISCONNECT_FROM_ROOM, FINISH_STEP, CANCEL_FINISHED_STEP } from '../utils/mutations';
 import { useParams } from 'react-router-dom';
 
 import { useGlobalContext } from '../utils/GlobalContext'
@@ -23,7 +24,7 @@ function Room() {
     const [disconnectFromRoom] = useMutation(DISCONNECT_FROM_ROOM);
     const [finishStep] = useMutation(FINISH_STEP);
     const [cancelFinishedStep] = useMutation(CANCEL_FINISHED_STEP);
-    const [state, dispatch] = useGlobalContext();
+    const [state, _dispatch] = useGlobalContext();
 
     const toggleFinishedStep = () => {
         setFinishedStep(!finishedStep);
@@ -100,13 +101,13 @@ function Room() {
 
     return (
         <MainContainer>
-            <StepDisplay content={room.currentStep.content}/>
+            <StepDisplay content={room.tutorial.steps[room.currentStep].content}/>
             <ButtonContainer>
                 {/* Room controls */}
                 {
                     room.owner.email===state.user.email ?
                         // If the room owner
-                        allUsersReady()?
+                        areAllUsersReady()?
                             // If all users finished with the step
                             <Button onClick={handleNextStep}>Next Step</Button> :
                             // Else users aren't all finished
@@ -124,7 +125,7 @@ function Room() {
             <CommentsContainer>
                 <h1>Comments</h1>
                 {
-                    room.currentStep.comments.map(comment => {
+                    room.tutorial.steps[room.currentStep].comments.map(comment => {
                         return (
                             <CommentsCard>
                                 <h3>{ comment.user.username }</h3>

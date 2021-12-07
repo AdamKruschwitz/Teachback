@@ -44,7 +44,12 @@ const resolvers = {
             // Mongoose Deep Population
             // https://mongoosejs.com/docs/populate.html#deep-populate
             const dbRoom = await Room.findById(_id)
-            .populate('owner')
+            .populate({
+                path: 'owner',
+                populate: {
+                    path: 'username'
+                }
+            })
             .populate({
                 path: 'tutorial',
                 populate: [{
@@ -52,7 +57,10 @@ const resolvers = {
                     populate: {
                         path: 'comments',
                         populate: {
-                            path: 'author'
+                            path: 'author',
+                            populate: {
+                                path: 'username'
+                            }
                         }
                     }
                 },
@@ -255,6 +263,14 @@ const resolvers = {
                         new: true
                     }
                 );
+            }
+        },
+        progressRoom: async (_parent, { roomId }, context) => {
+            if(context.user) {
+                const room = Room.findById(roomId);
+                room.currentStep++;
+                room.save();
+                return room;
             }
         }
     }
