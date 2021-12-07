@@ -6,6 +6,8 @@ import axios from 'axios'
 import { useGlobalContext } from '../utils/GlobalContext';
 import { auth } from '../firebase'
 import { PASSWORD_LOGIN } from '../utils/actions'
+import {withRouter} from 'react-router-dom';
+
 
 
 function EditProfile() {
@@ -18,42 +20,45 @@ function EditProfile() {
     const [passwordValue, setPasswordValue] = useState('')
     const [passwordConfirmValue, setPasswordConfirmValue] = useState('')
 
-    const handleEditEmail = async (e) => {
-        e.preventDefault();
-        console.log(emailValue)
+    const handleEditEmail = async () => {
+        // e.preventDefault();
+        // console.log(emailValue)
         if (emailValue === '') {
         alert('email field must not be empty');
         return;
         }
-    
+        // alert('email update successfull')
         try {
 
             const result = await auth.updateEmail(emailValue)
-            EditFromfirebaseResponse(result, PASSWORD_LOGIN)
+            EditFromfirebaseResponse(result)
         } catch {
         alert("Failed to update")
         }
     }
-    const handleChangePassword = async (e) => {
-        e.preventDefault();
-        console.log(passwordValue)
-        if (emailValue === '') {
-        alert('email field must not be empty');
+    const handleChangePassword = async () => {
+        // e.preventDefault();
+        // console.log(passwordValue)
+        if (passwordValue === '') {
+        alert('password field must not be empty');
         return;
         }
-    
+        // alert('password update successfull')
         try {
 
-            const result = await auth.updateEmail(passwordValue)
-            EditFromfirebaseResponse(result, PASSWORD_LOGIN)
+            const result = await auth.updatePassword(passwordValue)
+            EditFromfirebaseResponse(result)
         } catch {
         alert("Failed to update")
         }
     }
     const handleCancel = () => {
         // how to return back to profile page
+        window.location.href = '/profile'
     }
-    const handleChangeBoth = () => {
+    const handleChangeBoth = (e) => {
+        console.log(emailValue, passwordValue)
+        e.preventDefault();
         handleEditEmail()
         handleChangePassword()
     }
@@ -68,14 +73,14 @@ function EditProfile() {
                 token: token,
                 uid: result.user.uid
             }
-            axios.post('http://localhost:3001/registerUser',{user}).then(function(data){
-                if(data.data.result){
-                    dispatch({type: loginType, payload: user });
-                    // dispatch({ type: TOGGLE_LOGIN_DIALOG });
-                }else{
-                    alert('couldnt save to server')
-                }
-            })
+            // axios.post('http://localhost:3001/registerUser',{user}).then(function(data){
+            //     if(data.data.result){
+            //         dispatch({type: loginType, payload: user });
+            //         // dispatch({ type: TOGGLE_LOGIN_DIALOG });
+            //     }else{
+            //         alert('couldnt save to server')
+            //     }
+            // })
     }
 
     return (

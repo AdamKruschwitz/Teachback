@@ -14,10 +14,7 @@ const initialState = {
 export function GlobalProvider({ value = [], ...props }) {
     const [state, dispatch] = useGlobalReducer(initialState);
     useEffect(() => {
-      console.log(auth)
-
         const unsubscribe = auth.onAuthStateChanged(result => {
-            console.log(result)
             if (result != null) {
                 const token = result.refreshToken;
                 const user = {
