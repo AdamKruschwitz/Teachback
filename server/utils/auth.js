@@ -5,12 +5,12 @@ module.exports = {
   authMiddleware: function (req, res, next) {
     // allows token to be sent via  req.query or headers
     let refreshToken = req.query.refreshToken || req.headers.refreshToken;
-
+    console.log(refreshToken);
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
       // Should this be this way?
-      token = token.split(' ').pop().trim();
-      console.log(token);
+      refreshToken = refreshToken.split(' ').pop().trim();
+      console.log(refreshToken);
     }
 
     if (!refreshToken) {
@@ -20,10 +20,10 @@ module.exports = {
     // verify token and get user data out of it
     try {
       getAuth()
-      .verifyIdToken( token )
+      .verifyIdToken( refreshToken )
       .then((decodedToken) => {
         console.log(decodedToken);
-      })
+      });
     } catch {
       console.log('Invalid token');
       return res.status(400).json({ message: 'invalid token!' });

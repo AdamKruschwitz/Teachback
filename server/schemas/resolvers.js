@@ -183,6 +183,17 @@ const resolvers = {
                 owner: user,
                 tutorial: tutorial
             }
+        },
+        login: async (_parent, args) => {
+            var user = await User.findOne({ token: args.token });
+            if(!user) {
+                user = await User.findOneAndUpdate(
+                    { uid: user.uid },
+                    {
+                        
+                    }
+                    );
+            }
         }
     }
 }
