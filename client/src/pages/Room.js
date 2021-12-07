@@ -65,11 +65,15 @@ function Room() {
         toggleFinishedStep();
     }
 
+    const handleCloseRoom = () => {
+
+    }
+
     const renderRoomControls = () => {
         if(room.owner.email = state.user.email) {
             // If on the last step
             if(room.currentStep === room.tutorial.steps.length-1) {
-
+                return (<Button onClick={ handleCloseRoom }> Finish Tutorial </Button>)
             } else {
                 if(areAllUsersReady()) {
                     return (<Button onClick={handleNextStep}>Next Step</Button>)
@@ -128,24 +132,7 @@ function Room() {
         <MainContainer>
             <StepDisplay content={room.tutorial.steps[room.currentStep].content}/>
             <ButtonContainer>
-                {/* Room controls */}
-                {
-                    room.owner.email===state.user.email ?
-                        // If the room owner
-                        areAllUsersReady()?
-                            // If all users finished with the step
-                            <Button onClick={handleNextStep}>Next Step</Button> :
-                            // Else users aren't all finished
-                            <Button disabled onClick={handleNextStep}>Next Step</Button> :
-                        // Else the room follower
-                        finishedStep ? 
-                            // Of they are finished with the step
-                            <Button id="undo-finished-step" onClick={handleCancelFinishStep}>I'm not ready!</Button> :
-                            // If they are not finished with the step
-                            <Button id="finish-step" onClick={handleFinishStep}>Finish Step</Button>
-                }
-                
-                <Button onClick={handleFinishStep}>Finish Step</Button>
+                {renderRoomControls()}
             </ButtonContainer>
             <CommentsContainer>
                 <h1>Comments</h1>
