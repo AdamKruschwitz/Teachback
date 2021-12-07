@@ -104,6 +104,7 @@ const typeDefs = gql`
         deleteRating(ratingId: ID!): Tutorial
         createRoom(tutorialId: ID!, token: String!): Room
         login(input: UserInput): User
+        connectToRoom(roomId: ID!): Room
     }
 
 `
