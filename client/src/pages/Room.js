@@ -64,6 +64,27 @@ function Room() {
         });
         toggleFinishedStep();
     }
+
+    const renderRoomControls = () => {
+        if(room.owner.email = state.user.email) {
+            // If on the last step
+            if(room.currentStep === room.tutorial.steps.length-1) {
+
+            } else {
+                if(areAllUsersReady()) {
+                    return (<Button onClick={handleNextStep}>Next Step</Button>)
+                } else {
+                    return (<Button disabled>Next Step</Button>)
+                }
+            }
+        } else {
+            if(finishedStep) {
+                return (<Button id="undo-finished-step" onClick={handleCancelFinishStep}>I'm not ready!</Button>)
+            } else {
+                return (<Button id="finish-step" onClick={handleFinishStep}>Finish Step</Button>)
+            }
+        }
+    }
     
     // Handle loading initial room data
     useEffect( () => {
