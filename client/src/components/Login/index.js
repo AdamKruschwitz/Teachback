@@ -21,6 +21,8 @@ import AuthService from '../../utils/auth'
 import { LOGIN } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
 
+import axios from 'axios';
+
 const LoginDialogue = function() {
 
     const [emailValue, setEmailValue] = useState('')
@@ -57,10 +59,14 @@ const LoginDialogue = function() {
                 token: token,
                 uid: result.user.uid
             }
-            AuthService.login(token)
-            dispatch({type: loginType, payload: user });
-            dispatch({ type: TOGGLE_LOGIN_DIALOG });
-            loginMutation({ variables: { input: user } });
+            axios.post('http://localhost:3001/registerUser',{user}).then(function(data){
+                if(data.data.result){
+                    dispatch({type: loginType, payload: user });
+                    dispatch({ type: TOGGLE_LOGIN_DIALOG });
+                }else{
+                    alert('couldnt save to server')
+                }
+            })
     }
 
     async function handlePasswordLogin(e) {
