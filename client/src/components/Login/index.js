@@ -21,7 +21,7 @@ import AuthService from '../../utils/auth'
 import { LOGIN } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
 
-import axios from 'axios';
+import { axios } from 'axios';
 
 const LoginDialogue = function() {
 
@@ -35,8 +35,6 @@ const LoginDialogue = function() {
 
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
-
-    const [loginMutation, { error }] = useMutation(LOGIN);
   
     if(error) return "Login Error :("
 

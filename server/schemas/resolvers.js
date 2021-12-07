@@ -180,9 +180,6 @@ const resolvers = {
                 tutorial: tutorial
             }
         },
-        login: async (_parent, args, context) => {
-            console.log('Login Resolver Running');
-        },
         connectToRoom: async (_parent, { roomId }, context) => {
             if(context.user) {
                 // Add this user to the connected users, then return the resulting room.

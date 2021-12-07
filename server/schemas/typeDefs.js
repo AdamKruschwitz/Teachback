@@ -103,7 +103,6 @@ const typeDefs = gql`
         addRating(tutorialId: ID!, value: Int!): Tutorial
         deleteRating(ratingId: ID!): Tutorial
         createRoom(tutorialId: ID!, token: String!): Room
-        login(input: UserInput): User
         connectToRoom(roomId: ID!): Room
         disconnectFromRoom(roomId: ID!): Room
         recordStepFinished(roomId: ID!): Room

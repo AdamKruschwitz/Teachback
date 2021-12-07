@@ -1,8 +1,9 @@
 const { getAuth } = require( 'firebase-admin');
+const db = require('../config/connection');
 
 module.exports = {
   // function for our authenticated routes
-  authMiddleware: function ({ req }) {
+  authMiddleware: async function ({ req }) {
     console.log("context middleware running");
     console.log( req.headers );
     // allows token to be sent via  req.query or headers
@@ -11,11 +12,8 @@ module.exports = {
 
     // verify token and get user data out of it
     try {
-      getAuth()
-      .verifyIdToken( refreshToken )
-      .then((decodedToken) => {
-        console.log(decodedToken);
-      });
+      const user = await db.collection('users').findOne({ token: refreshToken });
+      console.log(user);
     } catch {
       console.log('Invalid token');
     }
