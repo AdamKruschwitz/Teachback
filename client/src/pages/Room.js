@@ -38,6 +38,7 @@ function Room() {
                 roomId: id
             }
         });
+        toggleFinishedStep();
     }
 
     const handleCancelFinishStep = () => {
@@ -45,7 +46,8 @@ function Room() {
             variables: {
                 roomId: id
             }
-        })
+        });
+        toggleFinishedStep();
     }
     
     // After render, check the state of initial room load and check for updated step data.
