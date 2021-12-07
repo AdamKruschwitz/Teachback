@@ -206,7 +206,24 @@ const resolvers = {
                 )
             }
         },
-        recordStepFinished: async(_parent, { roomId }, context) => {
+        disconnectFromRoom: async (_parent, { roomId }, context) => {
+            if(context.user) {
+                return await findOneAndUpdate(
+                    {
+                        _id: roomId
+                    },
+                    {
+                        $pull: {
+                            connectedUsers: context.user._id
+                        }
+                    },
+                    {
+                        new: true
+                    }
+                )
+            }
+        },
+        recordStepFinished: async (_parent, { roomId }, context) => {
             if(context.user) {
                 return await findOneAndUpdate(
                     {
