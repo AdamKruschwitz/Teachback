@@ -18,9 +18,6 @@ import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
 import AuthService from '../../utils/auth'
 
-import { LOGIN } from '../../utils/mutations';
-import { useMutation } from '@apollo/client';
-
 import axios from 'axios';
 
 const LoginDialogue = function() {
@@ -35,10 +32,7 @@ const LoginDialogue = function() {
 
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
-
-    const [loginMutation, { error }] = useMutation(LOGIN);
   
-    if(error) return "Login Error :("
 
     const handleOnClose = () => {
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
@@ -50,23 +44,24 @@ const LoginDialogue = function() {
     }
 
     const loginFromfirebaseResponse = async (result, loginType) => {
-        console.log(result);
         const token = result.user.refreshToken;
-            const user = {
-                username: result.user.displayName,
-                email: result.user.email,
-                image: result.user.photoURL,
-                token: token,
-                uid: result.user.uid
+        const user = {
+            username: result.user.displayName,
+            email: result.user.email,
+            image: result.user.photoURL,
+            token: token,
+            uid: result.user.uid
+        }
+
+        axios.post('http://localhost:3001/registerUser',{user}).then(function(data){
+            if(data.data.result){
+                dispatch({type: loginType, payload: user });
+                dispatch({ type: TOGGLE_LOGIN_DIALOG });
+            }else{
+                alert('couldnt save to server')
             }
-            axios.post('http://localhost:3001/registerUser',{user}).then(function(data){
-                if(data.data.result){
-                    dispatch({type: loginType, payload: user });
-                    dispatch({ type: TOGGLE_LOGIN_DIALOG });
-                }else{
-                    alert('couldnt save to server')
-                }
-            })
+        });
+        AuthService.login(token);
     }
 
     async function handlePasswordLogin(e) {
@@ -79,10 +74,9 @@ const LoginDialogue = function() {
         if (loginEmailValue === '') {
             alert('enter your email');
             return;
-            }
-    
+        }
+
         try {
-   
               const result = await auth.signInWithEmailAndPassword(loginEmailValue, loginPasswordValue)
               loginFromfirebaseResponse(result, PASSWORD_LOGIN)
         } catch {

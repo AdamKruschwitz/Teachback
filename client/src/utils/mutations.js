@@ -1,4 +1,29 @@
-import {gql} from '@apollo/client';
+import { gql } from "@apollo/client";
+
+export const CREATE_TUTORIAL = gql`
+  mutation createTutorial(
+    $title: String!
+    $author: String!
+    $tags: [String]
+    $category: String!
+    $steps: [String!]!
+  ) {
+    createTutorial(
+      title: $title
+      author: $author
+      tags: $tags
+      category: $category
+      steps: $steps
+    ) {
+      _id
+      title
+      author
+      tags
+      category
+      steps
+    }
+  }
+`;
 
 export const CREATE_ROOM = gql`
 mutation CREATE_ROOM($tutorialId: ID!, $token: String!) {
@@ -27,16 +52,6 @@ mutation CREATE_ROOM($tutorialId: ID!, $token: String!) {
 }
 `
 
-export const LOGIN = gql`
-mutation LOGIN($input: UserInput!) {
-    login(input: $input) {
-        username
-        email
-        image
-    }
-}
-`
-
 export const CONNECT_TO_ROOM = gql`
 mutation CONNECT_TO_ROOM($roomId: ID!) {
     connectToRoom(roomId: $roomId) {
@@ -55,7 +70,9 @@ mutation DISCONNECT_FROM_ROOM($roomId: ID!) {
 export const FINISH_STEP = gql`
 mutation FINISH_STEP($roomId: ID!) {
     recordStepFinished(roomId: $roomId) {
-        finishedUsers
+        finishedUsers {
+            email
+        }
     }
 }
 `
@@ -63,7 +80,18 @@ mutation FINISH_STEP($roomId: ID!) {
 export const CANCEL_FINISHED_STEP = gql`
 mutation CANCEL_FINISHED_STEP($roomId: ID!) {
     recordStepNotFinished(roomId: $roomId) {
-        finishedUsers
+        finishedUsers {
+            email
+        }
+    }
+}
+`
+export const ADD_COMMENT = gql`
+# TODO: create add comment mutation
+mutation addComment($stepId: ID!, $content: String! ) {
+    addComment(stepId: $stepId, content: $content) {
+        content
+        comments
     }
 }
 `
