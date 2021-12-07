@@ -16,15 +16,26 @@ export const GET_CURRENT_STEP = gql`
 `
 
 export const GET_ROOM = gql`
-    query GET_ROOM($id: ID!) {
-        room(_id: $id) {
+    query GET_ROOM($roomId: ID!) {
+        room(_id: $roomId) {
             currentStep
             tutorial {
                 title
                 author {
                     username
                 }
-                category
+                steps {
+                    content
+                    comments {
+                        content
+                        author {
+                            username
+                        }
+                    }
+                }
+                category {
+                    name
+                }
                 tags {
                   name
                 }

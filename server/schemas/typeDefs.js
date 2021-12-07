@@ -37,7 +37,7 @@ const typeDefs = gql`
         title: String!
         author: User!
         tags: [Tag]
-        category: String!
+        category: Category!
         steps: [Step!]!
         ratings: [Rating!]
         searchable: Boolean    

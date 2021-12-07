@@ -19,10 +19,13 @@ function Room() {
     const [finishedStep, setFinishedStep] = useState(false);
     // const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
-    const { data: roomData, loading: roomLoading, error } = useQuery(GET_ROOM, { variables: {id: id}, headers: { authentication: state.user ? state.user.token : "" } });
+    console.log(id);
+    const { data: roomData, loading: roomLoading, error } = useQuery(GET_ROOM, { variables: { roomId: id }, skip: !state.user });
+    
+    
     // const { data: stepData } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
-    const [connectToRoom] = useMutation(CONNECT_TO_ROOM);
-    const [disconnectFromRoom] = useMutation(DISCONNECT_FROM_ROOM);
+    // const [connectToRoom] = useMutation(CONNECT_TO_ROOM);
+    // const [disconnectFromRoom] = useMutation(DISCONNECT_FROM_ROOM);
     const [finishStep] = useMutation(FINISH_STEP);
     const [cancelFinishedStep] = useMutation(CANCEL_FINISHED_STEP);
     
@@ -116,24 +119,24 @@ function Room() {
     // }, [stepData]);
 
     // connect to the room on the server side
-    useEffect( () => {
-        connectToRoom({
-            variables: {
-                roomId: id
-            }
-        });
+    // useEffect( () => {
+    //     connectToRoom({
+    //         variables: {
+    //             roomId: id
+    //         }
+    //     });
 
-        // Cleanup for when the user disconnects
-        return () => {
-            disconnectFromRoom({
-                variables: {
-                    roomId: id
-                }
-            });
-        }
-    }, [])
+    //     // Cleanup for when the user disconnects
+    //     return () => {
+    //         disconnectFromRoom({
+    //             variables: {
+    //                 roomId: id
+    //             }
+    //         });
+    //     }
+    // }, [])
 
-    if(roomLoading) return "Room Loading..."
+    if(roomLoading || !roomData) return "Room Loading..."
 
     return (
         <MainContainer>

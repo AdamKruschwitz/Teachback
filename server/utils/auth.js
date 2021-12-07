@@ -4,7 +4,7 @@ const db = require('../config/connection');
 module.exports = {
   // function for our authenticated routes
   authMiddleware: async ({ req }) => {
-    // console.log("context middleware running");
+    console.log("context middleware running");
     // console.log( Object.keys(req) );
     // console.log(req.params);
     // allows token to be sent via  req.query or headers

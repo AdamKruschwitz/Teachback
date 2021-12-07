@@ -1,24 +1,35 @@
 // import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route,  } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 import { GlobalProvider } from './utils/GlobalContext';
 import AuthService from './utils/auth';
-import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 function App() {
 
-  const terminatingLink = new HttpLink({
+  const terminatingLink = createHttpLink({
     uri: "http://localhost:3001/graphql",
-    headers: {
-        refreshToken: AuthService.getToken()
-    }
+    // headers: {
+    //     Authentication: "Bearer " + AuthService.getToken()
+    // }
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    const token = localStorage.getItem('refresh_token');
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
   });
 
   const client = new ApolloClient({
-    links: terminatingLink,
+    links: authLink.concat(terminatingLink),
     cache: new InMemoryCache()
   });
 
