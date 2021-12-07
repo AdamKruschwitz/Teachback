@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
 import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
 
 
 const client = new ApolloClient({
@@ -15,7 +15,12 @@ const client = new ApolloClient({
 
 function App() {
 
-  const client = new ApolloClient();
+  const terminatingLink = new HttpLink()
+
+  const client = new ApolloClient({
+    link: terminatingLink,
+    cache: new InMemoryCache()
+  });
 
   return (
     <ApolloProvider client={client}>
