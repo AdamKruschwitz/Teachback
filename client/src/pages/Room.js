@@ -65,19 +65,23 @@ function Room() {
         toggleFinishedStep();
     }
     
-    // After render, check the state of initial room load and check for updated step data.
+    // Handle loading initial room data
     useEffect( () => {
         if(roomData) {
             // If the room has loaded for the first time...
             setRoom(roomData);
-        } else if(stepData) {
-            // If the step Data has been updated...
+        } 
+    }, [roomData]);
+
+    // Handle step updates
+    useEffect( () => {
+        if(stepData) {
             setRoom({
                 ...room,
-                currentStep: stepData
+                currentStep: stepData.currentStep
             });
         }
-    }, [roomData, stepData]);
+    }, [stepData]);
 
     // connect to the room on the server side
     useEffect( () => {
