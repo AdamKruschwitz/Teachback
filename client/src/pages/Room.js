@@ -14,6 +14,7 @@ function Room() {
     
     // Will be used for displaying connected users and allowing next buttons.
     const [room, setRoom] = useState({});
+    const [finishedStep, setFinishedStep] = useState(false);
     // const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
     const { data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
@@ -22,7 +23,10 @@ function Room() {
     const [disconnectFromRoom] = useMutation(DISCONNECT_FROM_ROOM);
     const [finishStep] = useMutation(FINISH_STEP);
     const [cancelFinishedStep] = useMutation(CANCEL_FINISHED_STEP);
-    const [state, dispatch] = useGlobalContext();
+
+    const toggleFinishedStep = () => {
+        setFinishedStep(!finishedStep);
+    }
 
     const handleNextStep= () => {
         
@@ -34,6 +38,14 @@ function Room() {
                 roomId: id
             }
         });
+    }
+
+    const handleCancelFinishStep = () => {
+        cancelFinishedStep({
+            variables: {
+                roomId: id
+            }
+        })
     }
     
     // After render, check the state of initial room load and check for updated step data.
@@ -48,7 +60,7 @@ function Room() {
                 currentStep: stepData
             });
         }
-    }, [setRoom]);
+    }, [roomData, stepData]);
 
     // connect to the room on the server side
     useEffect( () => {
@@ -76,6 +88,11 @@ function Room() {
             <ButtonContainer>
                 {/* TODO: if statement for if owner or if follower */}
                 <Button onClick={handleNextStep}>Next Step</Button>
+                {
+                    finishedStep ? 
+                    <Button id="undo-finished-step" onClick={handleCancelFinishStep}>I'm not ready!</Button> :
+                    <Button id="finish-step" onClick={handleFinishStep}>Finish Step</Button>
+                }
                 <Button onClick={handleFinishStep}>Finish Step</Button>
             </ButtonContainer>
             <CommentsContainer>
@@ -123,6 +140,11 @@ const ButtonContainer = styled.div`
             background-color: var(--light-green) !important;
             color: var(--dark-purple) !important;
         }
+    }
+
+    > #undo-finished-step {
+        color: var(--red) !important;
+        border-color: var(--red) !important;
     }
 `
 const CommentsContainer = styled.div`
