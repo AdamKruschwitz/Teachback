@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import { CommentInput } from '../components';
 
 import { useQuery } from '@apollo/client';
-import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
+import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries';
 import { useParams } from 'react-router-dom';
 
 function Room() {
@@ -21,62 +21,90 @@ function Room() {
     const [room, setRoom] = useState({});
     const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
-    const {data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
-    const {data: stepData, loading: stepLoading } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
-    
-    useEffect( () => {
-        if(roomData) {
+    const { data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: { id: id } });
+    const { data: stepData, loading: stepLoading } = useQuery(GET_CURRENT_STEP, { variables: { id: id }, pollInterval: 500 });
+
+    useEffect(() => {
+        if (roomData) {
             setRoom(roomData);
         }
     })
 
-    return (
-        <MainContainer>
-            <TopContainer>
-                <h1>Step 1</h1>
-                <MarkdownContainer>
-                    <ReactMarkdown children={step.content} remarkPlugins={[remarkGFM]} />
-                </MarkdownContainer>
-            </TopContainer>
-            <ButtonContainer>
-                {/* TODO: if statement for if owner or if follower */}
-                <Button onClick={handleNextStep}>Next Step</Button>
-                <Button onClick={handleFinishStep}>Finish Step</Button>
-            </ButtonContainer>
-            <CommentsContainer>
-                <h1>Comments</h1>
-                <CommentInput>
-                    This is a test
-                </CommentInput>
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-                
-               
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-            
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-               
-                
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                   
-                </CommentsCard>
-               
-               
-            </CommentsContainer>
-            {/* {/* <CommentInput /> */}
+    //Beginning of Sidebar for # of steps in tutorial
+    function SideBar(props) {
 
-        </MainContainer>
-    )
+        function makeCircles() {
+            let arr = []; // contain circles
+            console.log(props.step);
+            //let amount of circles be generated accoring to users steps
+            for (let i = 1; i <= props.length; i++) {
+                let color = i <= props.step ? "green" : "red";
+                let circle = (
+                    <div style={{ backgroundColor: color }} className="circle"></div>
+                ); //element tag
+                arr.push(circle);
+            }
+
+            return <>{arr}</>;
+        }
+        
+        return <div className="sidebar">{makeCircles()}</div>;
+    }
+
+    
+            // return <div>
+            // // ()
+    </div >
+
+    // End of sidebar step 
+
+return (
+    <MainContainer>
+        <TopContainer>
+            <h1>Step 1</h1>
+            <MarkdownContainer>
+                <ReactMarkdown children={step.content} remarkPlugins={[remarkGFM]} />
+            </MarkdownContainer>
+        </TopContainer>
+        <ButtonContainer>
+            {/* TODO: if statement for if owner or if follower */}
+            <Button onClick={handleNextStep}>Next Step</Button>
+            <Button onClick={handleFinishStep}>Finish Step</Button>
+        </ButtonContainer>
+        <CommentsContainer>
+            <h1>Comments</h1>
+            <CommentInput>
+                This is a test
+            </CommentInput>
+            <CommentsCard>
+                <h3>Hello Man</h3>
+                <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
+            </CommentsCard>
+
+
+            <CommentsCard>
+                <h3>Hello Man</h3>
+                <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
+            </CommentsCard>
+
+            <CommentsCard>
+                <h3>Hello Man</h3>
+                <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
+            </CommentsCard>
+
+
+            <CommentsCard>
+                <h3>Hello Man</h3>
+                <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
+
+            </CommentsCard>
+
+
+        </CommentsContainer>
+        {/* {/* <CommentInput /> */}
+
+    </MainContainer>
+)
 }
 
 export default Room
