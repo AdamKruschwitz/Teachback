@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 
 import { StepDisplay } from '../components'
 
@@ -17,19 +17,22 @@ function Room() {
     }
 
     const [step, setStep] = useState({});
+    // Will be used for displaying connected users and allowing next buttons.
     const [room, setRoom] = useState({});
-    const [curStepI, setCurStepI] = useState(0);
+    // const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
-    const {data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
-    const {data: stepData, loading: stepLoading } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
+    const { data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
+    const { data: stepData } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
     
     // After render, check the state of initial room load and check for updated step data.
     useEffect( () => {
         if(roomData) {
             setRoom(roomData);
+        } else if(stepData) {
+            setStep(stepData);
         }
         
-    })
+    }, [setStep, setRoom])
 
     return (
         <MainContainer>

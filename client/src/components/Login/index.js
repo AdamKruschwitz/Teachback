@@ -18,6 +18,9 @@ import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
 import AuthService from '../../utils/auth'
 
+import { LOGIN } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
+
 const LoginDialogue = function() {
 
     const [emailValue, setEmailValue] = useState('')
@@ -30,7 +33,11 @@ const LoginDialogue = function() {
 
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
+
+    const [loginMutation, { error }] = useMutation(LOGIN);
   
+    if(error) return "Login Error :("
+
     const handleOnClose = () => {
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
@@ -40,27 +47,30 @@ const LoginDialogue = function() {
         setCurTab(value);
     }
 
-    const loginFromfirebaseResponse = async (result) => {
+    const loginFromfirebaseResponse = async (result, loginType) => {
+        console.log(result);
         const token = result.user.refreshToken;
             const user = {
                 username: result.user.displayName,
                 email: result.user.email,
                 image: result.user.photoURL,
-                token: token
+                token: token,
+                uid: result.user.uid
             }
             AuthService.login(token)
-            dispatch({type: PASSWORD_LOGIN, payload: user });
+            dispatch({type: loginType, payload: user });
             dispatch({ type: TOGGLE_LOGIN_DIALOG });
+            loginMutation({ variables: { input: user } });
     }
 
     async function handlePasswordLogin(e) {
         e.preventDefault();
        
-        if (loginPasswordValue == '') {
+        if (loginPasswordValue === '') {
         alert('password field must not be empty');
         return;
         }
-        if (loginEmailValue == '') {
+        if (loginEmailValue === '') {
             alert('enter your email');
             return;
             }
@@ -68,7 +78,7 @@ const LoginDialogue = function() {
         try {
    
               const result = await auth.signInWithEmailAndPassword(loginEmailValue, loginPasswordValue)
-              loginFromfirebaseResponse(result)
+              loginFromfirebaseResponse(result, PASSWORD_LOGIN)
         } catch {
           alert("Failed to sign in")
         }
@@ -77,7 +87,7 @@ const LoginDialogue = function() {
     const handleCreatePasswordAccount = async (e) => {
         e.preventDefault();
        
-        if (passwordValue == '' || passwordConfirmValue == '') {
+        if (passwordValue === '' || passwordConfirmValue === '') {
         alert('password field must not be empty');
         return;
         }
@@ -90,9 +100,9 @@ const LoginDialogue = function() {
 
           const res = await auth.createUserWithEmailAndPassword(emailValue, passwordValue)
           console.log(res)
-          if (res.user != undefined) {
+          if (res.user !== undefined) {
               const result = await auth.signInWithEmailAndPassword(emailValue, passwordValue)
-              loginFromfirebaseResponse(result)
+              loginFromfirebaseResponse(result, PASSWORD_LOGIN)
           }
         } catch {
           alert("Failed to create an account")
@@ -103,14 +113,14 @@ const LoginDialogue = function() {
     const handleGoogleLogin = (e) => {
         e.preventDefault();
         auth.signInWithPopup(GoogleProvider)
-            .then(loginFromfirebaseResponse)
+            .then((result) => { return loginFromfirebaseResponse(result, GOOGLE_LOGIN) })
             .catch((error) => alert(error.message));
     }
 
     const handleGithubLogin = (e) => {
         e.preventDefault();
         auth.signInWithPopup(GithubProvider)
-        .then(loginFromfirebaseResponse)
+        .then((result) => { return loginFromfirebaseResponse(result, GITHUB_LOGIN) })
         .catch((error) => alert(error.message));
     }
 

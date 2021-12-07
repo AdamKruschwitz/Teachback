@@ -239,6 +239,23 @@ const resolvers = {
                     }
                 );
             }
+        },
+        recordStepNotFinished: async (_parent, { roomId }, context) => {
+            if(context.user) {
+                return await findOneAndUpdate(
+                    {
+                        _id: roomId
+                    },
+                    {
+                        $pull: {
+                            finishedUsers: context.user.id
+                        }
+                    },
+                    {
+                        new: true
+                    }
+                );
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
-import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
+import { GlobalProvider } from './utils/GlobalContext';
 import AuthService from './utils/auth';
 import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 

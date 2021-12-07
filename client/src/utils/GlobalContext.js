@@ -30,7 +30,7 @@ export function GlobalProvider({ value = [], ...props }) {
         })
     
         return unsubscribe
-      }, [])
+      }, [dispatch])
     return <Provider value={[state, dispatch]} {...props} />;
   };
 

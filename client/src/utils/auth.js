@@ -4,8 +4,8 @@ class AuthService {
         return localStorage.getItem('refresh_token')
     }
     
-    login(userObject) {
-        localStorage.setItem('refresh_token', userObject)
+    login(refreshToken) {
+        localStorage.setItem('refresh_token', refreshToken)
     }
 }
 
