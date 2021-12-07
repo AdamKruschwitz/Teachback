@@ -16,6 +16,12 @@ import { auth, GithubProvider, GoogleProvider } from "../../firebase";
 
 import { useGlobalContext } from '../../utils/GlobalContext';
 import { TOGGLE_LOGIN_DIALOG, GITHUB_LOGIN, GOOGLE_LOGIN, PASSWORD_LOGIN } from '../../utils/actions';
+import AuthService from '../../utils/auth'
+
+import { LOGIN } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
+
+import axios from 'axios';
 
 const LoginDialogue = function() {
 
@@ -29,7 +35,11 @@ const LoginDialogue = function() {
 
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
+
+    const [loginMutation, { error }] = useMutation(LOGIN);
   
+    if(error) return "Login Error :("
+
     const handleOnClose = () => {
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
@@ -39,14 +49,34 @@ const LoginDialogue = function() {
         setCurTab(value);
     }
 
+    const loginFromfirebaseResponse = async (result, loginType) => {
+        console.log(result);
+        const token = result.user.refreshToken;
+            const user = {
+                username: result.user.displayName,
+                email: result.user.email,
+                image: result.user.photoURL,
+                token: token,
+                uid: result.user.uid
+            }
+            axios.post('http://localhost:3001/registerUser',{user}).then(function(data){
+                if(data.data.result){
+                    dispatch({type: loginType, payload: user });
+                    dispatch({ type: TOGGLE_LOGIN_DIALOG });
+                }else{
+                    alert('couldnt save to server')
+                }
+            })
+    }
+
     async function handlePasswordLogin(e) {
         e.preventDefault();
        
-        if (loginPasswordValue == '') {
+        if (loginPasswordValue === '') {
         alert('password field must not be empty');
         return;
         }
-        if (loginEmailValue == '') {
+        if (loginEmailValue === '') {
             alert('enter your email');
             return;
             }
@@ -54,25 +84,16 @@ const LoginDialogue = function() {
         try {
    
               const result = await auth.signInWithEmailAndPassword(loginEmailValue, loginPasswordValue)
-              const token = result.user.refreshToken;
-              const user = {
-                  username: result.user.email,
-                  email: result.user.email,
-                  image: '',
-                  toke: token
-              }
-              dispatch({type: PASSWORD_LOGIN, payload: user });
-              dispatch({ type: TOGGLE_LOGIN_DIALOG });
+              loginFromfirebaseResponse(result, PASSWORD_LOGIN)
         } catch {
           alert("Failed to sign in")
         }
-    
     }
 
     const handleCreatePasswordAccount = async (e) => {
         e.preventDefault();
        
-        if (passwordValue == '' || passwordConfirmValue == '') {
+        if (passwordValue === '' || passwordConfirmValue === '') {
         alert('password field must not be empty');
         return;
         }
@@ -85,18 +106,9 @@ const LoginDialogue = function() {
 
           const res = await auth.createUserWithEmailAndPassword(emailValue, passwordValue)
           console.log(res)
-          if (res.user != undefined) {
+          if (res.user !== undefined) {
               const result = await auth.signInWithEmailAndPassword(emailValue, passwordValue)
-
-              const token = result.user.refreshToken;
-              const user = {
-                  username: result.user.email,
-                  email: result.user.email,
-                  image: '',
-                  toke: token
-              }
-              dispatch({type: PASSWORD_LOGIN, payload: user });
-              dispatch({ type: TOGGLE_LOGIN_DIALOG });
+              loginFromfirebaseResponse(result, PASSWORD_LOGIN)
           }
         } catch {
           alert("Failed to create an account")
@@ -107,37 +119,15 @@ const LoginDialogue = function() {
     const handleGoogleLogin = (e) => {
         e.preventDefault();
         auth.signInWithPopup(GoogleProvider)
-            .then((result) => {
-                const credential = result.credential;
-                const token = credential.accessToken;
-                const user = {
-                    username: result.additionalUserInfo.username,
-                    email: result.user.email,
-                    image: result.user.photoURL,
-                    toke: token
-                }
-                dispatch({type: GOOGLE_LOGIN, payload: user });
-                // TODO: graphql query sending user info.
-            })
+            .then((result) => { return loginFromfirebaseResponse(result, GOOGLE_LOGIN) })
             .catch((error) => alert(error.message));
     }
 
     const handleGithubLogin = (e) => {
         e.preventDefault();
-        auth.signInWithPopup(GithubProvider).then((result) => {
-            const credential = result.credential;
-            const token = credential.accessToken;
-            console.log(result);
-            alert(result);
-            const user = {
-                username: result.additionalUserInfo.username,
-                email: result.user.email,
-                image: result.user.photoURL,
-                token: token
-            }
-            dispatch({ type: GITHUB_LOGIN, payload: user });
-            // TODO: graphQL query sending user info.
-        }).catch((error) => alert(error.message));
+        auth.signInWithPopup(GithubProvider)
+        .then((result) => { return loginFromfirebaseResponse(result, GITHUB_LOGIN) })
+        .catch((error) => alert(error.message));
     }
 
     return (

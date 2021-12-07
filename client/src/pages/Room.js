@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Button } from '@mui/material';
+
+import { StepDisplay } from '../components'
 import { Button, TextField } from '@mui/material';
 import remarkGFM from 'remark-gfm';
 import ReactMarkdown from 'react-markdown'
+import { CommentInput } from '../components';
 
 import { useQuery } from '@apollo/client';
 import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
 import { useParams } from 'react-router-dom';
 
 function Room() {
-    const handleNextStep= () => {
+    const handleNextStep = () => {
         //TODO: functinality missing
     }
     const handleFinishStep = () => {
@@ -17,26 +21,26 @@ function Room() {
     }
 
     const [step, setStep] = useState({});
+    // Will be used for displaying connected users and allowing next buttons.
     const [room, setRoom] = useState({});
-    const [curStepI, setCurStepI] = useState(0);
+    // const [curStepI, setCurStepI] = useState(0);
     const { id } = useParams();
-    const {data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
-    const {data: stepData, loading: stepLoading } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
+    const { data: roomData, loading: roomLoading } = useQuery(GET_ROOM, { variables: {id: id} });
+    const { data: stepData } = useQuery(GET_CURRENT_STEP, { variables: {id: id}, pollInterval: 500 });
     
+    // After render, check the state of initial room load and check for updated step data.
     useEffect( () => {
         if(roomData) {
             setRoom(roomData);
+        } else if(stepData) {
+            setStep(stepData);
         }
-    })
+        
+    }, [setStep, setRoom])
 
     return (
         <MainContainer>
-            <TopContainer>
-                <h1>Step 1</h1>
-                <MarkdownContainer>
-                    <ReactMarkdown children={step.content} remarkPlugins={[remarkGFM]} />
-                </MarkdownContainer>
-            </TopContainer>
+            <StepDisplay content={step.content}/>
             <ButtonContainer>
                 {/* TODO: if statement for if owner or if follower */}
                 <Button onClick={handleNextStep}>Next Step</Button>
@@ -44,24 +48,18 @@ function Room() {
             </ButtonContainer>
             <CommentsContainer>
                 <h1>Comments</h1>
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
-                <CommentsCard>
-                    <h3>Hello Man</h3>
-                    <p>Quisque dictum varius ornare. Phasellus rutrum metus scelerisque maximus interdum. Maecenas id dui metus. Proin vulputate iaculis magna, ut lacinia nibh rutrum a. Maecenas porttitor, odio pellentesque efficitur ullamcorper, lorem est imperdiet dolor, cursus auctor nisl urna in dui. Maecenas pretium risus sit amet tristique consectetur. Nulla viverra orci diam. Curabitur et finibus nibh. Vestibulum in ligula rutrum, ultricies leo ac, posuere dui.</p>
-                </CommentsCard>
+                {
+                    step.comments.map(comment => {
+                        return (
+                            <CommentsCard>
+                                <h3>{ comment.user.username }</h3>
+                                <p>{ comment.content }</p>
+                            </CommentsCard>
+                        )
+                    })
+                }
+                
             </CommentsContainer>
-            
         </MainContainer>
     )
 }
@@ -73,25 +71,7 @@ const MainContainer = styled.div`
     flex-direction: column;
 `
 
-const TopContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 35em;
-    margin-bottom: 10px;
-    font-family: Montserrat;
-    background-color: var(--dark-purple);
-    color: #fff;
 
-`
-const MarkdownContainer = styled.div`
-    border: 1px solid #c4c4c4;
-    height: 70%;
-    width: 80%;
-    background-color: #f0f0f0;
-    color: #111;
-`
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -133,4 +113,3 @@ const CommentsCard = styled.div`
         margin-left: 10px;
     }
 `
-

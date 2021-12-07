@@ -4,21 +4,20 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
 import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
-import { GlobalProvider, useGlobalContext } from './utils/GlobalContext';
-import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
-
-
-const client = new ApolloClient({
-  uri: '/graphql',
-  cache: new InMemoryCache(),
-});
+import { GlobalProvider } from './utils/GlobalContext';
+import AuthService from './utils/auth';
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 function App() {
 
-  const terminatingLink = new HttpLink()
+  const terminatingLink = new HttpLink({
+    headers: {
+        refreshToken: AuthService.getToken()
+    }
+  });
 
   const client = new ApolloClient({
-    link: terminatingLink,
+    links: terminatingLink,
     cache: new InMemoryCache()
   });
 

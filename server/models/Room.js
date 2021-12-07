@@ -15,7 +15,19 @@ const roomSchema = new Schema({
         type: Number,
         required: true,
         default: 0
-    }
+    },
+    connectedUsers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        default: []
+    }],
+    finishedUsers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        default: []
+    }]
 });
 
 const Room = model('Room', roomSchema);
