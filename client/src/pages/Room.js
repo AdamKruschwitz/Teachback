@@ -3,13 +3,17 @@ import styled from 'styled-components'
 import { Button } from '@mui/material';
 
 import { StepDisplay } from '../components'
+import { Button, TextField } from '@mui/material';
+import remarkGFM from 'remark-gfm';
+import ReactMarkdown from 'react-markdown'
+import { CommentInput } from '../components';
 
 import { useQuery } from '@apollo/client';
 import { GET_CURRENT_STEP, GET_ROOM } from '../utils/queries' ;
 import { useParams } from 'react-router-dom';
 
 function Room() {
-    const handleNextStep= () => {
+    const handleNextStep = () => {
         //TODO: functinality missing
     }
     const handleFinishStep = () => {
@@ -109,4 +113,3 @@ const CommentsCard = styled.div`
         margin-left: 10px;
     }
 `
-
