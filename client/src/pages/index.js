@@ -3,6 +3,7 @@ import Browse from './Browse';
 import CreateTutorial from './CreateTutorial';
 import Profile from './Profile';
 import Room from './Room'
+import EditProfile from './EditProfile';
 
 export { 
     Home,
@@ -10,4 +11,5 @@ export {
     CreateTutorial,
     Profile,
     Room,
+    EditProfile,
 }

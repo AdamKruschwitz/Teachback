@@ -2,7 +2,9 @@ import React from 'react';
 import { Category } from '../components';
 import styled from 'styled-components'
 import { Button } from '@mui/material';
-import portrait from '../portrait.jpeg'
+import portrait from '../portrait.jpeg';
+import { Link } from "react-router-dom"
+
 
 const Profile = function() {
     const handleEditProfile = () => {
@@ -17,7 +19,13 @@ const Profile = function() {
                     alt='portrait'
                 />
                 <p>Alex</p>
-                <Button variant="outlined" onClick={handleEditProfile}>Edit Profile</Button>
+                <Link to='/profile/edit'>
+                <Button style={{
+                    border: '3px solid #94ECBE ',
+                    marginBottom: '15px',
+                    color: 'var(--light-green)',
+                }}variant="outlined" onClick={handleEditProfile}>Edit Profile</Button>
+                </Link>
             </TopContainer>
             <TutorialsContainer>
                 <h1>Tutorials</h1>
@@ -65,17 +73,6 @@ const TopContainer = styled.div`
         margin: 40px;
         border-radius: 50%;
 
-    }
-
-    > button {
-        border: 3px solid #94ECBE !important;
-        margin-bottom: 15px !important;
-        color: var(--light-green) !important;
-        border-color: var(--light-green) !important;
-        :hover {
-            background-color: var(--light-green) !important;
-            color: var(--dark-purple) !important;
-        }
     }
 `
 const TutorialsContainer = styled.div`

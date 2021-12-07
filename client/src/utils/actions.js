@@ -3,4 +3,6 @@ export const GITHUB_LOGIN = 'GITHUB_LOGIN';
 export const GOOGLE_LOGIN = "GOOGLE_LOGIN";
 export const PASSWORD_LOGIN = "PASSWORD_LOGIN";
 export const USER_LOGOUT = 'USER_LOGOUT'
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
+export const UPDATE_EMAIL = 'UPDATE_EMAIL'
 

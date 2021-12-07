@@ -3,7 +3,7 @@ import './App.css';
 import React from 'react';
 import { Routes, Route,  } from 'react-router-dom';
 import { Header, Footer, Login } from './components';
-import { Home, CreateTutorial, Browse, Profile, Room } from './pages';
+import { Home, CreateTutorial, Browse, Profile, Room, EditProfile} from './pages';
 import { GlobalProvider } from './utils/GlobalContext';
 import AuthService from './utils/auth';
 import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink, createHttpLink, gql } from '@apollo/client';
@@ -70,6 +70,7 @@ function App() {
             <Route path="/room/:id" element={ <Room /> } />
             <Route path="/tutorial/create" element={ <CreateTutorial /> } />
             <Route path="*" element={ <Home /> } />
+            <Route path="/profile/edit" element={ <EditProfile /> } />
           </Routes>
           <Footer />
         </GlobalProvider>

@@ -30,6 +30,7 @@ export function GlobalProvider({ value = [], ...props }) {
       //   }
         const unsubscribe = auth.onAuthStateChanged(result => {
             if (result != null) {
+
               // console.log(result);
               const token = result.refreshToken;
               const user = {

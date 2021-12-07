@@ -73,7 +73,7 @@ const Header = function() {
                     <HeaderRight>
                         <ButtonContainer>
                             <UnstyledLink to="tutorial/create">
-                                <RightButton variant="contained" onClick={handleLogIn}>Create Tutorial</RightButton>
+                                <RightButton variant="contained">Create Tutorial</RightButton>
                             </UnstyledLink>   
                         </ButtonContainer>
                         <ButtonContainer>
