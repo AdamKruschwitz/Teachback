@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import axios from 'axios'
 import { useGlobalContext } from '../utils/GlobalContext';
-import { auth } from '../firebase'
-import { PASSWORD_LOGIN } from '../utils/actions'
-import {withRouter} from 'react-router-dom';
+import { UPDATE_EMAIL, UPDATE_PASSWORD } from '../utils/actions'
+import "firebase/auth";
+import firebase from "firebase/app";
 
 
 
@@ -17,37 +17,52 @@ function EditProfile() {
 
 
     const [emailValue, setEmailValue] = useState('')
+    const [currentPasswordValue, setCurrentPasswordValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
     const [passwordConfirmValue, setPasswordConfirmValue] = useState('')
 
-    const handleEditEmail = async () => {
-        // e.preventDefault();
-        // console.log(emailValue)
-        if (emailValue === '') {
-        alert('email field must not be empty');
-        return;
-        }
-        // alert('email update successfull')
-        try {
-
-            const result = await auth.updateEmail(emailValue)
-            EditFromfirebaseResponse(result)
-        } catch {
-        alert("Failed to update")
-        }
+    useEffect(()=>{
+        
+        },[])
+    
+const reauthenticate = (currentPassword) => {
+    var user = firebase.auth().currentUser;
+    var cred = firebase.auth.EmailAuthProvider.credential(
+        user.email, currentPassword);
+    return user.reauthenticateWithCredential(cred);
+  }
+   
+    function updateUserEmail() {
+        // [START auth_update_user_email]
+        reauthenticate(currentPasswordValue).then(() => {
+            var user = firebase.auth().currentUser;
+            user.updateEmail(emailValue).then(() => {
+             alert('Email changed successfully!');
+             window.location.reload();
+            }).catch((error) => { alert(error.message); });
+          }).catch((error) => { alert(error.message); });
     }
+    
     const handleChangePassword = async () => {
-        // e.preventDefault();
-        // console.log(passwordValue)
+        if (currentPasswordValue === '') {
+            alert('you need to enter your current password first');
+            return;
+            }
+        if(passwordValue !== setPasswordConfirmValue){
+            alert('new passwords need to be the same')
+            return; //done abi test it I am ghost
+        }
         if (passwordValue === '') {
-        alert('password field must not be empty');
+        alert('Enter the new password');
         return;
         }
-        // alert('password update successfull')
         try {
-
-            const result = await auth.updatePassword(passwordValue)
-            EditFromfirebaseResponse(result)
+            reauthenticate(currentPasswordValue).then(() => {
+                var user = firebase.auth().currentUser;
+                user.updatePassword(passwordValue).then(() => {
+                  alert('password updated')
+                }).catch((error) => { alert(error.message); });
+              }).catch((error) => { alert(error.message); });
         } catch {
         alert("Failed to update")
         }
@@ -56,32 +71,8 @@ function EditProfile() {
         // how to return back to profile page
         window.location.href = '/profile'
     }
-    const handleChangeBoth = (e) => {
-        console.log(emailValue, passwordValue)
-        e.preventDefault();
-        handleEditEmail()
-        handleChangePassword()
-    }
 
-    const EditFromfirebaseResponse = async (result, loginType) => {
-        console.log(result);
-        const token = result.user.refreshToken;
-            const user = {
-                username: result.user.displayName,
-                email: result.user.email,
-                image: result.user.photoURL,
-                token: token,
-                uid: result.user.uid
-            }
-            // axios.post('http://localhost:3001/registerUser',{user}).then(function(data){
-            //     if(data.data.result){
-            //         dispatch({type: loginType, payload: user });
-            //         // dispatch({ type: TOGGLE_LOGIN_DIALOG });
-            //     }else{
-            //         alert('couldnt save to server')
-            //     }
-            // })
-    }
+    // change both is not possible in firebase according to security. you need to change first email and then password. maybe we can do all of them tigether with then() notation but later
 
     return (
 
@@ -96,6 +87,17 @@ function EditProfile() {
                             label="New Email"
                         />
                         <br />
+                        <TextField sx={{margin: '10px'}}
+                            required
+                            id="oldPassword"
+                            onChange={(event, object) => {
+                                setCurrentPasswordValue(event.target.value)
+                            }}
+                            value={currentPasswordValue}
+                            label="Current Password"
+                            type="password"
+                        />
+                        < br/>
                         <TextField sx={{margin: '10px'}}
                             id="password"
                             onChange={(event, object) => {
@@ -117,9 +119,8 @@ function EditProfile() {
                             type="password"
                         />
                     <ButtonAction>
-                        <Button variant="outlined" label="Submit" onClick={ handleEditEmail }>Change Email</Button>
+                        <Button variant="outlined" label="Submit" onClick={ updateUserEmail }>Change Email</Button>
                         <Button variant="outlined" label="Submit" onClick={ handleChangePassword }>Change Password</Button>
-                        <Button variant="outlined" label="Submit" onClick={ handleChangeBoth }>Change Both</Button>
                         <Button variant="outlined" label="Submit" onClick={ handleCancel }>Cancel</Button>
                     </ButtonAction>
             </TextFieldContainer>
