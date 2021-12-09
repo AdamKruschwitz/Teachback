@@ -2,13 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Button } from '@mui/material';
-
 import { useMutation } from '@apollo/client';
 import { CREATE_ROOM } from '../../utils/mutations';
 
+export default function TutorialInput({tutorial}) {
+    const [createRoom, {newRoomData}] = useMutation(CREATE_ROOM);
+    const {
+        title,
+        rating,
+        author,
+        _id: tutorialId
+    } = tutorial;
 
-function Category() {
-    const [createRoom, {newRoomData}] = useMutation(CREATE_ROOM)
     const handleRating = () => {
         // TODO: functionality
     }
@@ -24,27 +29,26 @@ function Category() {
         <CategoryContainer>
             <LeftConatiner>
                 <TopContainer>
-                    <p>How To Lorem Ipsum</p>
+                    <p>{ title }</p>
                 </TopContainer>
                 <BottomContainer>
-                    <StarOutlineIcon onClick={handleRating}/>
-                    <StarOutlineIcon onClick={handleRating}/>
-                    <StarOutlineIcon onClick={handleRating}/>
-                    <StarOutlineIcon onClick={handleRating}/>
-                    <StarOutlineIcon onClick={handleRating}/>
-                    <p>Viewed: 22 times</p>
+                    <StarOutlineIcon value={1} onClick={(e) => handleRating(e, 1)}/>
+                    <StarOutlineIcon value={2} onClick={(e) => handleRating(e, 2)}/>
+                    <StarOutlineIcon value={3} onClick={(e) => handleRating(e, 3)}/>
+                    <StarOutlineIcon value={4} onClick={(e) => handleRating(e, 4)}/>
+                    <StarOutlineIcon value={5} onClick={(e) => handleRating(e, 5)}/>
+                    <p>Rating: { rating }</p>
+                    <p>By { author.username }</p>
                 </BottomContainer>
 
             </LeftConatiner>
             <RightContainer>
-                <Button variant="outlined" onClick={handleCreateRoom}>Create Room</Button>
+                <Button variant="outlined" onClick={(e) => handleCreateRoom(e, tutorialId)}>Create Room</Button>
             </RightContainer>
             
         </CategoryContainer>
     )
 }
-
-export default Category
 
 const CategoryContainer = styled.div`
     display: flex;
@@ -109,7 +113,5 @@ const RightContainer = styled.div`
             color: #fff !important;
         }
     }
-
-    
 
 `

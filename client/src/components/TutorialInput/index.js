@@ -350,6 +350,4 @@ const MarkdownContainer = styled.div`
     margin-left: 10px;
 `
 
-
-
 export default StyledTutorialInput;
