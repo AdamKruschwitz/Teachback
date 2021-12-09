@@ -8,29 +8,25 @@ import { UPDATE_EMAIL, UPDATE_PASSWORD } from '../utils/actions'
 import "firebase/auth";
 import firebase from "firebase/app";
 
-
-
-function EditProfile() {
-
+export default function EditProfile() {
     const [state, dispatch] = useGlobalContext();
-    const [currentUser] = useState()
-
-
+    const [currentUser] = useState({});
     const [emailValue, setEmailValue] = useState('')
     const [currentPasswordValue, setCurrentPasswordValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
     const [passwordConfirmValue, setPasswordConfirmValue] = useState('')
 
+    // Load user profile data
     useEffect(()=>{
-        
+        // TODO
         },[])
     
-const reauthenticate = (currentPassword) => {
-    var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(
-        user.email, currentPassword);
-    return user.reauthenticateWithCredential(cred);
-  }
+    const reauthenticate = (currentPassword) => {
+        var user = firebase.auth().currentUser;
+        var cred = firebase.auth.EmailAuthProvider.credential(
+            user.email, currentPassword);
+        return user.reauthenticateWithCredential(cred);
+    }
    
     function updateUserEmail() {
         // [START auth_update_user_email]
@@ -44,18 +40,20 @@ const reauthenticate = (currentPassword) => {
     }
     
     const handleChangePassword = async () => {
+        // Verify inputs
         if (currentPasswordValue === '') {
             alert('you need to enter your current password first');
             return;
             }
         if(passwordValue !== setPasswordConfirmValue){
             alert('new passwords need to be the same')
-            return; //done abi test it I am ghost
+            return; 
         }
         if (passwordValue === '') {
-        alert('Enter the new password');
-        return;
+            alert('Enter the new password');
+            return;
         }
+        // Change password
         try {
             reauthenticate(currentPasswordValue).then(() => {
                 var user = firebase.auth().currentUser;
@@ -75,7 +73,6 @@ const reauthenticate = (currentPassword) => {
     // change both is not possible in firebase according to security. you need to change first email and then password. maybe we can do all of them tigether with then() notation but later
 
     return (
-
         <MainContainer>
             <TextFieldContainer>
             <TextField sx={{margin: '10px'}}
@@ -128,8 +125,6 @@ const reauthenticate = (currentPassword) => {
         </MainContainer>
     )
 }
-
-export default EditProfile
 
 const MainContainer = styled.div`
     display: flex;
