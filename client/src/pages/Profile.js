@@ -1,24 +1,28 @@
 import React from 'react';
-import { Category } from '../components';
+import { TutorialCard } from '../components';
 import styled from 'styled-components'
 import { Button } from '@mui/material';
 import portrait from '../portrait.jpeg';
 import { Link } from "react-router-dom"
 
 
-const Profile = function() {
+const Profile = function({ user }) {
+    const {
+        username, 
+        image,
+    } = user;
     const handleEditProfile = () => {
             // TODO: finish functionality
-
     }
+
     return (
         <ProfilePageBody>
             <TopContainer>
                 <img 
-                    src={portrait}
+                    src={image}
                     alt='portrait'
                 />
-                <p>Alex</p>
+                <p> { username } </p>
                 <Link to='/profile/edit'>
                 <Button style={{
                     border: '3px solid #94ECBE ',
@@ -29,15 +33,15 @@ const Profile = function() {
             </TopContainer>
             <TutorialsContainer>
                 <h1>Tutorials</h1>
-                <Category />
-                <Category />
-                <Category />
+                <TutorialCard />
+                <TutorialCard />
+                <TutorialCard />
             </TutorialsContainer>
             <HistoryContainer>
                 <h1>History</h1>
-                <Category />
-                <Category />
-                <Category />
+                <TutorialCard />
+                <TutorialCard />
+                <TutorialCard />
             </HistoryContainer>
         </ProfilePageBody>
     );

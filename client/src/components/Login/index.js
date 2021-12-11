@@ -29,11 +29,9 @@ const LoginDialogue = function() {
     const [loginEmailValue, setLoginEmailValue] = useState('')
     const [loginPasswordValue, setLoginPasswordValue] = useState('')
 
-
     const [curTab, setCurTab] = useState('login');
     const [state, dispatch] = useGlobalContext();
   
-
     const handleOnClose = () => {
         dispatch({ type: TOGGLE_LOGIN_DIALOG });
     }
@@ -221,6 +219,5 @@ const TabPanel = function({ children, value, index }) {
             <div>{children}</div>
         )
 }
-
 
 export default LoginDialogue;

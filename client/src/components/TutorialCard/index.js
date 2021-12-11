@@ -5,8 +5,9 @@ import { Button } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { CREATE_ROOM } from '../../utils/mutations';
 
-export default function TutorialInput({tutorial}) {
+export default function TutorialCard({ tutorial }) {
     const [createRoom, {newRoomData}] = useMutation(CREATE_ROOM);
+
     const {
         title,
         rating,

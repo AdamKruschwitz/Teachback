@@ -70,7 +70,9 @@ export default function EditProfile() {
         window.location.href = '/profile'
     }
 
-    // change both is not possible in firebase according to security. you need to change first email and then password. maybe we can do all of them tigether with then() notation but later
+    // change both is not possible in firebase according to security. 
+    // you need to change first email and then password. 
+    // maybe we can do all of them together with then() notation but later
 
     return (
         <MainContainer>
@@ -140,15 +142,15 @@ const ButtonAction = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    > button {
-        background-color: var(--light-green) !important;
-        color: var(--dark-purple) !important;
-        border-color: var(--dark-purple) !important;
-        font-family: 'Montserrat', sans-serif;
-        margin: 10px;
-        :hover {
-        background-color: var(--dark-purple) !important;
-        color: var(--light-green) !important;
-    }
+        > button {
+            background-color: var(--light-green) !important;
+            color: var(--dark-purple) !important;
+            border-color: var(--dark-purple) !important;
+            font-family: 'Montserrat', sans-serif;
+            margin: 10px;
+            :hover {
+            background-color: var(--dark-purple) !important;
+            color: var(--light-green) !important;
+        }
     }
 `

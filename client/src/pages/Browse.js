@@ -1,30 +1,57 @@
-import React, { useState, onEffect } from 'react';
-import { TutorialInput } from '../components';
-import { SearchBar } from '../components';
+import React, { useState, useEffect } from 'react';
+import { TutorialCard, SearchBar } from '../components';
 import styled from 'styled-components'
 import { Button } from '@mui/material';
 
 const Browse = function() {
-    
+    // TEST OBJECTS
+    const testTutorials = [
+        {
+            title: "How to tie your shoe",
+            rating: 5.0,
+            author: {
+                username: "BillyBeans"
+            },
+            _id: "abc123"
+        }
+    ];
+
+    const testCategories = [
+        { name: "Fidget Spinning" },
+        { name: "Hog Racing" },
+        { name: "Javascript" },
+        { name: "Cooking" }
+    ];
+
+    const testTags = [
+        { name: "Prank" },
+        { name: "Gone Wrong" },
+        { name: "Epic Fail" },
+        { name: "Juicebox opening tips" }
+    ]
+
     // state to hold search criteria
     const [search, setSearch] = useState({});
-    const [categories, setCategories] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [tutorials, setTutorials] = useState([]);
+    const [categories, setCategories] = useState(testCategories);
+    const [tags, setTags] = useState(testTags);
+    const [tutorials, setTutorials] = useState(testTutorials);
     
     // Get categories
-    onEffect(() => {
+    useEffect((e) => {
         // TODO
+        return false;
     });
 
     // Get tags
-    onEffect(() => {
+    useEffect((e) => {
         // TODO
+        return false;
     });
 
     // Get search results
-    onEffect(() => {
+    useEffect((e) => {
         // TODO
+        return false;
     });
 
     const handleCategorySelect = () => {
@@ -42,7 +69,7 @@ const Browse = function() {
             <TopContainer>
                 <LeftContainer>
                     <h1>Categories</h1>
-                    { categories.map((category) => <CategoryButton name={category} />) }
+                    { categories.map((category) => <CategoryButton name={category.name} />) }
                 </LeftContainer>
                 <RightContainer>
                     <h1>Popular Tags</h1>
@@ -55,7 +82,7 @@ const Browse = function() {
             <CategoryContainer>
                 {/* Search results */}
                 <h1>{search.category || "Tutorials"}</h1>
-                { tutorials.map((tutorial) => <TutorialInput tutorial={tutorial} />) }
+                { tutorials.map((tutorial) => <TutorialCard tutorial={tutorial} />) }
             </CategoryContainer>
         </MainBody>
     )
