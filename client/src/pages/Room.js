@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { StepDisplay } from '../components'
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import remarkGFM from 'remark-gfm';
 import ReactMarkdown from 'react-markdown'
 import { CommentInput } from '../components';
@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 
 import { useGlobalContext } from '../utils/GlobalContext'
 
-function Room() {
+export default function Room() {
     const [state, dispatch] = useGlobalContext();
     console.log(state);
     // Will be used for displaying connected users and allowing next buttons.
@@ -46,7 +46,7 @@ function Room() {
     }
 
     const handleNextStep= () => {
-        
+        // TODO - Progress to the next step in the tutorial
     }
 
     const areAllUsersReady = () => {
@@ -85,7 +85,7 @@ function Room() {
     }
 
     const handleCloseRoom = () => {
-
+        // TODO - delete the room
     }
 
     const renderRoomControls = () => {
@@ -170,8 +170,6 @@ function Room() {
         </MainContainer>
     )
 }
-
-export default Room
 
 const MainContainer = styled.div`
     display: flex;
