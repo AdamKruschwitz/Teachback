@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 
 const Home = function() {
+    // TESTING OBJECTS
+    const testTutorials = [
+        // TODO
+    ]
+
+    const [tutorials, setTutorials] = useState(testTutorials);
+
+    // Load the top tutorials
+    useEffect(() => {
+        // TODO
+        return false;
+    })
+
     return(
         <Container>
             <HeroContainer>
@@ -14,6 +27,10 @@ const Home = function() {
                     {/* TODO - add a hero image */}
                 </HeroRight>
             </HeroContainer>
+            <FeaturedContent>
+                <h1>Check out these popular tutorials!</h1>
+                { tutorials.map((tutorial) => /* replace with a tutorial card after merge */ false) }
+            </FeaturedContent>
         </Container>
     )
 }
@@ -63,6 +80,21 @@ const JoinButton = styled(Button)`
     border-color: var(--light-green) !important;
     font-family: 'Montserrat', sans-serif;
     padding: 1rem !important;
+`
+
+const FeaturedContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    background-color: var(--light-grey);
+    width: 100%;
+
+    > h1 {
+        font-family: 'Montserrat', sans-serif;
+        color: black;
+        font-size: 48px;
+    }
 `
 
 export default Home;
