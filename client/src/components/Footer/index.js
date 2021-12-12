@@ -6,7 +6,6 @@ import { Button } from '@mui/material';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 import SearchIcon from '@mui/icons-material/Search';
 
-
 function Footer() {
 
     const [loggedIn, setLoggedIn] = useState(false);

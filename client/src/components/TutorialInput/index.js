@@ -22,35 +22,33 @@ function TutorialInput({ className }) {
   
   const [state,  dispatch] = useGlobalContext()
 
-  const [category, setCategory] = React.useState('');
+  const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState([]);
 
   const handleCategory = (event) => {
     setCategory(event.target.value);
   };
 
-  const [title, setTitle] = React.useState('');
+  const [title, setTitle] = useState('');
 
   const handleTitle = (event) => {
     setTitle(event.target.value);
   };
 
-  const [tags, setTags] = React.useState('');
+  const [tags, setTags] = useState('');
 
   const handleTags = (event) => {
       setTags(event.target.value)
   }
 
-  // const [markdown, setMarkdown] = useState("");
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     if (name === "Input") {
       setBody(value);
       console.log(body);
-      // setMarkdown(generateMarkdown(value))
     }
   };
-
 
   const handleNewStep = () => {
     // save the body state to the current step and steps
@@ -83,7 +81,7 @@ function TutorialInput({ className }) {
   };
 
   
-  const [createTutorial, { error }] = useMutation(CREATE_TUTORIAL);
+  const [createTutorial] = useMutation(CREATE_TUTORIAL);
 
   const toggleSubmit = async (props) => {
     setSubmit(!submit);
@@ -202,13 +200,11 @@ const StyledTutorialInput = styled(TutorialInput)`
   border-radius: 4px #2d2244;
   margin-left: 20px;
 `;
-
 const MainContainer = styled.div`
     display: flex;
     width: 100vw;
     flex-direction: column;
 `;
-
 const TopContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -216,7 +212,6 @@ const TopContainer = styled.div`
   background-color: var(--dark-purple);
 
 `;
-
 const TitleContainer = styled.div`
   justify-content: center;
   align-items: center;
@@ -255,7 +250,6 @@ const MiddleTitleContainer = styled.div`
     font-family: Montserrat;
 
 `
-
 const MiddleLeftContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -266,7 +260,6 @@ const MiddleRightContainer = styled.div`
     justify-content: center;
     flex: 0.5;
 `
-
 const MiddleContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -275,14 +268,12 @@ const MiddleContainer = styled.div`
     
  
 `;
-
 const LeftContainer = styled.div`
     flex-direction: column;
     display: flex;
     flex: 0.5;
     margin: 10px;
 `
-
 const RightContainer = styled.div`
     flex-direction: column;
     display: flex;
@@ -296,14 +287,10 @@ const RightContainer = styled.div`
     }
 
 `
-
 const ButtonContainer = styled.div`
 display: flex;
 justify-content: flex-end;
-
-
 `
-
 const StepsContainer = styled.div`
     display: flex;
     flex: 0.5;
@@ -342,14 +329,10 @@ const ButtonRight = styled.div`
         background-color: #2D2244;
 
     }
-
   }
 `
-
 const MarkdownContainer = styled.div`
     margin-left: 10px;
 `
-
-
 
 export default StyledTutorialInput;

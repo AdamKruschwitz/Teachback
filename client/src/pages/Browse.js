@@ -1,51 +1,88 @@
-import React from 'react';
-import { Category } from '../components';
-import { SearchBar } from '../components';
+import React, { useState, useEffect } from 'react';
+import { TutorialCard, SearchBar } from '../components';
 import styled from 'styled-components'
 import { Button } from '@mui/material';
 
 const Browse = function() {
-    const handleCategorySelect = () => {
+    // TEST OBJECTS
+    const testTutorials = [
+        {
+            title: "How to tie your shoe",
+            rating: 5.0,
+            author: {
+                username: "BillyBeans"
+            },
+            _id: "abc123"
+        }
+    ];
 
+    const testCategories = [
+        { name: "Fidget Spinning" },
+        { name: "Hog Racing" },
+        { name: "Javascript" },
+        { name: "Cooking" }
+    ];
+
+    const testTags = [
+        { name: "Prank" },
+        { name: "Gone Wrong" },
+        { name: "Epic Fail" },
+        { name: "Juicebox opening tips" }
+    ]
+
+    // state to hold search criteria
+    const [search, setSearch] = useState({});
+    const [categories, setCategories] = useState(testCategories);
+    const [tags, setTags] = useState(testTags);
+    const [tutorials, setTutorials] = useState(testTutorials);
+    
+    // Get categories
+    useEffect((e) => {
+        // TODO
+        return false;
+    });
+
+    // Get tags
+    useEffect((e) => {
+        // TODO
+        return false;
+    });
+
+    // Get search results
+    useEffect((e) => {
+        // TODO
+        return false;
+    });
+
+    const handleCategorySelect = () => {
+        // TODO
     }
 
     const handleTagSelect = () => {
-        
+        // TODO
     }
+    const CategoryButton = ({name}) => (<Button onClick={(e) => handleCategorySelect(e, name)}>{name}</Button>);
+    const TagButton = ({name}) => (<Button onClick={(e) => handleTagSelect(e, name)}>{name}</Button>);
 
     return (
         <MainBody>
             <TopContainer>
                 <LeftContainer>
-                    <h1>Technologies</h1>
-                    <Button onClick={handleCategorySelect}>Javascript</Button>
-                    <Button onClick={handleCategorySelect}>HTML</Button>
-                    <Button onClick={handleCategorySelect}>CSS</Button>
-                    <Button onClick={handleCategorySelect}>React</Button>
-                    <Button onClick={handleCategorySelect}>React Native</Button>
-                    <Button onClick={handleCategorySelect}>IOS</Button>
+                    <h1>Categories</h1>
+                    { categories.map((category) => <CategoryButton name={category.name} />) }
                 </LeftContainer>
                 <RightContainer>
                     <h1>Popular Tags</h1>
-                    <Button onClick={handleTagSelect}>Swift</Button>
-                    <Button onClick={handleTagSelect}>GoLang</Button>
-                    <Button onClick={handleTagSelect}>Flutter</Button>
-                    <Button onClick={handleTagSelect}>Javascript</Button>
-                    <Button onClick={handleTagSelect}>Jquery</Button>
-                    <Button onClick={handleTagSelect}>Next.js</Button>
+                    { tags.map((tag) => <TagButton name={tag.name} />) }
                 </RightContainer>
             </TopContainer>
             <SearchContainer>
                 <SearchBar />
             </SearchContainer>
             <CategoryContainer>
-                <h1>Categories</h1>
-                <Category />
-                <Category />
-                <Category />
-                <Category />
-                <Category />
-                <Category />
+                {/* Search results */}
+                <h1>{search.category || "Tutorials"}</h1>
+                { tutorials.map((tutorial) => <TutorialCard tutorial={tutorial} />) }
             </CategoryContainer>
         </MainBody>
     )
