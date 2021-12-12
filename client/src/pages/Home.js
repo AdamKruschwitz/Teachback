@@ -21,7 +21,7 @@ const Home = function() {
             <HeroContainer>
                 <HeroLeft>
                     <HeroText>Make complex tasks simple, and bring everyone along with you!</HeroText>
-                    <JoinButton size="large" >Join Us</JoinButton>
+                    <JoinButton size="large" >Sign Up</JoinButton>
                 </HeroLeft>
                 <HeroRight>
                     {/* TODO - add a hero image */}
@@ -31,6 +31,10 @@ const Home = function() {
                 <h1>Check out these popular tutorials!</h1>
                 { tutorials.map((tutorial) => /* replace with a tutorial card after merge */ false) }
             </FeaturedContent>
+            <SignupReminder>
+                <p>Sign up here and start taking free technology tutorials today!</p>
+                <JoinButton> Sign Up </JoinButton>
+            </SignupReminder>
         </Container>
     )
 }
@@ -94,6 +98,20 @@ const FeaturedContent = styled.div`
         font-family: 'Montserrat', sans-serif;
         color: black;
         font-size: 48px;
+    }
+`
+
+const SignupReminder = styled.div`
+    background-color: var(--light-grey);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    > p {
+        font-family: 'Montserrat', sans-serif;
+        color: black;
+        font-size: 48px;
+        max-width: 60%;
     }
 `
 
