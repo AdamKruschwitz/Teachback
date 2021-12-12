@@ -1,16 +1,68 @@
 import React from 'react';
-
-
-import { Login, SearchBar, Category } from '../components';
+import styled from 'styled-components';
+import Button from '@mui/material/Button';
 
 const Home = function() {
     return(
-        <div>
-            <Category />
-            <Login />
-            <SearchBar />
-        </div>
+        <Container>
+            <HeroContainer>
+                <HeroLeft>
+                    <HeroText>Make complex tasks simple, and bring everyone along with you!</HeroText>
+                    <JoinButton size="large" >Join Us</JoinButton>
+                </HeroLeft>
+                <HeroRight>
+                    {/* TODO - add a hero image */}
+                </HeroRight>
+            </HeroContainer>
+        </Container>
     )
 }
+
+const Container = styled.div`
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light-grey);
+`
+
+const HeroContainer = styled.div`
+    width: 100%;
+    background-color: var(--dark-purple);
+    height: 75vh;
+    
+    display: flex;
+    flex-direction: row;
+`
+
+const HeroLeft = styled.div`
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin: 4rem 1rem 4rem 1rem;
+`
+
+const HeroRight = styled.div`
+    width: 45%;
+    background-color: var(--light-blue);
+    height: 100%;
+`
+
+const HeroText = styled.p`
+    color: var(--light-blue);
+    font-size: 56px;
+    letter-spacing: -1.5%;
+    font-family: 'Montserrat', sans-serif;
+`
+
+const JoinButton = styled(Button)`
+    z-index: 0;
+    background-color: var(--light-green) !important;
+    color: var(--dark-purple) !important;
+    border-color: var(--light-green) !important;
+    font-family: 'Montserrat', sans-serif;
+    padding: 1rem !important;
+`
 
 export default Home;
