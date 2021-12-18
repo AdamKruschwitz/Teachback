@@ -12,7 +12,7 @@ const resolvers = {
             return await User.find();
         },
         categories: async () => {
-            return Category.findAll();
+            return Category.find();
         },
         tutorials: async (_, { title, tagIDs, categoryIDs }) => {
             const args = title ? { title } : {};
@@ -89,11 +89,51 @@ const resolvers = {
                 return e.message;
             }
         },
-        createTutorial: async (_, { TutorialInput }) => {
-            // await to create tags, steps 
-            // use object ids from created tags and steps and pass to tutorial creation object 
-            console.log('hello')
-            return Tutorial.create({ TutorialInput }).populate('user');
+        createTutorial: async (_, { title, author, tags, category, steps}) => { 
+            // Create new steps
+            let stepsDB = [] 
+            for(let step of steps) {
+                let stepDB = await Step.create({ content: step, comments: [] });
+                stepsDB.push(stepDB);
+            }
+
+            // Create new tags or update tag counts
+            let tagsDB = [];
+            for(let tag of tags) {
+                let tagDB = await Tag.findOne({ name: tag });
+                // Create tag if not found
+                if (!tagDB) {
+                    tagDB = await Tag.create({ name: tag });
+                }
+                // TODO: handle tag frequency
+                tagsDB.push(tagDB);
+            }
+
+            // Get category by name
+            const categoryDB = await Category.findOne({ name: category });
+
+            // Get user by token
+            const user = await User.findOne({ token: author });
+
+            // Create Tutorial
+            const tutorial = await Tutorial.create({
+                title: title,
+                author: user,
+                tags: tagsDB.map(tag => tag._id),
+                category: categoryDB._id,
+                steps: stepsDB.map(step => step._id),
+                ratings: [],
+                searchable: true
+            });
+            const populatedTutorial = Tutorial.findById(tutorial._id)
+            .populate('author')
+            .populate('category')
+            .populate('tags')
+            .populate('ratings')
+            .populate('steps')
+            
+            console.log(populatedTutorial);
+            return populatedTutorial;
         },
         addComment: async (_, { stepId, content }) => {
             // TODO - fix this, this code does not add a comment
